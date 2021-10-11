@@ -11,6 +11,8 @@ import {
 } from "@keystone-next/keystone/fields";
 import { document } from "@keystone-next/fields-document";
 
+import { getPositionByAddress } from "./interactions/geo";
+
 export const lists = {
   User: list({
     ui: {
@@ -29,6 +31,7 @@ export const lists = {
       institutions: relationship({ ref: "Institution.owner", many: true }),
     },
   }),
+
   Institution: list({
     fields: {
       owner: relationship({ ref: "User.institutions", many: false }),
@@ -57,8 +60,8 @@ export const lists = {
       streetNumber: text({ validation: { isRequired: true } }),
       zip: integer({ validation: { isRequired: true } }),
       city: text({ validation: { isRequired: true } }),
-      positionLat: float({ ui: { itemView: { fieldMode: "read" } } }),
-      positionLng: float({ ui: { itemView: { fieldMode: "read" } } }),
+      positionLat: float(),
+      positionLng: float(),
 
       homepage: text(),
       email: text(),
@@ -69,6 +72,20 @@ export const lists = {
 
       logo: image(),
       photo: image(),
+    },
+    hooks: {
+      resolveInput: async ({ resolvedData, item }) => {
+        // Update position if at least one address field was updated
+        if (
+          resolvedData.street ||
+          resolvedData.streetNumber ||
+          resolvedData.zip
+        ) {
+          Object.assign(resolvedData, await getPositionByAddress(item));
+        }
+
+        return resolvedData;
+      },
     },
   }),
 };
