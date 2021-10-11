@@ -1,0 +1,19 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+export const databaseUrl = process.env.DATABASE_URL ?? "file:./dev.db";
+
+let secret = process.env.SESSION_SECRET;
+
+if (!secret) {
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "The SESSION_SECRET environment variable must be set in production"
+    );
+  } else {
+    secret = "-- DEV COOKIE SECRET; CHANGE ME --";
+  }
+}
+
+export const sessionSecret = secret;
+export const sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
