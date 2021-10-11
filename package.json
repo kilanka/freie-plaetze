@@ -1,9 +1,22 @@
 {
   "private": true,
   "workspaces": [
-    "./backend"
+    "./backend",
+    "./frontend"
   ],
   "devDependencies": {
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "import-sort-style-module": "^6.0.0",
+    "prettier": "^2.3.2",
+    "prettier-plugin-import-sort": "0.0.7"
+  },
+  "prettier": {
+    "printWidth": 100
+  },
+  "importSort": {
+    ".ts, .tsx, .js": {
+      "style": "module",
+      "parser": "typescript"
+    }
   }
 }

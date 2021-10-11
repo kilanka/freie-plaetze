@@ -1,15 +1,15 @@
+import { document } from "@keystone-next/fields-document";
 import { list } from "@keystone-next/keystone";
 import {
-  text,
-  relationship,
-  password,
-  timestamp,
-  select,
-  integer,
-  image,
   float,
+  image,
+  integer,
+  password,
+  relationship,
+  select,
+  text,
+  timestamp,
 } from "@keystone-next/keystone/fields";
-import { document } from "@keystone-next/fields-document";
 
 import { getPositionByAddress } from "./interactions/geo";
 
@@ -76,11 +76,7 @@ export const lists = {
     hooks: {
       resolveInput: async ({ resolvedData, item }) => {
         // Update position if at least one address field was updated
-        if (
-          resolvedData.street ||
-          resolvedData.streetNumber ||
-          resolvedData.zip
-        ) {
+        if (resolvedData.street || resolvedData.streetNumber || resolvedData.zip) {
           Object.assign(resolvedData, await getPositionByAddress(item));
         }
 
