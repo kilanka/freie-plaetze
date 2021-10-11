@@ -1,10 +1,9 @@
+import { createAuth } from "@keystone-next/auth";
 import { config } from "@keystone-next/keystone";
 import { statelessSessions } from "@keystone-next/keystone/session";
-import { createAuth } from "@keystone-next/auth";
 
+import { databaseUrl, sessionMaxAge, sessionSecret } from "./environment";
 import { lists } from "./schema";
-
-import { databaseUrl, sessionSecret, sessionMaxAge } from "./environment";
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -38,6 +37,15 @@ export default withAuth(
         storagePath: "public/images",
         baseUrl: "/images",
       },
+    },
+    graphql: {
+      cors:
+        process.env.NODE_ENV !== "production"
+          ? {
+              origin: ["http://localhost:8080", "https://studio.apollographql.com"],
+              credentials: true,
+            }
+          : undefined,
     },
   })
 );

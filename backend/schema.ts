@@ -77,7 +77,7 @@ export const lists = {
       resolveInput: async ({ resolvedData, item }) => {
         // Update position if at least one address field was updated
         if (resolvedData.street || resolvedData.streetNumber || resolvedData.zip) {
-          Object.assign(resolvedData, await getPositionByAddress(item));
+          Object.assign(resolvedData, await getPositionByAddress(item ?? resolvedData));
         }
 
         return resolvedData;
