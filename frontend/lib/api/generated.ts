@@ -27,25 +27,25 @@ export type CreateInitialUserInput = {
   password?: Maybe<Scalars['String']>;
 };
 
-export type DateTimeNullableFilter = {
+export type DateTimeFilter = {
   equals?: Maybe<Scalars['DateTime']>;
   gt?: Maybe<Scalars['DateTime']>;
   gte?: Maybe<Scalars['DateTime']>;
   in?: Maybe<Array<Scalars['DateTime']>>;
   lt?: Maybe<Scalars['DateTime']>;
   lte?: Maybe<Scalars['DateTime']>;
-  not?: Maybe<DateTimeNullableFilter>;
+  not?: Maybe<DateTimeFilter>;
   notIn?: Maybe<Array<Scalars['DateTime']>>;
 };
 
-export type FloatNullableFilter = {
+export type FloatFilter = {
   equals?: Maybe<Scalars['Float']>;
   gt?: Maybe<Scalars['Float']>;
   gte?: Maybe<Scalars['Float']>;
   in?: Maybe<Array<Scalars['Float']>>;
   lt?: Maybe<Scalars['Float']>;
   lte?: Maybe<Scalars['Float']>;
-  not?: Maybe<FloatNullableFilter>;
+  not?: Maybe<FloatFilter>;
   notIn?: Maybe<Array<Scalars['Float']>>;
 };
 
@@ -84,28 +84,28 @@ export type ImageFieldOutput = {
 
 export type Institution = {
   __typename?: 'Institution';
-  ageFrom?: Maybe<Scalars['Int']>;
-  ageTo?: Maybe<Scalars['Int']>;
-  city?: Maybe<Scalars['String']>;
+  ageFrom: Scalars['Int'];
+  ageTo: Scalars['Int'];
+  city: Scalars['String'];
   description?: Maybe<Institution_Description_Document>;
   email?: Maybe<Scalars['String']>;
-  gender?: Maybe<InstitutionGenderType>;
+  gender: InstitutionGenderType;
   homepage?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  lastUpdated?: Maybe<Scalars['DateTime']>;
+  lastUpdated: Scalars['DateTime'];
   logo?: Maybe<ImageFieldOutput>;
   mobilePhone?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   owner?: Maybe<User>;
   phone?: Maybe<Scalars['String']>;
   photo?: Maybe<ImageFieldOutput>;
-  placesAvailable?: Maybe<Scalars['Int']>;
-  placesTotal?: Maybe<Scalars['Int']>;
-  positionLat?: Maybe<Scalars['Float']>;
-  positionLng?: Maybe<Scalars['Float']>;
-  street?: Maybe<Scalars['String']>;
-  streetNumber?: Maybe<Scalars['String']>;
-  zip?: Maybe<Scalars['Int']>;
+  placesAvailable: Scalars['Int'];
+  placesTotal: Scalars['Int'];
+  positionLat: Scalars['Float'];
+  positionLng: Scalars['Float'];
+  street: Scalars['String'];
+  streetNumber: Scalars['String'];
+  zip: Scalars['Int'];
 };
 
 export type InstitutionCreateInput = {
@@ -114,7 +114,7 @@ export type InstitutionCreateInput = {
   city?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['JSON']>;
   email?: Maybe<Scalars['String']>;
-  gender?: Maybe<InstitutionGenderType>;
+  gender: InstitutionGenderType;
   homepage?: Maybe<Scalars['String']>;
   lastUpdated?: Maybe<Scalars['DateTime']>;
   logo?: Maybe<ImageFieldInput>;
@@ -224,15 +224,15 @@ export type InstitutionWhereInput = {
   gender?: Maybe<InstitutionGenderTypeNullableFilter>;
   homepage?: Maybe<StringFilter>;
   id?: Maybe<IdFilter>;
-  lastUpdated?: Maybe<DateTimeNullableFilter>;
+  lastUpdated?: Maybe<DateTimeFilter>;
   mobilePhone?: Maybe<StringFilter>;
   name?: Maybe<StringFilter>;
   owner?: Maybe<UserWhereInput>;
   phone?: Maybe<StringFilter>;
   placesAvailable?: Maybe<IntFilter>;
   placesTotal?: Maybe<IntFilter>;
-  positionLat?: Maybe<FloatNullableFilter>;
-  positionLng?: Maybe<FloatNullableFilter>;
+  positionLat?: Maybe<FloatFilter>;
+  positionLng?: Maybe<FloatFilter>;
   street?: Maybe<StringFilter>;
   streetNumber?: Maybe<StringFilter>;
   zip?: Maybe<IntFilter>;
@@ -497,6 +497,8 @@ export type Query = {
   institutions?: Maybe<Array<Institution>>;
   institutionsCount?: Maybe<Scalars['Int']>;
   keystone: KeystoneMeta;
+  /** Return institutions within `radius` km distance from `cityOrZip` */
+  nearbyInstitutions: Array<Institution>;
   user?: Maybe<User>;
   users?: Maybe<Array<User>>;
   usersCount?: Maybe<Scalars['Int']>;
@@ -517,6 +519,16 @@ export type QueryInstitutionsArgs = {
 
 
 export type QueryInstitutionsCountArgs = {
+  where?: InstitutionWhereInput;
+};
+
+
+export type QueryNearbyInstitutionsArgs = {
+  cityOrZip: Scalars['String'];
+  orderBy?: Array<InstitutionOrderByInput>;
+  radius: Scalars['Int'];
+  skip?: Scalars['Int'];
+  take?: Maybe<Scalars['Int']>;
   where?: InstitutionWhereInput;
 };
 
@@ -644,33 +656,95 @@ export type UserWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
 };
 
+export type NearbyInstitutionsQueryVariables = Exact<{
+  cityOrZip: Scalars['String'];
+  radius: Scalars['Int'];
+  skip?: Maybe<Scalars['Int']>;
+  take?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type NearbyInstitutionsQuery = { __typename?: 'Query', nearbyInstitutions: Array<{ __typename?: 'Institution', id: string, name: string, city: string, gender: InstitutionGenderType, ageFrom: number, ageTo: number, placesAvailable: number, placesTotal: number, lastUpdated: any, photo?: { __typename?: 'LocalImageFieldOutput', src: string } | null | undefined }> };
+
 export type InstitutionsQueryVariables = Exact<{
   skip?: Maybe<Scalars['Int']>;
   take?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type InstitutionsQuery = { __typename?: 'Query', institutionsCount?: number | null | undefined, institutions?: Array<{ __typename?: 'Institution', id: string, name?: string | null | undefined, placesTotal?: number | null | undefined, placesAvailable?: number | null | undefined, city?: string | null | undefined, gender?: InstitutionGenderType | null | undefined, ageFrom?: number | null | undefined, ageTo?: number | null | undefined, logo?: { __typename?: 'LocalImageFieldOutput', src: string } | null | undefined, photo?: { __typename?: 'LocalImageFieldOutput', src: string } | null | undefined }> | null | undefined };
+export type InstitutionsQuery = { __typename?: 'Query', institutionsCount?: number | null | undefined, institutions?: Array<{ __typename?: 'Institution', id: string, name: string, city: string, gender: InstitutionGenderType, ageFrom: number, ageTo: number, placesAvailable: number, placesTotal: number, lastUpdated: any, photo?: { __typename?: 'LocalImageFieldOutput', src: string } | null | undefined }> | null | undefined };
 
 
+export const NearbyInstitutionsDocument = gql`
+    query nearbyInstitutions($cityOrZip: String!, $radius: Int!, $skip: Int, $take: Int) {
+  nearbyInstitutions(
+    cityOrZip: $cityOrZip
+    radius: $radius
+    skip: $skip
+    take: $take
+  ) {
+    id
+    name
+    city
+    gender
+    ageFrom
+    ageTo
+    photo {
+      src
+    }
+    placesAvailable
+    placesTotal
+    lastUpdated
+  }
+}
+    `;
+
+/**
+ * __useNearbyInstitutionsQuery__
+ *
+ * To run a query within a React component, call `useNearbyInstitutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNearbyInstitutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNearbyInstitutionsQuery({
+ *   variables: {
+ *      cityOrZip: // value for 'cityOrZip'
+ *      radius: // value for 'radius'
+ *      skip: // value for 'skip'
+ *      take: // value for 'take'
+ *   },
+ * });
+ */
+export function useNearbyInstitutionsQuery(baseOptions: Apollo.QueryHookOptions<NearbyInstitutionsQuery, NearbyInstitutionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NearbyInstitutionsQuery, NearbyInstitutionsQueryVariables>(NearbyInstitutionsDocument, options);
+      }
+export function useNearbyInstitutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NearbyInstitutionsQuery, NearbyInstitutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NearbyInstitutionsQuery, NearbyInstitutionsQueryVariables>(NearbyInstitutionsDocument, options);
+        }
+export type NearbyInstitutionsQueryHookResult = ReturnType<typeof useNearbyInstitutionsQuery>;
+export type NearbyInstitutionsLazyQueryHookResult = ReturnType<typeof useNearbyInstitutionsLazyQuery>;
+export type NearbyInstitutionsQueryResult = Apollo.QueryResult<NearbyInstitutionsQuery, NearbyInstitutionsQueryVariables>;
 export const InstitutionsDocument = gql`
     query institutions($skip: Int, $take: Int) {
   institutionsCount
   institutions(skip: $skip, take: $take) {
     id
     name
-    placesTotal
-    placesAvailable
     city
     gender
     ageFrom
     ageTo
-    logo {
-      src
-    }
     photo {
       src
     }
+    placesAvailable
+    placesTotal
+    lastUpdated
   }
 }
     `;

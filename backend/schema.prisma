@@ -21,27 +21,27 @@ model User {
 }
 
 model Institution {
-  id              String    @id @default(cuid())
-  owner           User?     @relation("Institution_owner", fields: [ownerId], references: [id])
-  ownerId         String?   @map("owner")
-  lastUpdated     DateTime? @updatedAt
-  name            String    @default("")
+  id              String   @id @default(cuid())
+  owner           User?    @relation("Institution_owner", fields: [ownerId], references: [id])
+  ownerId         String?  @map("owner")
+  lastUpdated     DateTime @updatedAt
+  name            String   @default("")
   gender          String
   ageFrom         Int
   ageTo           Int
   placesAvailable Int
   placesTotal     Int
-  street          String    @default("")
-  streetNumber    String    @default("")
+  street          String   @default("")
+  streetNumber    String   @default("")
   zip             Int
-  city            String    @default("")
+  city            String   @default("")
   positionLat     Float?
   positionLng     Float?
-  homepage        String    @default("")
-  email           String    @default("")
-  phone           String    @default("")
-  mobilePhone     String    @default("")
-  description     String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  homepage        String   @default("")
+  email           String   @default("")
+  phone           String   @default("")
+  mobilePhone     String   @default("")
+  description     String   @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   logo_filesize   Int?
   logo_extension  String?
   logo_width      Int?

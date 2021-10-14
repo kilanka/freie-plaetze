@@ -171,17 +171,17 @@ input InstitutionRelateToManyForCreateInput {
 type Institution {
   id: ID!
   owner: User
-  lastUpdated: DateTime
-  name: String
-  gender: InstitutionGenderType
-  ageFrom: Int
-  ageTo: Int
-  placesAvailable: Int
-  placesTotal: Int
-  street: String
-  streetNumber: String
-  zip: Int
-  city: String
+  lastUpdated: DateTime!
+  name: String!
+  gender: InstitutionGenderType!
+  ageFrom: Int!
+  ageTo: Int!
+  placesAvailable: Int!
+  placesTotal: Int!
+  street: String!
+  streetNumber: String!
+  zip: Int!
+  city: String!
   positionLat: Float
   positionLng: Float
   homepage: String
@@ -243,7 +243,7 @@ input InstitutionWhereInput {
   NOT: [InstitutionWhereInput!]
   id: IDFilter
   owner: UserWhereInput
-  lastUpdated: DateTimeNullableFilter
+  lastUpdated: DateTimeFilter
   name: StringFilter
   gender: InstitutionGenderTypeNullableFilter
   ageFrom: IntFilter
@@ -262,7 +262,7 @@ input InstitutionWhereInput {
   mobilePhone: StringFilter
 }
 
-input DateTimeNullableFilter {
+input DateTimeFilter {
   equals: DateTime
   in: [DateTime!]
   notIn: [DateTime!]
@@ -270,7 +270,7 @@ input DateTimeNullableFilter {
   lte: DateTime
   gt: DateTime
   gte: DateTime
-  not: DateTimeNullableFilter
+  not: DateTimeFilter
 }
 
 input InstitutionGenderTypeNullableFilter {
@@ -372,7 +372,7 @@ input InstitutionCreateInput {
   owner: UserRelateToOneForCreateInput
   lastUpdated: DateTime
   name: String
-  gender: InstitutionGenderType
+  gender: InstitutionGenderType!
   ageFrom: Int
   ageTo: Int
   placesAvailable: Int
@@ -406,6 +406,17 @@ scalar JSON
   )
 
 type Query {
+  """
+  Return institutions within `radius` km distance from `cityOrZip`
+  """
+  nearbyInstitutions(
+    cityOrZip: String!
+    radius: Int!
+    where: InstitutionWhereInput! = {}
+    orderBy: [InstitutionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Institution!]!
   authenticatedItem: AuthenticatedItem
   users(
     where: UserWhereInput! = {}

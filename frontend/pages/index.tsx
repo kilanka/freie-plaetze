@@ -1,5 +1,8 @@
-import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/layout";
+import { Box, Flex, HStack, Heading, SimpleGrid, Text } from "@chakra-ui/layout";
+import { Form, Formik } from "formik";
+import { InputControl, NumberInputControl } from "formik-chakra-ui";
 import type { NextPage } from "next";
+import React from "react";
 
 import { InstitutionList } from "../lib/components/content/InstitutionList";
 import { Layout } from "../lib/components/Layout";
@@ -33,7 +36,26 @@ const HomePage: NextPage = () => {
       </Box>
 
       <Box as="section" id="list">
-        <InstitutionList />
+        <Formik initialValues={{ location: "", radius: "40" }} onSubmit={() => {}}>
+          {({ values }) => (
+            <>
+              <Form>
+                <Flex justifyContent="center" mb={16}>
+                  <HStack maxWidth="2xl">
+                    <InputControl name="location" label="Stadt / PLZ"></InputControl>
+                    <NumberInputControl
+                      name="radius"
+                      label="Umkreis"
+                      numberInputProps={{ min: 5, step: 5 }}
+                      maxWidth={24}
+                    />
+                  </HStack>
+                </Flex>
+              </Form>
+              <InstitutionList cityOrZip={values.location} radius={parseInt(values.radius)} />
+            </>
+          )}
+        </Formik>
       </Box>
     </Layout>
   );

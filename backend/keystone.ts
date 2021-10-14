@@ -3,7 +3,10 @@ import { config } from "@keystone-next/keystone";
 import { statelessSessions } from "@keystone-next/keystone/session";
 
 import { databaseUrl, sessionMaxAge, sessionSecret } from "./environment";
-import { lists } from "./schema";
+import { extendGraphqlSchema, lists } from "./schema";
+import { insertSeedData } from "./seed";
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -25,6 +28,12 @@ export default withAuth(
     db: {
       provider: databaseUrl.startsWith("file") ? "sqlite" : "postgresql",
       url: databaseUrl,
+      useMigrations: isProduction,
+      async onConnect(context) {
+        if (!isProduction && process.argv.includes("--seed")) {
+          await insertSeedData(context);
+        }
+      },
     },
     ui: {
       isAccessAllowed: (context) => !!context.session?.data,
@@ -39,13 +48,13 @@ export default withAuth(
       },
     },
     graphql: {
-      cors:
-        process.env.NODE_ENV !== "production"
-          ? {
-              origin: ["http://localhost:8080", "https://studio.apollographql.com"],
-              credentials: true,
-            }
-          : undefined,
+      cors: !isProduction
+        ? {
+            origin: ["http://localhost:8080", "https://studio.apollographql.com"],
+            credentials: true,
+          }
+        : undefined,
     },
+    extendGraphqlSchema,
   })
 );

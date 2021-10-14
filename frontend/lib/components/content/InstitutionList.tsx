@@ -1,54 +1,123 @@
-import { Box, SimpleGrid } from "@chakra-ui/layout";
+import { Box, SimpleGrid, Text } from "@chakra-ui/layout";
 import { Spinner } from "@chakra-ui/spinner";
-import React from "react";
+import { produce } from "immer";
+import React, { useEffect } from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
+import { useDebounce } from "use-debounce";
 
-import { useInstitutionsQuery } from "../../api/generated";
+import { useNearbyInstitutionsLazyQuery } from "../../api/generated";
 import { InstitutionListItem } from "./InstitutionListItem";
 
-export const InstitutionList: React.FC = ({}) => {
-  const batchSize = 5;
+export type InstitutionListProps = { cityOrZip: string; radius: number };
 
-  const { loading, data, error, fetchMore } = useInstitutionsQuery({
-    variables: { skip: 0, take: batchSize },
+export const InstitutionList: React.FC<InstitutionListProps> = ({
+  cityOrZip: cityOrZipProp,
+  radius: radiusProp,
+}) => {
+  const batchSize = 7;
+  const debounceDelay = 700; // ms
+
+  const [cityOrZip] = useDebounce(cityOrZipProp, debounceDelay);
+  const [radius] = useDebounce(radiusProp, debounceDelay);
+
+  const isInputInvalid = cityOrZip === "" || [0, NaN].includes(radius);
+
+  const [fetchInstitutions, { loading, error, data, fetchMore }] = useNearbyInstitutionsLazyQuery({
+    variables: { skip: 0, take: batchSize, cityOrZip: "", radius: 0 }, // fake cityOrZip and radius to make TS happy
   });
 
-  const institutions = data?.institutions;
-  const hasNextPage = Boolean(data) && data!.institutions!.length < data!.institutionsCount!;
+  const institutions = data?.nearbyInstitutions;
+  const isResultEmpty =
+    Boolean(error) || typeof institutions === "undefined" || institutions.length === 0;
+
+  const [hasNextPage, setHasNextPage] = React.useState(false);
+  useEffect(() => {
+    setHasNextPage(true);
+    if (!isInputInvalid) {
+      fetchInstitutions({ variables: { cityOrZip, radius } });
+    }
+  }, [cityOrZip, radius]);
 
   const [sentryRef] = useInfiniteScroll({
     loading,
     hasNextPage,
     onLoadMore: () => {
-      fetchMore({
-        variables: {
-          skip: institutions!.length,
-          take: batchSize,
-        },
-        updateQuery: (prev, { fetchMoreResult }) => ({
-          ...prev,
-          institutions: [...(prev.institutions ?? []), ...(fetchMoreResult?.institutions ?? [])],
-        }),
-      });
+      if (fetchMore) {
+        fetchMore({
+          variables: {
+            skip: institutions!.length,
+            take: batchSize,
+          },
+          updateQuery: (prev, { fetchMoreResult }) =>
+            produce(prev, (prev) => {
+              if (prev.nearbyInstitutions) {
+                if (fetchMoreResult?.nearbyInstitutions) {
+                  prev.nearbyInstitutions.push(...fetchMoreResult.nearbyInstitutions);
+                }
+                if (
+                  !fetchMoreResult?.nearbyInstitutions ||
+                  fetchMoreResult?.nearbyInstitutions.length < batchSize
+                ) {
+                  setHasNextPage(false);
+                  console.log("setHasNextPage(false)");
+                }
+              }
+            }),
+        });
+      }
     },
-    disabled: Boolean(error) || !Boolean(institutions),
-    // rootMargin: "0px 0px 400px 0px", // start loading when the sentry is 400px away from the viewport
+    disabled: isResultEmpty,
+    rootMargin: "0px 0px 400px 0px", // start loading when the sentry is 400px away from the viewport
   });
 
-  if (!institutions) {
-    return null;
+  const [isListTouched, setIsListTouched] = React.useState(false);
+  if (!isListTouched && !isResultEmpty) {
+    setIsListTouched(true);
   }
 
   return (
-    <SimpleGrid columns={1} gap={8}>
-      {institutions.map((institution) => (
-        <InstitutionListItem key={institution.id} institution={institution} />
-      ))}
-      {(loading || hasNextPage) && (
-        <Box ref={sentryRef}>
-          <Spinner />
-        </Box>
-      )}
+    <SimpleGrid
+      columns={1}
+      autoRows="min-content"
+      gap={8}
+      minH={isListTouched ? "90vh" : undefined}
+    >
+      {(() => {
+        if (isInputInvalid) {
+          return null;
+        }
+
+        if (loading) {
+          return (
+            <Box>
+              <Spinner />
+            </Box>
+          );
+        }
+
+        if (isResultEmpty) {
+          return (
+            <Text fontSize="lg">
+              Im Umkreis von {radius} km um {cityOrZip} sind leider keine Einrichtungen eingetragen.
+              <br />
+              Betreiben Sie eine Einrichtung? -&gt; Anmelden
+            </Text>
+          );
+        }
+
+        return (
+          <>
+            {institutions.map((institution) => (
+              <InstitutionListItem key={institution.id} institution={institution} />
+            ))}
+            {(loading || hasNextPage) && (
+              <Box ref={sentryRef}>
+                <Spinner />
+              </Box>
+            )}
+          </>
+        );
+      })()}
     </SimpleGrid>
   );
 };
