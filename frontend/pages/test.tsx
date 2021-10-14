@@ -1,20 +1,21 @@
-import type { InferGetServerSidePropsType, NextPage } from "next";
+import type {InferGetServerSidePropsType, NextPage} from "next";
+import React from "react";
 
-import { client } from "../lib/api/apollo-client";
-import { getSdk } from "../lib/api/generated";
+import {client} from "../lib/api/apollo-client";
+import {getSdk} from "../lib/api/generated";
 
 const TestPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
-  institutions,
+	institutions,
 }) => {
-  return <div>{JSON.stringify(institutions)}</div>;
+	return <div>{JSON.stringify(institutions)}</div>;
 };
 
 export default TestPage;
 
 export const getServerSideProps = async () => {
-  const { data } = await getSdk(client).institutionsQuery({});
+	const {data} = await getSdk(client).institutionsQuery({});
 
-  return {
-    props: data,
-  };
+	return {
+		props: data,
+	};
 };

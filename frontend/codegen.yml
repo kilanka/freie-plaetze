@@ -1,13 +1,13 @@
 overwrite: true
-schema: "../backend/schema.graphql"
-documents: "lib/api/queries.ts"
+schema: ../backend/schema.graphql
+documents: lib/api/queries.ts
 
 generates:
   lib/api/generated.ts:
     config:
       withHooks: true
-      gqlImport: "graphql-tag#gql"
+      gqlImport: graphql-tag#gql
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo

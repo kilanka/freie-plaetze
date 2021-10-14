@@ -4,14 +4,37 @@
     "./backend",
     "./frontend"
   ],
+  "scripts": {
+    "xo": "xo"
+  },
   "devDependencies": {
     "typescript": "^4.4.2",
     "import-sort-style-module": "^6.0.0",
     "prettier": "^2.3.2",
-    "prettier-plugin-import-sort": "0.0.7"
+    "prettier-plugin-import-sort": "0.0.7",
+    "eslint-config-xo-react": "^0.24.0",
+    "type-fest": "^0.21.3",
+    "xo": "^0.38.2"
+  },
+  "xo": {
+    "extends": "xo-react",
+    "prettier": true,
+    "ignores": [
+      "frontend/lib/api/generated.ts"
+    ],
+    "rules": {
+      "unicorn/filename-case": "off",
+      "react/prop-types": "off",
+      "import/no-extraneous-dependencies": "off",
+      "node/file-extension-in-import": "off",
+      "node/no-unsupported-features/es-syntax": "off",
+      "import/no-unassigned-import": "off"
+    }
   },
   "prettier": {
-    "printWidth": 100
+    "printWidth": 100,
+    "singleQuote": false,
+    "trailingComma": "es5"
   },
   "importSort": {
     ".ts, .tsx, .js": {

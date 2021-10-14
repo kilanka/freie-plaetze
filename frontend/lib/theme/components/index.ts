@@ -1,7 +1,7 @@
 import Heading from "./heading";
 
 const components = {
-	Heading
+	Heading,
 };
 
 export default components;
