@@ -3,6 +3,7 @@ import {Stat, StatHelpText, StatLabel, StatNumber} from "@chakra-ui/stat";
 import React from "react";
 
 import {Institution} from "../../api/generated";
+import {Image} from "../next/Image";
 
 export type InstitutionListItemProps = {
 	institution: Pick<
@@ -16,14 +17,14 @@ export type InstitutionListItemProps = {
 		| "placesAvailable"
 		| "placesTotal"
 		| "lastUpdated"
-	>;
+	> & {photo?: {src?: string | null} | null};
 };
 
 export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institution}) => {
 	return (
 		<Flex
 			width="100%"
-			bgColor="orange.100"
+			bgColor="yellow.100"
 			borderRadius="lg"
 			shadow="sm"
 			textAlign="left"
@@ -62,7 +63,11 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 						</StatHelpText>
 					</Stat>
 				</Flex>
-				<Box minWidth="64" bgColor="orange.200" />
+				<Box minWidth="64" bgColor="yellow.200" height="100%">
+					{institution.photo?.src && (
+						<Image src={`http://localhost:3000${institution.photo?.src}`} layout="fill" h="100%" />
+					)}
+				</Box>
 			</Flex>
 		</Flex>
 	);

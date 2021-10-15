@@ -1,4 +1,8 @@
-import faker, {address} from "faker";
+import {createReadStream} from "fs";
+import path from "path";
+
+import faker from "faker";
+import {Upload} from "graphql-upload";
 import {sample} from "lodash";
 
 faker.seed(123);
@@ -69,6 +73,22 @@ export const addresses = [
 	},
 ];
 
+let imageNumber = 0;
+
+function getImage() {
+	imageNumber++;
+	const filename = `${imageNumber}.jpg`;
+
+	const upload = new Upload();
+	upload.resolve({
+		createReadStream: () => createReadStream(path.resolve(__dirname, `./images/${filename}`)),
+		filename,
+		encoding: "7bit",
+		mimetype: "application/jpeg",
+	});
+	return {upload};
+}
+
 export const institutions = addresses.map((address) => ({
 	owner: "admin",
 	name: faker.company.companyName(),
@@ -78,4 +98,5 @@ export const institutions = addresses.map((address) => ({
 	placesAvailable: faker.datatype.number(10),
 	placesTotal: faker.datatype.number({min: 11, max: 20}),
 	...address,
+	photo: getImage(),
 }));

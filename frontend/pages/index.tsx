@@ -1,4 +1,4 @@
-import {Box, Flex, HStack, Heading, SimpleGrid, Text} from "@chakra-ui/layout";
+import {Box, Container, Flex, HStack, Heading, Text} from "@chakra-ui/layout";
 import {Form, Formik} from "formik";
 import {InputControl, NumberInputControl} from "formik-chakra-ui";
 import type {NextPage} from "next";
@@ -13,11 +13,10 @@ const HomePage: NextPage = () => {
 			<Box
 				as="section"
 				id="focus"
-				mb={16}
-				bgColor="orange.50"
-				borderRadius="lg"
-				shadow="sm"
-				padding={16}
+				bgGradient="linear(to-b, teal.100, teal.50)"
+				p={16}
+				pb={32}
+				textAlign="center"
 			>
 				<Heading mb={4}>Sie brauchen Hilfe zur Erziehung?</Heading>
 				<Text fontSize="xl" mb={10}>
@@ -35,24 +34,22 @@ const HomePage: NextPage = () => {
 				</Text>
 			</Box>
 
-			<Box as="section" id="list">
+			<Container as="section" maxWidth="container.lg">
 				{/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
 				<Formik initialValues={{location: "", radius: "40"}} onSubmit={() => {}}>
 					{({values}) => (
 						<>
-							<Form>
-								<Flex justifyContent="center" mb={16}>
-									<HStack maxWidth="2xl">
-										<InputControl name="location" label="Stadt / PLZ" />
-										<NumberInputControl
-											name="radius"
-											label="Umkreis"
-											numberInputProps={{min: 5, step: 5}}
-											maxWidth={24}
-										/>
-									</HStack>
-								</Flex>
-							</Form>
+							<Flex as={Form} justifyContent="center" mb={16}>
+								<HStack maxWidth="2xl">
+									<InputControl name="location" label="Stadt / PLZ" />
+									<NumberInputControl
+										name="radius"
+										label="Umkreis"
+										numberInputProps={{min: 10, step: 10}}
+										maxWidth={24}
+									/>
+								</HStack>
+							</Flex>
 							<InstitutionList
 								cityOrZip={values.location}
 								radius={Number.parseInt(values.radius, 10)}
@@ -60,7 +57,7 @@ const HomePage: NextPage = () => {
 						</>
 					)}
 				</Formik>
-			</Box>
+			</Container>
 		</Layout>
 	);
 };

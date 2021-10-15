@@ -82,6 +82,7 @@ export const InstitutionList: React.FC<InstitutionListProps> = ({
 			autoRows="min-content"
 			gap={8}
 			minH={isListTouched ? "90vh" : undefined}
+			textAlign="center"
 		>
 			{(() => {
 				if (isInputInvalid) {
