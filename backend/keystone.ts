@@ -1,6 +1,6 @@
-import {createAuth} from "@keystone-next/auth";
-import {config} from "@keystone-next/keystone";
-import {statelessSessions} from "@keystone-next/keystone/session";
+import {createAuth} from "@keystone-6/auth";
+import {config} from "@keystone-6/core";
+import {statelessSessions} from "@keystone-6/core/session";
 
 import {databaseUrl, sessionMaxAge, sessionSecret} from "./environment";
 import {extendGraphqlSchema, lists} from "./schema";
@@ -25,6 +25,14 @@ const session = statelessSessions({
 
 export default withAuth(
 	config({
+		server: {
+			cors: isProduction
+				? undefined
+				: {
+						origin: ["http://localhost:8080"],
+						credentials: true,
+				  },
+		},
 		db: {
 			provider: databaseUrl.startsWith("file") ? "sqlite" : "postgresql",
 			url: databaseUrl,
@@ -46,14 +54,6 @@ export default withAuth(
 				storagePath: "public/images",
 				baseUrl: "/images",
 			},
-		},
-		graphql: {
-			cors: isProduction
-				? undefined
-				: {
-						origin: ["http://localhost:8080", "https://studio.apollographql.com"],
-						credentials: true,
-				  },
 		},
 		extendGraphqlSchema,
 	})

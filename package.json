@@ -20,7 +20,7 @@
     "extends": "xo-react",
     "prettier": true,
     "ignores": [
-      "frontend/lib/api/generated.ts"
+      "frontend/lib/api/generated/*"
     ],
     "rules": {
       "unicorn/filename-case": "off",

@@ -1,5 +1,4 @@
-import {document} from "@keystone-next/fields-document";
-import {graphQLSchemaExtension, list} from "@keystone-next/keystone";
+import {graphQLSchemaExtension, list} from "@keystone-6/core";
 import {
 	float,
 	image,
@@ -9,7 +8,8 @@ import {
 	select,
 	text,
 	timestamp,
-} from "@keystone-next/keystone/fields";
+} from "@keystone-6/core/fields";
+import {document} from "@keystone-6/fields-document";
 import {lengthToDegrees} from "@turf/helpers";
 
 import {getPositionByAddress, getPositionByZipOrCity} from "./interactions/geo";
@@ -35,6 +35,9 @@ export const lists = {
 
 	Institution: list({
 		fields: {
+			name: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
+			slug: text({isIndexed: "unique", isFilterable: true, graphql: {read: {isNonNull: true}}}),
+
 			owner: relationship({ref: "User.institutions", many: false}),
 			lastUpdated: timestamp({
 				db: {updatedAt: true, isNullable: false},
@@ -42,7 +45,6 @@ export const lists = {
 				graphql: {read: {isNonNull: true}},
 			}),
 
-			name: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
 			gender: select({
 				type: "enum",
 				options: [
@@ -98,9 +100,9 @@ export const lists = {
 					Object.assign(
 						resolvedData,
 						await getPositionByAddress({
-							street: resolvedData.street ?? item.street,
-							streetNumber: resolvedData.streetNumber ?? item.streetNumber,
-							zip: resolvedData.zip ?? item.zip,
+							street: resolvedData.street ?? item?.street,
+							streetNumber: resolvedData.streetNumber ?? item?.streetNumber,
+							zip: resolvedData.zip ?? item?.zip,
 						})
 					);
 				}

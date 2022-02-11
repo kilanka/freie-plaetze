@@ -1,0 +1,6 @@
+.keystone
+*.log
+*.db
+
+public/images
+seed/images

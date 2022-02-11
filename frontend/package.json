@@ -2,35 +2,35 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8080",
+    "dev": "npm run codegen -- --watch & next dev -p 8080",
     "build": "next build",
     "start": "next start",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config .graphqlrc"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.16",
-    "@chakra-ui/react": "^1.6.9",
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
+    "@apollo/client": "^3.5.8",
+    "@chakra-ui/react": "^1.8.3",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@turf/helpers": "^6.5.0",
     "formik": "^2.2.9",
-    "formik-chakra-ui": "^1.4.7",
+    "formik-chakra-ui": "^1.6.0",
     "framer-motion": "^4.1.17",
-    "graphql": "^15.6.1",
-    "immer": "^9.0.6",
-    "next": "11.1.2",
+    "graphql": "^16.3.0",
+    "immer": "^9.0.12",
+    "next": "12.0.10",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-infinite-scroll-hook": "^4.0.1",
-    "use-debounce": "^7.0.0",
+    "react-infinite-scroll-hook": "^4.0.2",
+    "use-debounce": "^7.0.1",
     "usehooks-ts": "^1.0.4",
-    "yup": "^0.32.10"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.2.0",
-    "@graphql-codegen/typescript-graphql-apollo": "^1.0.0",
-    "@graphql-codegen/typescript-operations": "^2.1.6",
-    "@graphql-codegen/typescript-react-apollo": "^3.1.4",
-    "@types/react": "17.0.27"
+    "@graphql-codegen/cli": "^2.6.1",
+    "@graphql-codegen/typescript-graphql-apollo": "^1.1.1",
+    "@graphql-codegen/typescript-operations": "^2.3.0",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.5",
+    "@types/react": "17.0.39"
   }
 }
