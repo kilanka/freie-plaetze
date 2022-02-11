@@ -10,15 +10,12 @@ import {InstitutionListItem} from "./InstitutionListItem";
 
 export type InstitutionListProps = {cityOrZip: string; radius: number};
 
-export const InstitutionList: React.FC<InstitutionListProps> = ({
-	cityOrZip: cityOrZipProp,
-	radius: radiusProp,
-}) => {
+export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
 	const batchSize = 7;
 	const debounceDelay = 700; // Ms
 
-	const [cityOrZip] = useDebounce(cityOrZipProp, debounceDelay);
-	const [radius] = useDebounce(radiusProp, debounceDelay);
+	const [cityOrZip] = useDebounce(props.cityOrZip, debounceDelay);
+	const [radius] = useDebounce(props.radius, debounceDelay);
 
 	const isInputInvalid = cityOrZip === "" || [0, Number.NaN].includes(radius);
 
@@ -34,7 +31,7 @@ export const InstitutionList: React.FC<InstitutionListProps> = ({
 	useEffect(() => {
 		setHasNextPage(true);
 		if (!isInputInvalid) {
-			fetchInstitutions({variables: {cityOrZip, radius}});
+			void fetchInstitutions({variables: {cityOrZip, radius}});
 		}
 	}, [setHasNextPage, isInputInvalid, fetchInstitutions, cityOrZip, radius]);
 

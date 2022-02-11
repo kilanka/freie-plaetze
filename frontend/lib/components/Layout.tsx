@@ -15,14 +15,15 @@ export const Layout: React.FC<LayoutProps> = ({title, children}) => {
 			<Head>
 				<title>{title}</title>
 			</Head>
-			<Box bgColor="teal.50">
+			<Box bgColor="white">
 				<Box
-					bgColor="teal.600"
+					bgColor="white"
 					position="absolute"
 					top={0}
 					left={0}
 					right={0}
 					height={headerHeight}
+					shadow="md"
 				>
 					<Container
 						display="flex"
@@ -32,18 +33,11 @@ export const Layout: React.FC<LayoutProps> = ({title, children}) => {
 						justifyContent="space-between"
 						maxWidth="container.lg"
 					>
-						<Text color="whiteAlpha.900" fontSize="2xl" fontWeight="bold">
+						<Text color="gray.900" fontSize="2xl" fontWeight="bold">
 							Freie Plätze
 						</Text>
 						<Box>
-							<LinkButton
-								href=""
-								variant="outline"
-								color="whiteAlpha.900"
-								colorScheme="teal"
-								_hover={{bgColor: "whiteAlpha.300"}}
-								_active={{bgColor: "whiteAlpha.500"}}
-							>
+							<LinkButton href="" variant="outline" colorScheme="gray">
 								Anmelden
 							</LinkButton>
 						</Box>

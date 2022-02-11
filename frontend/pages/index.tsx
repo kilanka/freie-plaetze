@@ -10,14 +10,7 @@ import {Layout} from "../lib/components/Layout";
 const HomePage: NextPage = () => {
 	return (
 		<Layout title="Freie Plätze">
-			<Box
-				as="section"
-				id="focus"
-				bgGradient="linear(to-b, teal.100, teal.50)"
-				p={16}
-				pb={32}
-				textAlign="center"
-			>
+			<Box as="section" id="focus" p={16} pb={32} textAlign="center">
 				<Heading mb={4}>Sie brauchen Hilfe zur Erziehung?</Heading>
 				<Text fontSize="xl" mb={10}>
 					Einrichtungen, die Sie bei der Erziehung unterstützen können, finden Sie auf dieser Seite.
