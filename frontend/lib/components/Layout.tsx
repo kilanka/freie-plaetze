@@ -6,6 +6,7 @@ import {LinkButton} from "./next/LinkButton";
 
 export type LayoutProps = {
 	title: string;
+	children?: React.ReactNode;
 };
 
 export const Layout: React.FC<LayoutProps> = ({title, children}) => {

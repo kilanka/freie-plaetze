@@ -1,7 +1,7 @@
 import {createReadStream} from "fs";
 import path from "path";
 
-import faker from "faker";
+import {faker} from "@faker-js/faker";
 import {Upload} from "graphql-upload";
 import {sample} from "lodash";
 import slugify from "slugify";

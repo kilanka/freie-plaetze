@@ -9,16 +9,13 @@
     "postinstall": "keystone postinstall"
   },
   "dependencies": {
+    "@faker-js/faker": "^6.1.2",
     "@keystone-6/auth": "^1.0.2",
+    "@keystone-6/core": "1.0.1",
     "@keystone-6/fields-document": "^1.0.1",
-    "@keystone-6/core": "^1.0.1",
-    "axios": "^0.25.0",
+    "axios": "^0.26.1",
     "dotenv": "^16.0.0",
-    "faker": "^5.5.3",
     "lodash": "^4.17.21",
     "slugify": "^1.6.5"
-  },
-  "devDependencies": {
-    "@types/faker": "^5.5.8"
   }
 }
