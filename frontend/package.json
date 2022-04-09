@@ -8,29 +8,29 @@
     "codegen": "graphql-codegen --config .graphqlrc"
   },
   "dependencies": {
-    "@apollo/client": "^3.5.10",
-    "@chakra-ui/react": "^1.8.8",
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
-    "@turf/helpers": "^6.5.0",
-    "formik": "^2.2.9",
-    "formik-chakra-ui": "^1.6.0",
-    "framer-motion": "^6.2.9",
-    "graphql": "^16.3.0",
-    "immer": "^9.0.12",
+    "@apollo/client": "3.5.10",
+    "@chakra-ui/react": "1.8.8",
+    "@emotion/react": "11.9.0",
+    "@emotion/styled": "11.8.1",
+    "@turf/helpers": "6.5.0",
+    "formik": "2.2.9",
+    "formik-chakra-ui": "1.6.0",
+    "framer-motion": "6.2.9",
+    "graphql": "16.3.0",
+    "immer": "9.0.12",
     "next": "12.1.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-infinite-scroll-hook": "^4.0.3",
-    "use-debounce": "^7.0.1",
-    "usehooks-ts": "^2.4.2",
-    "yup": "^0.32.11"
+    "react-infinite-scroll-hook": "4.0.3",
+    "use-debounce": "7.0.1",
+    "usehooks-ts": "2.4.2",
+    "yup": "0.32.11"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.6.2",
-    "@graphql-codegen/typescript-graphql-apollo": "^1.1.1",
-    "@graphql-codegen/typescript-operations": "^2.3.5",
-    "@graphql-codegen/typescript-react-apollo": "^3.2.11",
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/typescript-graphql-apollo": "1.1.1",
+    "@graphql-codegen/typescript-operations": "2.3.5",
+    "@graphql-codegen/typescript-react-apollo": "3.2.11",
     "@types/react": "17.0.39"
   }
 }
