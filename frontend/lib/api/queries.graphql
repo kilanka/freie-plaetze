@@ -1,37 +1,54 @@
-fragment basicInstitutionInfo on Institution {
-  id
-  slug
-  name
+fragment Gist on Institution {
   city
   gender
   ageFrom
   ageTo
-  photo {
-    url
-  }
+}
+
+fragment PlacesStat on Institution {
   placesAvailable
   placesTotal
   lastUpdated
 }
 
+fragment BasicInstitutionInfo on Institution {
+  id
+  slug
+  name
+  photo {
+    url
+  }
+  ...PlacesStat
+  ...Gist
+  description {
+    document
+  }
+}
+
 query nearbyInstitutions($cityOrZip: String!, $radius: Int!, $skip: Int, $take: Int) {
   nearbyInstitutions(cityOrZip: $cityOrZip, radius: $radius, skip: $skip, take: $take) {
-    ...basicInstitutionInfo
+    ...BasicInstitutionInfo
   }
 }
 
 query institutions($skip: Int, $take: Int) {
   institutionsCount
   institutions(skip: $skip, take: $take) {
-    ...basicInstitutionInfo
+    ...BasicInstitutionInfo
   }
 }
 
 query institutionBySlug($slug: String!) {
   institution(where: { slug: $slug }) {
-    ...basicInstitutionInfo
+    ...BasicInstitutionInfo
     logo {
       url
     }
+    street
+    streetNumber
+    zip
+    email
+    phone
+    mobilePhone
   }
 }

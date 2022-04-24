@@ -9,7 +9,7 @@ import {Layout} from "../lib/components/Layout";
 
 const HomePage: NextPage = () => {
 	return (
-		<Layout title="Freie Plätze">
+		<Layout>
 			<Box as="section" id="focus" p={16} pb={32} textAlign="center">
 				<Heading mb={4}>Sie brauchen Hilfe zur Erziehung?</Heading>
 				<Text fontSize="xl" mb={10}>
@@ -27,7 +27,7 @@ const HomePage: NextPage = () => {
 				</Text>
 			</Box>
 
-			<Container as="section" maxWidth="container.lg">
+			<Container as="section" maxWidth="container.xl">
 				{/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
 				<Formik initialValues={{location: "", radius: "40"}} onSubmit={() => {}}>
 					{({values}) => (

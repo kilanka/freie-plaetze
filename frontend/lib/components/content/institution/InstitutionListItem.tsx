@@ -1,10 +1,11 @@
-import {Box, Flex, HStack, Heading, LinkBox, LinkOverlay, Text} from "@chakra-ui/layout";
-import {Stat, StatHelpText, StatLabel, StatNumber} from "@chakra-ui/stat";
+import {Box, Flex, HStack, Heading, LinkBox, LinkOverlay, Text} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
 
-import {BasicInstitutionInfoFragment} from "../../api/generated";
-import {Image} from "../next/Image";
+import {BasicInstitutionInfoFragment} from "../../../api/generated";
+import {Image} from "../../next/Image";
+import {Gist} from "./Gist";
+import {PlacesStat} from "./PlacesStat";
 
 export type InstitutionListItemProps = {
 	institution: BasicInstitutionInfoFragment;
@@ -33,32 +34,12 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 						</LinkOverlay>
 					</NextLink>
 					<Text fontSize="lg" fontWeight="bold">
-						<HStack divider={<Box>&bull;</Box>} spacing={2}>
-							<span>{institution.city}</span>
-							<span>
-								{
-									{mixed: "geschlechtsgemischt", f: "nur Mädchen", m: "nur Jungen"}[
-										institution.gender
-									]
-								}
-							</span>
-							<span>
-								{institution.ageFrom} - {institution.ageTo} Jahre
-							</span>
-						</HStack>
+						<Gist institution={institution} />
 					</Text>
 				</Box>
 				<Flex>
 					<Flex alignItems="center" mr={16}>
-						<Stat>
-							<StatLabel>Freie Plätze</StatLabel>
-							<StatNumber>
-								{institution.placesAvailable} / {institution.placesTotal}
-							</StatNumber>
-							<StatHelpText>
-								Stand {new Date(institution.lastUpdated).toLocaleDateString("de-DE")}
-							</StatHelpText>
-						</Stat>
+						<PlacesStat institution={institution} />
 					</Flex>
 					<Box minWidth="64" height="100%">
 						{institution.photo?.url && (

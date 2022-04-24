@@ -6,7 +6,7 @@ import useInfiniteScroll from "react-infinite-scroll-hook";
 import {useDebounce} from "use-debounce";
 
 import {useNearbyInstitutionsLazyQuery} from "../../api/generated";
-import {InstitutionListItem} from "./InstitutionListItem";
+import {InstitutionListItem} from "./institution/InstitutionListItem";
 
 export type InstitutionListProps = {cityOrZip: string; radius: number};
 

@@ -1,11 +1,12 @@
-import {Box, Container, Flex, Text} from "@chakra-ui/layout";
+import {Box, Container, Text} from "@chakra-ui/react";
 import Head from "next/head";
 import React from "react";
 
+import {Link} from "./next/Link";
 import {LinkButton} from "./next/LinkButton";
 
 export type LayoutProps = {
-	title: string;
+	title?: string;
 	children?: React.ReactNode;
 };
 
@@ -14,7 +15,7 @@ export const Layout: React.FC<LayoutProps> = ({title, children}) => {
 	return (
 		<>
 			<Head>
-				<title>{title}</title>
+				<title>{title ? title + " – Freie Plätze" : "Freie Plätze"}</title>
 			</Head>
 			<Box bgColor="white">
 				<Box
@@ -32,11 +33,13 @@ export const Layout: React.FC<LayoutProps> = ({title, children}) => {
 						marginX="auto"
 						alignItems="center"
 						justifyContent="space-between"
-						maxWidth="container.lg"
+						maxWidth="container.xl"
 					>
-						<Text color="gray.900" fontSize="2xl" fontWeight="bold">
-							Freie Plätze
-						</Text>
+						<Link href="/">
+							<Text color="gray.900" fontSize="2xl" fontWeight="bold">
+								Freie Plätze
+							</Text>
+						</Link>
 						<Box>
 							<LinkButton href="" variant="outline" colorScheme="gray">
 								Anmelden
