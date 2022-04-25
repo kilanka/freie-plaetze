@@ -17,10 +17,11 @@ export const Layout: React.FC<LayoutProps> = ({title, children}) => {
 			<Head>
 				<title>{title ? title + " – Freie Plätze" : "Freie Plätze"}</title>
 			</Head>
-			<Box bgColor="white">
+			<Box bgColor="white" position="relative" height="100%" minHeight="100vh" zIndex={0}>
 				<Box
 					bgColor="white"
 					position="absolute"
+					zIndex={10}
 					top={0}
 					left={0}
 					right={0}
@@ -41,14 +42,14 @@ export const Layout: React.FC<LayoutProps> = ({title, children}) => {
 							</Text>
 						</Link>
 						<Box>
-							<LinkButton href="" variant="outline" colorScheme="gray">
+							<LinkButton href="/login" variant="outline" colorScheme="gray">
 								Anmelden
 							</LinkButton>
 						</Box>
 					</Container>
 				</Box>
 
-				<Box as="main" minHeight="100vh" paddingTop={headerHeight}>
+				<Box as="main" paddingTop={headerHeight} position="absolute" height="100%" width="100%">
 					{children}
 				</Box>
 			</Box>
