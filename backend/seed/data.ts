@@ -104,5 +104,8 @@ export const institutions = addresses.map((address) => {
 		placesTotal: faker.datatype.number({min: 11, max: 20}),
 		...address,
 		photo: getImage(),
+		email: faker.internet.email(name),
+		phone: faker.phone.phoneNumber("0#### ######"),
+		mobilePhone: faker.phone.phoneNumber("015# ########"),
 	};
 });
