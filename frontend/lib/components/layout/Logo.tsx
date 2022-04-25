@@ -1,0 +1,12 @@
+import {Text, TextProps} from "@chakra-ui/react";
+import React from "react";
+
+import {Link} from "../next/Link";
+
+export interface LogoProps extends TextProps {}
+
+export const Logo: React.FC<LogoProps> = ({...textProps}) => (
+	<Text color="gray.900" fontSize="2xl" fontWeight="bold" {...textProps}>
+		<Link href="/">Freie Plätze</Link>
+	</Text>
+);

@@ -19,8 +19,8 @@ import {getSdk} from "../../lib/api/generated/ssr";
 import {Description} from "../../lib/components/content/institution/Description";
 import {Gist} from "../../lib/components/content/institution/Gist";
 import {PlacesStat} from "../../lib/components/content/institution/PlacesStat";
-import {Layout} from "../../lib/components/Layout";
 import {Link} from "../../lib/components/next/Link";
+import {Title} from "../../lib/components/Title";
 
 export const getServerSideProps = async ({params}: GetServerSidePropsContext) => {
 	const slug = params!.slug as string;
@@ -37,7 +37,8 @@ export const getServerSideProps = async ({params}: GetServerSidePropsContext) =>
 
 const Page: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({institution}) => {
 	return (
-		<Layout title={institution?.name}>
+		<>
+			<Title>{institution?.name}</Title>
 			<Container maxWidth="container.xl" mt={8}>
 				<Grid templateColumns={{base: "1fr", md: "3fr 2fr"}} gap={{base: 8, md: 10}}>
 					<GridItem>
@@ -103,7 +104,7 @@ const Page: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 					</GridItem>
 				</Grid>
 			</Container>
-		</Layout>
+		</>
 	);
 };
 

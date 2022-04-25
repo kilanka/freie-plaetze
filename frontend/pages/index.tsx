@@ -5,11 +5,10 @@ import type {NextPage} from "next";
 import React from "react";
 
 import {InstitutionList} from "../lib/components/content/InstitutionList";
-import {Layout} from "../lib/components/Layout";
 
 const HomePage: NextPage = () => {
 	return (
-		<Layout>
+		<>
 			<Box as="section" id="focus" p={16} pb={32} textAlign="center">
 				<Heading mb={4}>Sie brauchen Hilfe zur Erziehung?</Heading>
 				<Text fontSize="xl" mb={10}>
@@ -51,7 +50,7 @@ const HomePage: NextPage = () => {
 					)}
 				</Formik>
 			</Container>
-		</Layout>
+		</>
 	);
 };
 
