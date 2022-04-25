@@ -42,7 +42,7 @@ export const Layout: React.FC<LayoutProps> = ({title, children}) => {
 							</Text>
 						</Link>
 						<Box>
-							<LinkButton href="/login" variant="outline" colorScheme="gray">
+							<LinkButton href="/members/login" variant="outline" colorScheme="gray">
 								Anmelden
 							</LinkButton>
 						</Box>
