@@ -5,7 +5,7 @@ import React, {useEffect} from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import {useDebounce} from "use-debounce";
 
-import {useNearbyInstitutionsLazyQuery} from "../../api/generated";
+import {useSearchInstitutionsQuery} from "../../api/generated";
 import {InstitutionListItem} from "./institution/InstitutionListItem";
 
 export type InstitutionListProps = {cityOrZip: string; radius: number};
@@ -17,32 +17,32 @@ export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
 	const [cityOrZip] = useDebounce(props.cityOrZip, debounceDelay);
 	const [radius] = useDebounce(props.radius, debounceDelay);
 
-	const isInputInvalid = cityOrZip === "" || [0, Number.NaN].includes(radius);
+	const filterByLocation = cityOrZip !== "" && !Number.isNaN(radius) && radius !== 0;
 
-	const [fetchInstitutions, {loading, error, data, fetchMore}] = useNearbyInstitutionsLazyQuery({
-		variables: {skip: 0, take: batchSize, cityOrZip: "", radius: 0}, // Fake cityOrZip and radius to make TS happy
+	const {loading, error, data, fetchMore} = useSearchInstitutionsQuery({
+		variables: {cityOrZip, radius, take: batchSize},
 	});
 
 	const institutions = data?.nearbyInstitutions;
 	const isResultEmpty =
-		Boolean(error) || typeof institutions === "undefined" || institutions.length === 0;
+		Boolean(error) || typeof institutions === "undefined" || institutions?.length === 0;
 
 	const [hasNextPage, setHasNextPage] = React.useState(false);
-	useEffect(() => {
+
+	React.useEffect(() => {
 		setHasNextPage(true);
-		if (!isInputInvalid) {
-			void fetchInstitutions({variables: {cityOrZip, radius}});
-		}
-	}, [setHasNextPage, isInputInvalid, fetchInstitutions, cityOrZip, radius]);
+	}, [setHasNextPage, cityOrZip, radius]);
 
 	const [sentryRef] = useInfiniteScroll({
 		loading,
 		hasNextPage,
+		disabled: isResultEmpty,
+		rootMargin: "0px 0px 400px 0px", // Start loading when the sentry is 400px away from the viewport
 		onLoadMore: () => {
 			if (fetchMore) {
 				void fetchMore({
 					variables: {
-						skip: institutions!.length,
+						skip: institutions?.length ?? 0,
 						take: batchSize,
 					},
 					updateQuery: (previous, {fetchMoreResult}) =>
@@ -57,44 +57,18 @@ export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
 									fetchMoreResult?.nearbyInstitutions.length < batchSize
 								) {
 									setHasNextPage(false);
-									console.log("setHasNextPage(false)");
 								}
 							}
 						}),
 				});
 			}
 		},
-		disabled: isResultEmpty,
-		rootMargin: "0px 0px 400px 0px", // Start loading when the sentry is 400px away from the viewport
 	});
 
-	const [isListTouched, setIsListTouched] = React.useState(false);
-	if (!isListTouched && !isResultEmpty) {
-		setIsListTouched(true);
-	}
-
 	return (
-		<SimpleGrid
-			columns={1}
-			autoRows="min-content"
-			gap={8}
-			minH={isListTouched ? "90vh" : undefined}
-			textAlign="center"
-		>
+		<SimpleGrid columns={1} autoRows="min-content" gap={8} textAlign="center">
 			{(() => {
-				if (isInputInvalid) {
-					return null;
-				}
-
-				if (loading) {
-					return (
-						<Box>
-							<Spinner />
-						</Box>
-					);
-				}
-
-				if (isResultEmpty) {
+				if (filterByLocation && isResultEmpty) {
 					return (
 						<Text fontSize="lg">
 							Im Umkreis von {radius} km um {cityOrZip} sind leider keine Einrichtungen eingetragen.
@@ -106,14 +80,10 @@ export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
 
 				return (
 					<>
-						{institutions.map((institution) => (
+						{institutions?.map((institution) => (
 							<InstitutionListItem key={institution.id} institution={institution} />
 						))}
-						{(loading || hasNextPage) && (
-							<Box ref={sentryRef}>
-								<Spinner />
-							</Box>
-						)}
+						{(loading || hasNextPage) && <Spinner ref={sentryRef} justifySelf="center" />}
 					</>
 				);
 			})()}

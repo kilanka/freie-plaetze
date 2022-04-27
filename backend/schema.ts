@@ -116,10 +116,13 @@ export const lists = {
 export const extendGraphqlSchema = graphQLSchemaExtension({
 	typeDefs: `
     type Query {
-      """Return institutions within \`radius\` km distance from \`cityOrZip\`"""
+      """
+			If \`cityOrZip\` is not empty, return institutions within \`radius\` km distance from
+			\`cityOrZip\`. Otherwise, return all institutions.
+			"""
       nearbyInstitutions(
-        cityOrZip: String!
-        radius: Int!
+				radius: Int!
+        cityOrZip: String
         where: InstitutionWhereInput! = {}
         orderBy: [InstitutionOrderByInput!]! = []
         take: Int
@@ -130,15 +133,24 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
 		Query: {
 			nearbyInstitutions: async (root, {cityOrZip, radius, where, ...parameters}, context) => {
 				try {
-					const pos = await getPositionByZipOrCity(cityOrZip);
-					const radiusDeg = lengthToDegrees(radius, "kilometers");
+					const positionFilters: any = {};
+
+					if (cityOrZip !== "") {
+						const pos = await getPositionByZipOrCity(cityOrZip);
+						const radiusDeg = lengthToDegrees(radius, "kilometers");
+
+						positionFilters.positionLat = {
+							gt: pos.positionLat - radiusDeg,
+							lt: pos.positionLat + radiusDeg,
+						};
+						positionFilters.positionLng = {
+							gt: pos.positionLng - radiusDeg,
+							lt: pos.positionLng + radiusDeg,
+						};
+					}
 
 					const result = await context.db.Institution.findMany({
-						where: {
-							positionLat: {gt: pos.positionLat - radiusDeg, lt: pos.positionLat + radiusDeg},
-							positionLng: {gt: pos.positionLng - radiusDeg, lt: pos.positionLng + radiusDeg},
-							...where,
-						},
+						where: {...positionFilters, ...where},
 						...parameters,
 					});
 					return result;

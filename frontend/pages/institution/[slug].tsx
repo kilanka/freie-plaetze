@@ -14,7 +14,8 @@ import type {GetServerSidePropsContext, InferGetServerSidePropsType, NextPage} f
 import React from "react";
 import {IoCall, IoLocationSharp, IoMail, IoPhonePortrait} from "react-icons/io5";
 
-import {client} from "../../lib/api/apollo-client";
+import {getApolloClient} from "../../lib/api/apollo-client";
+import {useInstitutionBySlugQuery} from "../../lib/api/generated";
 import {getSdk} from "../../lib/api/generated/ssr";
 import {Description} from "../../lib/components/content/institution/Description";
 import {Gist} from "../../lib/components/content/institution/Gist";
@@ -27,15 +28,23 @@ export const getServerSideProps = async ({params}: GetServerSidePropsContext) =>
 
 	const {
 		data: {institution},
-	} = await getSdk(client).institutionBySlugQuery({variables: {slug}});
+	} = await getSdk(getApolloClient()).institutionBySlugQuery({variables: {slug}});
 
 	return {
 		notFound: !institution,
-		props: {institution: institution!},
+		props: {slug},
 	};
 };
 
-const Page: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({institution}) => {
+const Page: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({slug}) => {
+	const {data} = useInstitutionBySlugQuery({variables: {slug}});
+
+	const institution = data?.institution;
+
+	if (!institution) {
+		return null;
+	}
+
 	return (
 		<>
 			<Title>{institution?.name}</Title>

@@ -1,10 +1,10 @@
-schema: ../backend/schema.graphql
-documents: lib/api/*.graphql
+schema: backend/schema.graphql
+documents: frontend/lib/**/*.graphql
 
 # https://www.graphql-code-generator.com/docs/getting-started/index
 overwrite: true
 generates:
-  lib/api/generated/index.ts:
+  frontend/lib/api/generated/index.ts:
     config:
       withHooks: true
     plugins:
@@ -13,9 +13,8 @@ generates:
       - typescript-react-apollo
   # This output is a hack because typescript-graphql-apollo doesn't play nicely with
   # typescript-react-apollo in the same file (creates duplicate document definitions)
-  lib/api/generated/ssr.ts:
+  frontend/lib/api/generated/ssr.ts:
     plugins:
       - typescript
       - typescript-operations
       - typescript-graphql-apollo
-

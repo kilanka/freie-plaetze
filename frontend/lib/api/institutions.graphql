@@ -25,8 +25,14 @@ fragment BasicInstitutionInfo on Institution {
   }
 }
 
-query nearbyInstitutions($cityOrZip: String!, $radius: Int!, $skip: Int, $take: Int) {
-  nearbyInstitutions(cityOrZip: $cityOrZip, radius: $radius, skip: $skip, take: $take) {
+query searchInstitutions($cityOrZip: String!, $radius: Int!, $skip: Int, $take: Int) {
+  nearbyInstitutions(
+    cityOrZip: $cityOrZip
+    radius: $radius
+    skip: $skip
+    take: $take
+    orderBy: { placesAvailable: desc }
+  ) {
     ...BasicInstitutionInfo
   }
 }

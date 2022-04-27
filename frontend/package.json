@@ -2,16 +2,16 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "dev": "npm run codegen -- --watch & next dev -p 8080",
+    "dev": "next dev -p 8080",
     "build": "next build",
-    "start": "next start",
-    "codegen": "graphql-codegen --config .graphqlrc"
+    "start": "next start"
   },
   "dependencies": {
     "@apollo/client": "3.5.10",
     "@chakra-ui/react": "1.8.8",
     "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",
+    "@reduxjs/toolkit": "^1.8.1",
     "@turf/helpers": "6.5.0",
     "formik": "2.2.9",
     "formik-chakra-ui": "1.6.0",
@@ -19,6 +19,7 @@
     "graphql": "16.3.0",
     "immer": "9.0.12",
     "next": "12.1.4",
+    "next-redux-cookie-wrapper": "^2.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
@@ -28,10 +29,6 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "2.6.2",
-    "@graphql-codegen/typescript-graphql-apollo": "1.1.1",
-    "@graphql-codegen/typescript-operations": "2.3.5",
-    "@graphql-codegen/typescript-react-apollo": "3.2.11",
     "@types/react": "17.0.39"
   }
 }
