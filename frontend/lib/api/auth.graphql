@@ -1,0 +1,14 @@
+mutation login($email: String!, $password: String!) {
+  authResult: authenticateUserWithPassword(email: $email, password: $password) {
+    ... on UserAuthenticationWithPasswordSuccess {
+      sessionToken
+      user: item {
+        name
+        email
+      }
+    }
+    ... on UserAuthenticationWithPasswordFailure {
+      errorMessage: message
+    }
+  }
+}

@@ -1,17 +1,22 @@
 // Based on https://github.com/shshaw/next-apollo-ssr/blob/909ae5922377fe0c759c0c1f37a6b32aa773f301/data/apollo.js
 
-import {ApolloClient, InMemoryCache, NormalizedCacheObject} from "@apollo/client";
+import {ApolloClient, InMemoryCache, NormalizedCacheObject, createHttpLink} from "@apollo/client";
 
 const isServer = typeof window === "undefined";
 const windowApolloState = !isServer && (window.__NEXT_DATA__ as any).apolloState;
 
-let client: ApolloClient<NormalizedCacheObject> | undefined;
+type Client = ApolloClient<NormalizedCacheObject>;
 
-export function getApolloClient(forceNew = false) {
-	if (!client || forceNew) {
-		client = new ApolloClient({
+let clientSideApolloClient: Client | undefined;
+
+export function getApolloClient() {
+	if (isServer || !clientSideApolloClient) {
+		const newClient = new ApolloClient({
 			ssrMode: isServer,
-			uri: `${process.env.NEXT_PUBLIC_BACKEND_URL!}/api/graphql`,
+			link: createHttpLink({
+				uri: `${process.env.NEXT_PUBLIC_BACKEND_URL!}/api/graphql`,
+				credentials: "include",
+			}),
 			cache: new InMemoryCache().restore(windowApolloState || {}),
 
 			/**
@@ -30,7 +35,13 @@ export function getApolloClient(forceNew = false) {
         }
       */
 		});
+
+		if (!isServer) {
+			clientSideApolloClient = newClient;
+		}
+
+		return newClient;
 	}
 
-	return client;
+	return clientSideApolloClient;
 }

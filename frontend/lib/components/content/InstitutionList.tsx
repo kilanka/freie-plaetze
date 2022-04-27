@@ -1,7 +1,7 @@
-import {Box, SimpleGrid, Text} from "@chakra-ui/layout";
+import {SimpleGrid, Text} from "@chakra-ui/layout";
 import {Spinner} from "@chakra-ui/spinner";
 import {produce} from "immer";
-import React, {useEffect} from "react";
+import React from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import {useDebounce} from "use-debounce";
 

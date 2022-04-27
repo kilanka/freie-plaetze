@@ -1,7 +1,7 @@
 import {AnyAction, ThunkAction, configureStore} from "@reduxjs/toolkit";
 import {nextReduxCookieMiddleware, wrapMakeStore} from "next-redux-cookie-wrapper";
 import {createWrapper} from "next-redux-wrapper";
-import {useDispatch} from "react-redux";
+import {useDispatch, useStore} from "react-redux";
 
 import {authSlice} from "./auth";
 
@@ -13,7 +13,7 @@ const makeStore = wrapMakeStore(() =>
 		middleware: (getDefaultMiddleware) =>
 			getDefaultMiddleware().prepend(
 				nextReduxCookieMiddleware({
-					subtrees: [`${authSlice.name}.isUserAuthenticated`],
+					subtrees: [authSlice.name],
 				})
 			),
 	})
@@ -29,6 +29,7 @@ export type AppThunkAction<ReturnType = Promise<void>> = ThunkAction<
 	AnyAction
 >;
 
+export const useAppStore = () => useStore() as AppStore;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const wrapper = createWrapper<AppStore>(makeStore);
