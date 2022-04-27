@@ -1,22 +1,22 @@
 import {Box, Drawer, DrawerContent, useDisclosure} from "@chakra-ui/react";
 import React, {ReactNode} from "react";
+import {useSelector} from "react-redux";
 
+import {selectIsUserLoggedIn} from "../../store/auth";
 import {NavBar} from "./NavBar";
-import {SidebarContent} from "./SidebarContent";
-
-const isLoggedIn = false;
+import {Sidebar} from "./Sidebar";
 
 export interface LayoutProps {
 	children?: ReactNode;
 }
 
 export const Layout: React.FC<LayoutProps> = ({children}) => {
+	const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
+
 	const {isOpen, onOpen, onClose} = useDisclosure();
 	return (
 		<Box minH="100vh" bg="gray.50">
-			{isLoggedIn && (
-				<SidebarContent display={{base: "none", md: "block"}} onClose={() => onClose} />
-			)}
+			{isUserLoggedIn && <Sidebar display={{base: "none", md: "block"}} onClose={() => onClose} />}
 			<Drawer
 				autoFocus={false}
 				isOpen={isOpen}
@@ -27,7 +27,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
 				onOverlayClick={onClose}
 			>
 				<DrawerContent>
-					<SidebarContent onClose={onClose} />
+					<Sidebar onClose={onClose} />
 				</DrawerContent>
 			</Drawer>
 

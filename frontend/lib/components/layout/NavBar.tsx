@@ -15,23 +15,28 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import {FiChevronDown, FiMenu} from "react-icons/fi";
+import {useSelector} from "react-redux";
 
+import {useAppDispatch} from "../../store";
+import {logout, selectUserDetails} from "../../store/auth";
 import {LinkButton} from "../next/LinkButton";
 import {Logo} from "./Logo";
+import {sidebarWidth} from "./Sidebar";
 
-const isLoggedIn = false;
-
-export const navBarWidth = 60;
+export const navBarHeight = 16;
 
 export interface NavBarProps extends FlexProps {
 	onOpen: () => void;
 }
 export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
+	const dispatch = useAppDispatch();
+	const {isUserLoggedIn, userName} = useSelector(selectUserDetails);
+
 	return (
 		<Flex
-			ml={{base: 0, md: isLoggedIn ? navBarWidth : 0}}
+			ml={{base: 0, md: isUserLoggedIn ? sidebarWidth : 0}}
 			px={{base: 4, md: 4}}
-			height={16}
+			height={navBarHeight}
 			alignItems="center"
 			bg="white"
 			borderBottomWidth="1px"
@@ -41,7 +46,7 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 			{...flexProps}
 		>
 			<IconButton
-				order={isLoggedIn ? 0 : 1}
+				order={isUserLoggedIn ? 0 : 1}
 				display={{base: "flex", md: "none"}}
 				variant="outline"
 				aria-label="open menu"
@@ -49,18 +54,18 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 				onClick={onOpen}
 			/>
 
-			<Box order={isLoggedIn ? 1 : 0}>
-				<Logo />
+			<Box order={isUserLoggedIn ? 1 : 0}>
+				<Logo display={{md: isUserLoggedIn ? "none" : "block"}} />
 			</Box>
 
-			{(isLoggedIn && (
+			{(isUserLoggedIn && (
 				<Flex order={2} alignItems="center">
 					<Menu>
 						<MenuButton py={2} transition="all 0.3s">
 							<HStack>
-								<Avatar size="sm" name="John Doe" />
+								<Avatar size="sm" name={userName} />
 								<Text display={{base: "none", md: "flex"}} fontSize="sm">
-									John Doe
+									{userName}
 								</Text>
 								<Icon as={FiChevronDown} display={{base: "none", md: "flex"}} />
 							</HStack>
@@ -69,7 +74,13 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 							<MenuItem>Benutzerdaten</MenuItem>
 							<MenuItem>Meine Einrichtungen</MenuItem>
 							<MenuDivider />
-							<MenuItem>Abmelden</MenuItem>
+							<MenuItem
+								onClick={() => {
+									dispatch(logout());
+								}}
+							>
+								Abmelden
+							</MenuItem>
 						</MenuList>
 					</Menu>
 				</Flex>

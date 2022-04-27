@@ -19,7 +19,10 @@ export const authSlice = createSlice({
 			state,
 			action: PayloadAction<{sessionToken: string; userEmail: string; userName: string}>
 		) => {
-			setCookie(null, "keystonejs-session", action.payload.sessionToken, {path: "/"});
+			setCookie(null, "keystonejs-session", action.payload.sessionToken, {
+				path: "/",
+				httpOnly: false,
+			});
 
 			state.isUserLoggedIn = true;
 			state.userEmail = action.payload.userEmail;
@@ -47,7 +50,7 @@ export const authSlice = createSlice({
 	},
 });
 
-export const {loginSuccess, loginError} = authSlice.actions;
+export const {loginSuccess, loginError, logout} = authSlice.actions;
 
 /**
  * Returns a thunk action that performs a sign in with the given credentials. Finally, either a

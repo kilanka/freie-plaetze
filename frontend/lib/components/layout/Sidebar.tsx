@@ -1,9 +1,10 @@
 import {Box, BoxProps, CloseButton, Flex} from "@chakra-ui/react";
 import React from "react";
 import {IconType} from "react-icons";
-import {FiCompass, FiHome, FiSettings, FiStar} from "react-icons/fi";
+import {FiHome} from "react-icons/fi";
 
 import {Logo} from "./Logo";
+import {navBarHeight} from "./NavBar";
 import {SidebarItem} from "./SidebarItem";
 
 const SidebarItems: Array<{
@@ -15,19 +16,21 @@ export interface SidebarContentProps extends BoxProps {
 	onClose: () => void;
 }
 
-export const SidebarContent: React.FC<SidebarContentProps> = ({onClose, ...boxProps}) => {
+export const sidebarWidth = 60;
+
+export const Sidebar: React.FC<SidebarContentProps> = ({onClose, ...boxProps}) => {
 	return (
 		<Box
 			transition="3s ease"
 			bg="white"
 			borderRight="1px"
 			borderRightColor="gray.200"
-			w={{base: "full", md: 60}}
+			w={{base: "full", md: sidebarWidth}}
 			h="full"
 			pos="fixed"
 			{...boxProps}
 		>
-			<Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+			<Flex h={navBarHeight} alignItems="center" mx="8" justifyContent="space-between">
 				<Logo />
 				<CloseButton display={{base: "flex", md: "none"}} onClick={onClose} />
 			</Flex>
