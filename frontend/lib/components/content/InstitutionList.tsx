@@ -66,7 +66,7 @@ export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
 	});
 
 	return (
-		<SimpleGrid columns={1} autoRows="min-content" gap={8} textAlign="center">
+		<SimpleGrid columns={1} autoRows="min-content" gap={{base: 16, md: 8}} textAlign="center">
 			{(() => {
 				if (filterByLocation && isResultEmpty) {
 					return (

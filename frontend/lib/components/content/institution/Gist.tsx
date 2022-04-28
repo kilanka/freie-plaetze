@@ -10,14 +10,12 @@ export type GistProps = {
 
 export const Gist: React.FC<GistProps> = ({institution}) => {
 	return (
-		<Stack direction="row" divider={<GistBullet />}>
-			<Box>{institution.city}</Box>
-			<Box>
-				{{mixed: "geschlechtsgemischt", f: "nur Mädchen", m: "nur Jungen"}[institution.gender]}
-			</Box>
-			<Box>
-				{institution.ageFrom} - {institution.ageTo} Jahre
-			</Box>
-		</Stack>
+		<>
+			{institution.city}
+			<GistBullet />
+			{{mixed: "geschlechtsgemischt", f: "nur Mädchen", m: "nur Jungen"}[institution.gender]}
+			<GistBullet />
+			{institution.ageFrom}&nbsp;-&nbsp;{institution.ageTo}&nbsp;Jahre
+		</>
 	);
 };

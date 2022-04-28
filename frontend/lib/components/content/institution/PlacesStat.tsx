@@ -1,15 +1,15 @@
-import {Stat, StatHelpText, StatLabel, StatNumber} from "@chakra-ui/react";
+import {Stat, StatHelpText, StatLabel, StatNumber, StatProps} from "@chakra-ui/react";
 import React from "react";
 
 import {PlacesStatFragment} from "../../../api/generated";
 
-export type PlacesStatProps = {
+export interface PlacesStatProps extends StatProps {
 	institution: PlacesStatFragment;
-};
+}
 
-export const PlacesStat: React.FC<PlacesStatProps> = ({institution}) => {
+export const PlacesStat: React.FC<PlacesStatProps> = ({institution, ...statProps}) => {
 	return (
-		<Stat>
+		<Stat {...statProps}>
 			<StatLabel>Freie Plätze</StatLabel>
 			<StatNumber>
 				{institution.placesAvailable} / {institution.placesTotal}
