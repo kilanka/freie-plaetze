@@ -1,5 +1,6 @@
 import {graphQLSchemaExtension, list} from "@keystone-6/core";
 import {
+	checkbox,
 	float,
 	image,
 	integer,
@@ -12,13 +13,46 @@ import {
 import {document} from "@keystone-6/fields-document";
 import {lengthToDegrees} from "@turf/helpers";
 
+import {isProduction} from "./environment";
 import {getPositionByAddress, getPositionByZipOrCity} from "./interactions/geo";
+
+type FilterArgs = {
+	session?: {
+		data: {id: string; isAdmin: boolean};
+	};
+} & Record<string, any>;
+
+const isUserLoggedIn = (args: FilterArgs) => Boolean(args.session?.data.id);
+const isUserAdmin = (args: FilterArgs) => Boolean(args.session?.data.isAdmin);
+
+const isUserCurrentUserItem = (args: FilterArgs & {item: any}) =>
+	args.session?.data.id === args.item.id;
+const isUserAdminOrCurrentUserItem = (args: FilterArgs & {item: any}) =>
+	isUserAdmin(args) || isUserCurrentUserItem(args);
+
+const filterInstitutionsOwnedByUser = (args: FilterArgs) => {
+	if (isUserAdmin(args)) return true;
+	return {owner: {id: {equals: args.session?.data.id}}};
+};
 
 export const lists = {
 	User: list({
 		ui: {
 			listView: {
 				initialColumns: ["name"],
+			},
+		},
+		access: {
+			filter: {
+				query: (args: FilterArgs) => {
+					if (!isUserLoggedIn(args)) return false;
+					if (isUserAdmin(args)) return true;
+					return {id: {equals: args.session?.data.id}};
+				},
+			},
+			item: {
+				update: isUserAdminOrCurrentUserItem,
+				delete: isUserAdminOrCurrentUserItem,
 			},
 		},
 		fields: {
@@ -28,12 +62,43 @@ export const lists = {
 				isFilterable: true,
 				validation: {isRequired: true},
 			}),
-			password: password({validation: {isRequired: true}}),
-			institutions: relationship({ref: "Institution.owner", many: true}),
+			password: password({
+				validation: {isRequired: true, rejectCommon: isProduction},
+				access: {
+					read: isUserAdminOrCurrentUserItem,
+					update: isUserCurrentUserItem,
+				},
+			}),
+			isAdmin: checkbox({
+				access: {
+					read: isUserAdminOrCurrentUserItem,
+					update: isUserAdmin,
+				},
+			}),
+			institutions: relationship({
+				ref: "Institution.owner",
+				many: true,
+				access: {
+					read: isUserAdminOrCurrentUserItem,
+					update: isUserAdmin,
+				},
+			}),
 		},
 	}),
 
 	Institution: list({
+		access: {
+			operation: {
+				create: isUserLoggedIn,
+				update: isUserLoggedIn,
+				delete: isUserLoggedIn,
+			},
+			filter: {
+				delete: filterInstitutionsOwnedByUser,
+				update: filterInstitutionsOwnedByUser,
+			},
+		},
+
 		fields: {
 			name: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
 			slug: text({isIndexed: "unique", isFilterable: true, graphql: {read: {isNonNull: true}}}),
@@ -80,7 +145,7 @@ export const lists = {
 			}),
 			zip: integer({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
 			city: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
-			positionLat: float(), // { db: { isNullable: false }, graphql: { read: { isNonNull: true } } } somehow doesn't work with filtering
+			positionLat: float(),
 			positionLng: float(),
 
 			homepage: text(),

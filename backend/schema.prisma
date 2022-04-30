@@ -16,6 +16,7 @@ model User {
   name         String        @default("")
   email        String        @unique @default("")
   password     String
+  isAdmin      Boolean       @default(false)
   institutions Institution[] @relation("Institution_owner")
 }
 

@@ -39,6 +39,7 @@ type User {
   name: String
   email: String
   password: PasswordState
+  isAdmin: Boolean
   institutions(
     where: InstitutionWhereInput! = {}
     orderBy: [InstitutionOrderByInput!]! = []
@@ -64,6 +65,7 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
+  isAdmin: BooleanFilter
   institutions: InstitutionManyRelationFilter
 }
 
@@ -106,6 +108,11 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
 input InstitutionManyRelationFilter {
   every: InstitutionWhereInput
   some: InstitutionWhereInput
@@ -116,6 +123,7 @@ input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  isAdmin: OrderDirection
 }
 
 enum OrderDirection {
@@ -127,6 +135,7 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  isAdmin: Boolean
   institutions: InstitutionRelateToManyForUpdateInput
 }
 
@@ -146,6 +155,7 @@ input UserCreateInput {
   name: String
   email: String
   password: String
+  isAdmin: Boolean
   institutions: InstitutionRelateToManyForCreateInput
 }
 

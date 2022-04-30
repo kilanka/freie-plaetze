@@ -1,12 +1,14 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+export const isProduction = process.env.NODE_ENV === "production";
+
 export const databaseUrl = process.env.DATABASE_URL ?? "file:./dev.db";
 
 let secret = process.env.SESSION_SECRET;
 
 if (!secret) {
-	if (process.env.NODE_ENV === "production") {
+	if (isProduction) {
 		throw new Error("The SESSION_SECRET environment variable must be set in production");
 	} else {
 		secret = "-- DEV COOKIE SECRET; CHANGE ME --";

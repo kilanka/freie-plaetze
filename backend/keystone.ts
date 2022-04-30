@@ -2,17 +2,15 @@ import {createAuth} from "@keystone-6/auth";
 import {config} from "@keystone-6/core";
 import {statelessSessions} from "@keystone-6/core/session";
 
-import {databaseUrl, sessionMaxAge, sessionSecret} from "./environment";
+import {databaseUrl, isProduction, sessionMaxAge, sessionSecret} from "./environment";
 import {extendGraphqlSchema, lists} from "./schema";
 import {insertSeedData} from "./seed";
-
-const isProduction = process.env.NODE_ENV === "production";
 
 const {withAuth} = createAuth({
 	listKey: "User",
 	identityField: "email",
 	secretField: "password",
-	sessionData: "name",
+	sessionData: "id isAdmin",
 	initFirstItem: {
 		fields: ["name", "email", "password"],
 	},

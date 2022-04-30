@@ -24,7 +24,7 @@ export async function insertSeedData(context: KeystoneContext) {
 		return user;
 	};
 
-	const createPost = async (institutionData: any) => {
+	const createInstitution = async (institutionData: any) => {
 		let users;
 		try {
 			users = await context.query.User.findMany({
@@ -53,7 +53,7 @@ export async function insertSeedData(context: KeystoneContext) {
 	await Promise.all(
 		institutions.map(async (institution) => {
 			console.log(`📝 Adding institution: ${institution.name}`);
-			await createPost(institution);
+			await createInstitution(institution);
 		})
 	);
 

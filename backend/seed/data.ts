@@ -9,68 +9,81 @@ import slugify from "slugify";
 faker.seed(123);
 faker.setLocale("de");
 
-export const users = [{name: "admin", email: "admin@example.org", password: "password"}];
+export const users = [
+	{name: "Admin", email: "admin@example.org", password: "password", isAdmin: true},
+	{name: "User 1", email: "user1@example.org", password: "password", isAdmin: false},
+];
 
-export const addresses = [
+export const partialInstitutionData = [
 	{
 		street: "Wollankstraße",
 		streetNumber: "131",
 		zip: 13187,
 		city: "Berlin",
+		owner: "Admin",
 	},
 	{
 		street: "Gleimstraße",
 		streetNumber: "49",
 		zip: 10437,
 		city: "Berlin",
+		owner: "Admin",
 	},
 	{
 		street: "Danziger Str.",
 		streetNumber: "50",
 		zip: 10435,
 		city: "Berlin",
+		owner: "Admin",
 	},
 	{
 		street: "Kniprodestraße",
 		streetNumber: "29",
 		zip: 10407,
 		city: "Berlin",
+		owner: "Admin",
 	},
 	{
 		street: "Helsingforser Str.",
 		streetNumber: "11-13",
 		zip: 10243,
 		city: "Berlin",
+		owner: "Admin",
 	},
 	{
 		street: "Falkenbergsweg",
 		streetNumber: "5",
 		zip: 21149,
 		city: "Hamburg",
+		owner: "User 1",
 	},
 	{
 		street: "Swebenhöhe",
 		streetNumber: "50",
 		zip: 22159,
 		city: "Hamburg",
+		owner: "User 1",
 	},
 	{
 		street: "Walderseestraße",
 		streetNumber: "99",
 		zip: 22605,
 		city: "Hamburg",
+		owner: "User 1",
 	},
 	{
 		street: "Ebelingplatz",
 		streetNumber: "8",
 		zip: 20537,
 		city: "Hamburg",
+		owner: "User 1",
 	},
 	{
 		street: "Krieterstraße",
 		streetNumber: "6",
 		zip: 21109,
 		city: "Hamburg",
+		owner: "User 1",
 	},
 ];
 
@@ -91,10 +104,9 @@ function getImage() {
 	return {upload};
 }
 
-export const institutions = addresses.map((address) => {
+export const institutions = partialInstitutionData.map((address) => {
 	const name = faker.company.companyName();
 	return {
-		owner: "admin",
 		name,
 		slug: slugify(name, {lower: true, locale: "de"}),
 		gender: sample(["mixed", "f", "m"]),
