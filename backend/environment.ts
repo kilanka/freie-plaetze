@@ -20,3 +20,5 @@ export const sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
 
 export const nominatimSearchEndpoint =
 	process.env.NOMINATIM_SEARCH_ENDPOINT ?? "https://nominatim.openstreetmap.org/search";
+
+export const imagesPath = process.env.IMAGES_PATH ?? "images";

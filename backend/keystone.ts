@@ -2,7 +2,7 @@ import {createAuth} from "@keystone-6/auth";
 import {config} from "@keystone-6/core";
 import {statelessSessions} from "@keystone-6/core/session";
 
-import {databaseUrl, isProduction, sessionMaxAge, sessionSecret} from "./environment";
+import {databaseUrl, imagesPath, isProduction, sessionMaxAge, sessionSecret} from "./environment";
 import {extendGraphqlSchema, lists} from "./schema";
 import {insertSeedData} from "./seed";
 
@@ -24,12 +24,7 @@ const session = statelessSessions({
 export default withAuth(
 	config({
 		server: {
-			cors: isProduction
-				? undefined
-				: {
-						origin: ["http://localhost:8080"],
-						credentials: true,
-				  },
+			cors: isProduction ? undefined : {origin: ["http://localhost:8080"], credentials: true},
 		},
 		db: {
 			provider: databaseUrl.startsWith("file") ? "sqlite" : "postgresql",
@@ -48,10 +43,7 @@ export default withAuth(
 		session,
 		images: {
 			upload: "local",
-			local: {
-				storagePath: "public/images",
-				baseUrl: "/images",
-			},
+			local: {storagePath: imagesPath, baseUrl: "/images"},
 		},
 		extendGraphqlSchema,
 	})
