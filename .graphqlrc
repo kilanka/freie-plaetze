@@ -1,20 +1,2 @@
+# Root GraphQL config for the VSCode extension
 schema: backend/schema.graphql
-documents: frontend/lib/**/*.graphql
-
-# https://www.graphql-code-generator.com/docs/getting-started/index
-overwrite: true
-generates:
-  frontend/lib/api/generated/index.ts:
-    config:
-      withHooks: true
-    plugins:
-      - typescript
-      - typescript-operations
-      - typescript-react-apollo
-  # This output is a hack because typescript-graphql-apollo doesn't play nicely with
-  # typescript-react-apollo in the same file (creates duplicate document definitions)
-  frontend/lib/api/generated/ssr.ts:
-    plugins:
-      - typescript
-      - typescript-operations
-      - typescript-graphql-apollo

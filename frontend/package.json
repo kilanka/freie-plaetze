@@ -3,8 +3,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 8080",
-    "build": "next build",
-    "start": "next start -p 8080"
+    "build": "npm run codegen && next build",
+    "start": "next start -p 8080",
+    "codegen": "graphql-codegen --config .graphqlrc",
+    "codegen:watch": "npm run codegen -- --watch"
   },
   "dependencies": {
     "@apollo/client": "3.5.10",
@@ -31,6 +33,11 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
-    "@types/react": "17.0.39"
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/typescript-graphql-apollo": "1.1.1",
+    "@graphql-codegen/typescript-operations": "2.3.5",
+    "@graphql-codegen/typescript-react-apollo": "3.2.11",
+    "@types/react": "17.0.39",
+    "type-fest": "2.12.2"
   }
 }
