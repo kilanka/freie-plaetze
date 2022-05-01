@@ -15,7 +15,6 @@
     "@emotion/styled": "11.8.1",
     "@keystone-6/document-renderer": "^1.0.0",
     "@reduxjs/toolkit": "^1.8.1",
-    "@turf/helpers": "6.5.0",
     "formik": "2.2.9",
     "formik-chakra-ui": "1.6.0",
     "framer-motion": "6.2.9",

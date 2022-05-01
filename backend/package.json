@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "keystone dev",
-    "start": "keystone start",
+    "start": "keystone prisma migrate deploy && keystone start",
     "build": "keystone build",
     "postinstall": "keystone postinstall"
   },
@@ -13,6 +13,7 @@
     "@keystone-6/auth": "1.0.2",
     "@keystone-6/core": "1.0.1",
     "@keystone-6/fields-document": "1.0.1",
+    "@turf/helpers": "6.5.0",
     "axios": "0.26.1",
     "dotenv": "16.0.0",
     "lodash": "4.17.21",
