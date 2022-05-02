@@ -1,6 +1,7 @@
 .keystone
 *.log
 *.db
+.env
 
-public/images
+images
 seed/images
