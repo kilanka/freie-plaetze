@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "keystone dev",
-    "start": "keystone prisma migrate deploy && keystone start",
+    "start": "npm run prisma migrate deploy && keystone start",
     "build": "keystone build",
-    "postinstall": "keystone postinstall"
+    "postinstall": "keystone postinstall",
+    "prisma": "keystone prisma"
   },
   "dependencies": {
     "@faker-js/faker": "6.1.2",
