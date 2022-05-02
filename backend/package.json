@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@types/download": "^8.0.1",
-    "download": "^8.0.0",
-    "typescript": "^4.6.4"
+    "typescript": "^4.6.4",
+    "undici": "^5.1.1"
   }
 }

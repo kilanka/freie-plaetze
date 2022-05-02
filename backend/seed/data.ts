@@ -1,8 +1,8 @@
 import {faker} from "@faker-js/faker";
-import download from "download";
 import {Upload} from "graphql-upload";
 import {sample} from "lodash";
 import slugify from "slugify";
+import {fetch} from "undici";
 
 faker.seed(123);
 faker.setLocale("de");
@@ -85,14 +85,15 @@ export const partialInstitutionData = [
 	},
 ];
 
-function getImage() {
+async function getImage() {
 	const seed = faker.random.alphaNumeric(5);
-	const sourceUrl = `https://picsum.photos/seed/${seed}/300/200`;
+	const sourceUrl = `https://picsum.photos/seed/${seed}/600/400`;
+	const imageStream = (await fetch(sourceUrl)).body!;
 
 	const upload = new Upload();
 	// @ts-expect-error `resolve` unknown but it still works?
 	upload.resolve({
-		createReadStream: () => download(sourceUrl),
+		createReadStream: () => imageStream,
 		filename: `${seed}.jpg`,
 		encoding: "7bit",
 		mimetype: "application/jpeg",
@@ -100,20 +101,24 @@ function getImage() {
 	return {upload};
 }
 
-export const institutions = partialInstitutionData.map((address) => {
-	const name = faker.company.companyName();
-	return {
-		name,
-		slug: slugify(name, {lower: true, locale: "de"}),
-		gender: sample(["mixed", "f", "m"]),
-		ageFrom: faker.datatype.number(10),
-		ageTo: faker.datatype.number({min: 11, max: 20}),
-		placesAvailable: faker.datatype.number(10),
-		placesTotal: faker.datatype.number({min: 11, max: 20}),
-		...address,
-		photo: getImage(),
-		email: faker.internet.email(name),
-		phone: faker.phone.phoneNumber("0#### ######"),
-		mobilePhone: faker.phone.phoneNumber("015# ########"),
-	};
-});
+export async function getInstitutions() {
+	return Promise.all(
+		partialInstitutionData.map(async (address) => {
+			const name = faker.company.companyName();
+			return {
+				name,
+				slug: slugify(name, {lower: true, locale: "de"}),
+				gender: sample(["mixed", "f", "m"]),
+				ageFrom: faker.datatype.number(10),
+				ageTo: faker.datatype.number({min: 11, max: 20}),
+				placesAvailable: faker.datatype.number(10),
+				placesTotal: faker.datatype.number({min: 11, max: 20}),
+				...address,
+				photo: await getImage(),
+				email: faker.internet.email(name),
+				phone: faker.phone.phoneNumber("0#### ######"),
+				mobilePhone: faker.phone.phoneNumber("015# ########"),
+			};
+		})
+	);
+}

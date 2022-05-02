@@ -1,6 +1,6 @@
 import {KeystoneContext} from "@keystone-6/core/types";
 
-import {institutions, users} from "./data";
+import {getInstitutions, users} from "./data";
 
 export async function insertSeedData(context: KeystoneContext) {
 	console.log(`🌱 Inserting seed data`);
@@ -50,6 +50,7 @@ export async function insertSeedData(context: KeystoneContext) {
 		})
 	);
 
+	const institutions = await getInstitutions();
 	await Promise.all(
 		institutions.map(async (institution) => {
 			console.log(`📝 Adding institution: ${institution.name}`);
