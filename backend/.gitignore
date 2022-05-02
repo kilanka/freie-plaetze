@@ -1,7 +1,6 @@
 .keystone
 *.log
 *.db
-.env
 
 images
 seed/images
