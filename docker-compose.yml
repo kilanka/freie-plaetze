@@ -12,5 +12,5 @@ services:
   backend:
     build: .
     environment:
-      NODE_ENV: staging
+      APP_ENV: staging
       DATABASE_URL: postgres://pguser:pgpass@db:5432/pguser

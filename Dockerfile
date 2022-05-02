@@ -17,7 +17,7 @@ RUN adduser --system --uid 1001 keystone
 RUN chown -R keystone:keystone node_modules/.keystone node_modules/.prisma
 USER keystone
 
-ENV NODE_ENV production
+ENV APP_ENV production
 ENV IMAGES_PATH /images
 VOLUME /images
 
