@@ -14,6 +14,7 @@ RUN npm run build
 
 RUN addgroup --system --gid 1001 keystone
 RUN adduser --system --uid 1001 keystone
+RUN chown -R keystone:keystone node_modules/.keystone node_modules/.prisma
 USER keystone
 
 ENV NODE_ENV production
