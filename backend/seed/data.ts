@@ -1,7 +1,5 @@
-import {createReadStream} from "fs";
-import path from "path";
-
 import {faker} from "@faker-js/faker";
+import download from "download";
 import {Upload} from "graphql-upload";
 import {sample} from "lodash";
 import slugify from "slugify";
@@ -87,17 +85,15 @@ export const partialInstitutionData = [
 	},
 ];
 
-let imageNumber = 0;
-
 function getImage() {
-	imageNumber++;
-	const filename = `${imageNumber}.jpg`;
+	const seed = faker.random.alphaNumeric(5);
+	const sourceUrl = `https://picsum.photos/seed/${seed}/300/200`;
 
 	const upload = new Upload();
 	// @ts-expect-error `resolve` unknown but it still works?
 	upload.resolve({
-		createReadStream: () => createReadStream(path.resolve(__dirname, `./images/${filename}`)),
-		filename,
+		createReadStream: () => download(sourceUrl),
+		filename: `${seed}.jpg`,
 		encoding: "7bit",
 		mimetype: "application/jpeg",
 	});
