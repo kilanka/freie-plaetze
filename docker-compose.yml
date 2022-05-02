@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:14.2
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpass
+    ports:
+      - 5432:5432
+
+  backend:
+    build: .
+    environment:
+      NODE_ENV: staging
+      DATABASE_URL: postgres://pguser:pgpass@db:5432/pguser

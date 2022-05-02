@@ -3,7 +3,7 @@ dotenv.config();
 
 export const isProduction = process.env.NODE_ENV === "production";
 
-export const databaseUrl = process.env.DATABASE_URL ?? "file:./dev.db";
+export const databaseUrl = process.env.DATABASE_URL ?? "postgres://pguser:pgpass@localhost:5432/pguser";
 
 let secret = process.env.SESSION_SECRET;
 
