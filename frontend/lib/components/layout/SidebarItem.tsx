@@ -6,10 +6,10 @@ import {Link} from "../next/Link";
 
 export interface SidebarItemProps extends FlexProps {
 	icon: IconType;
-	link: string;
+	href: string;
 }
-export const SidebarItem: React.FC<SidebarItemProps> = ({icon, link, children, ...flexProps}) => (
-	<Link href={link} style={{textDecoration: "none"}} _focus={{boxShadow: "none"}}>
+export const SidebarItem: React.FC<SidebarItemProps> = ({icon, href, children, ...flexProps}) => (
+	<Link href={href} style={{textDecoration: "none"}} _focus={{boxShadow: "none"}}>
 		<Flex
 			align="center"
 			px={8}
@@ -20,7 +20,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({icon, link, children, .
 			_active={{bg: "gray.200"}}
 			{...flexProps}
 		>
-			{icon && <Icon mr="4" fontSize="16" as={icon} />}
+			{icon && <Icon mr="4" fontSize={20} as={icon} />}
 			{children}
 		</Flex>
 	</Link>

@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 
 import {selectIsUserLoggedIn} from "../../store/auth";
 import {NavBar} from "./NavBar";
-import {Sidebar} from "./Sidebar";
+import {Sidebar, sidebarWidth} from "./Sidebar";
 
 export interface LayoutProps {
 	children?: ReactNode;
@@ -32,7 +32,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
 			</Drawer>
 
 			<NavBar onOpen={onOpen} />
-			<Box as="main" minH="100%" width="100%">
+			<Box as="main" minH="100%" ml={{md: sidebarWidth}}>
 				{children}
 			</Box>
 		</Box>

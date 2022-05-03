@@ -10,14 +10,20 @@ export const authSlice = createSlice({
 	name: "auth",
 	initialState: {
 		isUserLoggedIn: false,
-		userEmail: "",
-		userName: "",
+		user: {
+			id: "",
+			name: "",
+			email: "",
+		},
 	},
 
 	reducers: {
 		loginSuccess: (
 			state,
-			action: PayloadAction<{sessionToken: string; userEmail: string; userName: string}>
+			action: PayloadAction<{
+				sessionToken: string;
+				user: {id: string; email: string; name: string};
+			}>
 		) => {
 			setCookie(null, "keystonejs-session", action.payload.sessionToken, {
 				path: "/",
@@ -25,20 +31,17 @@ export const authSlice = createSlice({
 			});
 
 			state.isUserLoggedIn = true;
-			state.userEmail = action.payload.userEmail;
-			state.userName = action.payload.userName;
+			state.user = action.payload.user;
 		},
 		loginError: (state) => {
 			state.isUserLoggedIn = false;
-			state.userEmail = "";
-			state.userName = "";
+			state.user = authSlice.getInitialState().user;
 		},
 		logout: (state) => {
 			destroyCookie(null, "keystonejs-session");
 
 			state.isUserLoggedIn = false;
-			state.userEmail = "";
-			state.userName = "";
+			state.user = authSlice.getInitialState().user;
 		},
 	},
 
@@ -83,8 +86,11 @@ export function login(
 				dispatch(
 					loginSuccess({
 						sessionToken: authResult.sessionToken,
-						userEmail: authResult.user.email ?? "",
-						userName: authResult.user.name ?? "",
+						user: {
+							id: authResult.user.id ?? "",
+							name: authResult.user.name ?? "",
+							email: authResult.user.email ?? "",
+						},
 					})
 				);
 				return;
@@ -92,10 +98,11 @@ export function login(
 		}
 
 		dispatch(loginError());
-		return "An unexpected error ocurred. Please try again.";
+		return "An unexpected error occurred. Please try again.";
 	};
 }
 
 // Selectors
-export const selectUserDetails = (state: AppState) => state[authSlice.name];
-export const selectIsUserLoggedIn = (state: AppState) => selectUserDetails(state).isUserLoggedIn;
+export const selectIsUserLoggedIn = (state: AppState) => state[authSlice.name].isUserLoggedIn;
+export const selectUser = (state: AppState) => state[authSlice.name].user;
+export const selectUserId = (state: AppState) => selectUser(state).id;

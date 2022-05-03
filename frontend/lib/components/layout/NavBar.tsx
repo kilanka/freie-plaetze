@@ -13,12 +13,13 @@ import {
 	MenuList,
 	Text,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import React from "react";
 import {FiChevronDown, FiMenu} from "react-icons/fi";
 import {useSelector} from "react-redux";
 
 import {useAppDispatch} from "../../store";
-import {logout, selectUserDetails} from "../../store/auth";
+import {logout, selectIsUserLoggedIn, selectUser} from "../../store/auth";
 import {LinkButton} from "../next/LinkButton";
 import {Logo} from "./Logo";
 import {sidebarWidth} from "./Sidebar";
@@ -30,7 +31,8 @@ export interface NavBarProps extends FlexProps {
 }
 export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 	const dispatch = useAppDispatch();
-	const {isUserLoggedIn, userName} = useSelector(selectUserDetails);
+	const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
+	const {name: userName} = useSelector(selectUser);
 
 	return (
 		<Flex
@@ -72,7 +74,9 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 						</MenuButton>
 						<MenuList>
 							<MenuItem>Benutzerdaten</MenuItem>
-							<MenuItem>Meine Einrichtungen</MenuItem>
+							<NextLink href="/members">
+								<MenuItem>Meine Einrichtungen</MenuItem>
+							</NextLink>
 							<MenuDivider />
 							<MenuItem
 								onClick={() => {

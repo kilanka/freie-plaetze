@@ -58,3 +58,9 @@ query institutionBySlug($slug: String!) {
     mobilePhone
   }
 }
+
+query myInstitutions($userId: ID!) {
+  institutions(where: { owner: { id: { equals: $userId } } }) {
+    ...BasicInstitutionInfo
+  }
+}

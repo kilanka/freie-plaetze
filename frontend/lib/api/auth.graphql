@@ -3,6 +3,7 @@ mutation login($email: String!, $password: String!) {
     ... on UserAuthenticationWithPasswordSuccess {
       sessionToken
       user: item {
+        id
         name
         email
       }

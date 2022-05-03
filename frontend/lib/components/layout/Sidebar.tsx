@@ -1,24 +1,17 @@
 import {Box, BoxProps, CloseButton, Flex} from "@chakra-ui/react";
 import React from "react";
-import {IconType} from "react-icons";
-import {FiHome} from "react-icons/fi";
 
 import {Logo} from "./Logo";
 import {navBarHeight} from "./NavBar";
-import {SidebarItem} from "./SidebarItem";
+import {SidebarContent} from "./SidebarContent";
 
-const SidebarItems: Array<{
-	name: string;
-	icon: IconType;
-}> = [{name: "Start", icon: FiHome}];
-
-export interface SidebarContentProps extends BoxProps {
+export interface SidebarProps extends BoxProps {
 	onClose: () => void;
 }
 
-export const sidebarWidth = 60;
+export const sidebarWidth = 80;
 
-export const Sidebar: React.FC<SidebarContentProps> = ({onClose, ...boxProps}) => {
+export const Sidebar: React.FC<SidebarProps> = ({onClose, ...boxProps}) => {
 	return (
 		<Box
 			transition="3s ease"
@@ -35,11 +28,7 @@ export const Sidebar: React.FC<SidebarContentProps> = ({onClose, ...boxProps}) =
 				<CloseButton display={{base: "flex", md: "none"}} onClick={onClose} />
 			</Flex>
 
-			{SidebarItems.map((link) => (
-				<SidebarItem key={link.name} link="" icon={link.icon}>
-					{link.name}
-				</SidebarItem>
-			))}
+			<SidebarContent />
 		</Box>
 	);
 };
