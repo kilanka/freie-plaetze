@@ -1,3 +1,5 @@
+import {createHash} from "crypto";
+
 import {graphQLSchemaExtension, list} from "@keystone-6/core";
 import {
 	checkbox,
@@ -12,10 +14,10 @@ import {
 } from "@keystone-6/core/fields";
 import {document} from "@keystone-6/fields-document";
 import {lengthToDegrees} from "@turf/helpers";
-import slugify from "slugify";
 
 import {isProduction} from "./environment";
 import {getPositionByAddress, getPositionByZipOrCity} from "./interactions/geo";
+import {slugify} from "./util";
 
 type FilterArgs = {
 	session?: {
@@ -169,7 +171,7 @@ export const lists = {
 			photo: image(),
 		},
 		hooks: {
-			resolveInput: async ({resolvedData, item}) => {
+			resolveInput: async ({resolvedData, item, context}) => {
 				// Update position if at least one address field was updated
 				if (resolvedData.street || resolvedData.streetNumber || resolvedData.zip) {
 					Object.assign(
@@ -184,11 +186,16 @@ export const lists = {
 
 				// Update slug if name was updated
 				if (resolvedData.name) {
-					resolvedData.slug = slugify(resolvedData.name, {
-						lower: true,
-						locale: "de",
-						remove: /[*+~.,()'"!:@/§]/g,
-					});
+					resolvedData.slug = `${slugify(resolvedData.name)}-${createHash("md5")
+						.update(
+							"".concat(
+								resolvedData.street ?? item!.street,
+								resolvedData.streetNumber ?? item!.streetNumber,
+								resolvedData.zip ?? item!.zip
+							)
+						)
+						.digest("hex")
+						.slice(0, 8)}`;
 				}
 
 				return resolvedData;
