@@ -143,7 +143,7 @@ export const lists = {
 				validation: {isRequired: true},
 				graphql: {read: {isNonNull: true}},
 			}),
-			zip: integer({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
+			zip: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
 			city: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
 			positionLat: float(),
 			positionLng: float(),
@@ -154,6 +154,7 @@ export const lists = {
 			mobilePhone: text(),
 
 			description: document(),
+			descriptionPlain: text(),
 
 			logo: image(),
 			photo: image(),

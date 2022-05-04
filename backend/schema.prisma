@@ -21,40 +21,41 @@ model User {
 }
 
 model Institution {
-  id              String                @id @default(cuid())
-  name            String                @default("")
-  slug            String                @unique @default("")
-  owner           User?                 @relation("Institution_owner", fields: [ownerId], references: [id])
-  ownerId         String?               @map("owner")
-  lastUpdated     DateTime              @updatedAt
-  gender          InstitutionGenderType
-  ageFrom         Int
-  ageTo           Int
-  placesAvailable Int
-  placesTotal     Int
-  street          String                @default("")
-  streetNumber    String                @default("")
-  zip             Int
-  city            String                @default("")
-  positionLat     Float?
-  positionLng     Float?
-  homepage        String                @default("")
-  email           String                @default("")
-  phone           String                @default("")
-  mobilePhone     String                @default("")
-  description     Json                  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  logo_filesize   Int?
-  logo_extension  String?
-  logo_width      Int?
-  logo_height     Int?
-  logo_mode       String?
-  logo_id         String?
-  photo_filesize  Int?
-  photo_extension String?
-  photo_width     Int?
-  photo_height    Int?
-  photo_mode      String?
-  photo_id        String?
+  id               String                @id @default(cuid())
+  name             String                @default("")
+  slug             String                @unique @default("")
+  owner            User?                 @relation("Institution_owner", fields: [ownerId], references: [id])
+  ownerId          String?               @map("owner")
+  lastUpdated      DateTime              @updatedAt
+  gender           InstitutionGenderType
+  ageFrom          Int
+  ageTo            Int
+  placesAvailable  Int
+  placesTotal      Int
+  street           String                @default("")
+  streetNumber     String                @default("")
+  zip              String                @default("")
+  city             String                @default("")
+  positionLat      Float?
+  positionLng      Float?
+  homepage         String                @default("")
+  email            String                @default("")
+  phone            String                @default("")
+  mobilePhone      String                @default("")
+  description      Json                  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  descriptionPlain String                @default("")
+  logo_filesize    Int?
+  logo_extension   String?
+  logo_width       Int?
+  logo_height      Int?
+  logo_mode        String?
+  logo_id          String?
+  photo_filesize   Int?
+  photo_extension  String?
+  photo_width      Int?
+  photo_height     Int?
+  photo_mode       String?
+  photo_id         String?
 
   @@index([ownerId])
 }

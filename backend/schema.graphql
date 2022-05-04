@@ -183,7 +183,7 @@ type Institution {
   placesTotal: Int!
   street: String!
   streetNumber: String!
-  zip: Int!
+  zip: String!
   city: String!
   positionLat: Float
   positionLng: Float
@@ -192,6 +192,7 @@ type Institution {
   phone: String
   mobilePhone: String
   description: Institution_description_Document
+  descriptionPlain: String
   logo: ImageFieldOutput
   photo: ImageFieldOutput
 }
@@ -267,7 +268,7 @@ input InstitutionWhereInput {
   placesTotal: IntFilter
   street: StringFilter
   streetNumber: StringFilter
-  zip: IntFilter
+  zip: StringFilter
   city: StringFilter
   positionLat: FloatNullableFilter
   positionLng: FloatNullableFilter
@@ -275,6 +276,7 @@ input InstitutionWhereInput {
   email: StringFilter
   phone: StringFilter
   mobilePhone: StringFilter
+  descriptionPlain: StringFilter
 }
 
 input DateTimeFilter {
@@ -337,6 +339,7 @@ input InstitutionOrderByInput {
   email: OrderDirection
   phone: OrderDirection
   mobilePhone: OrderDirection
+  descriptionPlain: OrderDirection
 }
 
 input InstitutionUpdateInput {
@@ -351,7 +354,7 @@ input InstitutionUpdateInput {
   placesTotal: Int
   street: String
   streetNumber: String
-  zip: Int
+  zip: String
   city: String
   positionLat: Float
   positionLng: Float
@@ -360,6 +363,7 @@ input InstitutionUpdateInput {
   phone: String
   mobilePhone: String
   description: JSON
+  descriptionPlain: String
   logo: ImageFieldInput
   photo: ImageFieldInput
 }
@@ -397,7 +401,7 @@ input InstitutionCreateInput {
   placesTotal: Int
   street: String
   streetNumber: String
-  zip: Int
+  zip: String
   city: String
   positionLat: Float
   positionLng: Float
@@ -406,6 +410,7 @@ input InstitutionCreateInput {
   phone: String
   mobilePhone: String
   description: JSON
+  descriptionPlain: String
   logo: ImageFieldInput
   photo: ImageFieldInput
 }
