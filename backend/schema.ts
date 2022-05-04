@@ -102,7 +102,15 @@ export const lists = {
 
 		fields: {
 			name: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
-			slug: text({isIndexed: "unique", isFilterable: true, graphql: {read: {isNonNull: true}}}),
+			slug: text({
+				isIndexed: "unique",
+				isFilterable: true,
+				graphql: {read: {isNonNull: true}},
+				access: {
+					create: isUserAdmin,
+					update: isUserAdmin,
+				},
+			}),
 
 			owner: relationship({ref: "User.institutions", many: false}),
 			lastUpdated: timestamp({
@@ -172,11 +180,6 @@ export const lists = {
 							zip: resolvedData.zip ?? item?.zip,
 						})
 					);
-				}
-
-				// Prevent manually setting slugs
-				if (resolvedData.slug) {
-					resolvedData.slug = undefined;
 				}
 
 				// Update slug if name was updated
