@@ -12,6 +12,7 @@ import {
 } from "@keystone-6/core/fields";
 import {document} from "@keystone-6/fields-document";
 import {lengthToDegrees} from "@turf/helpers";
+import slugify from "slugify";
 
 import {isProduction} from "./environment";
 import {getPositionByAddress, getPositionByZipOrCity} from "./interactions/geo";
@@ -171,6 +172,20 @@ export const lists = {
 							zip: resolvedData.zip ?? item?.zip,
 						})
 					);
+				}
+
+				// Prevent manually setting slugs
+				if (resolvedData.slug) {
+					resolvedData.slug = undefined;
+				}
+
+				// Update slug if name was updated
+				if (resolvedData.name) {
+					resolvedData.slug = slugify(resolvedData.name, {
+						lower: true,
+						locale: "de",
+						remove: /[*+~.,()'"!:@/§]/g,
+					});
 				}
 
 				return resolvedData;

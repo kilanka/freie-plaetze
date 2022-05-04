@@ -1,7 +1,6 @@
 import {faker} from "@faker-js/faker";
 import {Upload} from "graphql-upload";
 import {sample} from "lodash";
-import slugify from "slugify";
 import {fetch} from "undici";
 
 faker.seed(123);
@@ -107,7 +106,6 @@ export async function getInstitutions() {
 			const name = faker.company.companyName();
 			return {
 				name,
-				slug: slugify(name, {lower: true, locale: "de"}),
 				gender: sample(["mixed", "f", "m"]),
 				ageFrom: faker.datatype.number(10),
 				ageTo: faker.datatype.number({min: 11, max: 20}),
