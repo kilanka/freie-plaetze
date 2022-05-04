@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Institution" ADD COLUMN     "descriptionPlain" TEXT NOT NULL DEFAULT E'',
+ALTER COLUMN "zip" SET DEFAULT E'',
+ALTER COLUMN "zip" SET DATA TYPE TEXT;
