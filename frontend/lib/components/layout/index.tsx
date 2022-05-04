@@ -1,8 +1,7 @@
 import {Box, Drawer, DrawerContent, useDisclosure} from "@chakra-ui/react";
 import React, {ReactNode} from "react";
-import {useSelector} from "react-redux";
 
-import {selectIsUserLoggedIn} from "../../store/auth";
+import {useClientOnlyLoginState} from "../../hooks/use-client-only-login-state";
 import {NavBar} from "./NavBar";
 import {Sidebar, sidebarWidth} from "./Sidebar";
 
@@ -11,7 +10,7 @@ export interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({children}) => {
-	const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
+	const isUserLoggedIn = useClientOnlyLoginState();
 
 	const {isOpen, onOpen, onClose} = useDisclosure();
 	return (
@@ -32,7 +31,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
 			</Drawer>
 
 			<NavBar onOpen={onOpen} />
-			<Box as="main" minH="100%" ml={{md: sidebarWidth}}>
+			<Box as="main" minH="100%" ml={{md: isUserLoggedIn ? sidebarWidth : 0}}>
 				{children}
 			</Box>
 		</Box>

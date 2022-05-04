@@ -18,6 +18,7 @@ import React from "react";
 import {FiChevronDown, FiMenu} from "react-icons/fi";
 import {useSelector} from "react-redux";
 
+import {useClientOnlyLoginState} from "../../hooks/use-client-only-login-state";
 import {useAppDispatch} from "../../store";
 import {logout, selectIsUserLoggedIn, selectUser} from "../../store/auth";
 import {LinkButton} from "../next/LinkButton";
@@ -31,7 +32,7 @@ export interface NavBarProps extends FlexProps {
 }
 export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 	const dispatch = useAppDispatch();
-	const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
+	const isUserLoggedIn = useClientOnlyLoginState();
 	const {name: userName} = useSelector(selectUser);
 
 	return (
