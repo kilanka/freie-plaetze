@@ -7,7 +7,7 @@ import Router from "next/router";
 import React from "react";
 import * as yup from "yup";
 
-import {FormBox} from "../../lib/components/content/FormBox";
+import {FormBox} from "../../lib/components/forms/FormBox";
 import {Link} from "../../lib/components/next/Link";
 import {useAppDispatch} from "../../lib/store";
 import {login} from "../../lib/store/auth";

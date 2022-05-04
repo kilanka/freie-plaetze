@@ -59,8 +59,93 @@ query institutionBySlug($slug: String!) {
   }
 }
 
+fragment TextualInstitutionFields on Institution {
+  name
+  gender
+  ageFrom
+  ageTo
+  placesAvailable
+  placesTotal
+  street
+  streetNumber
+  zip
+  city
+  homepage
+  email
+  phone
+  mobilePhone
+  descriptionPlain
+}
+
+fragment EditableInstitutionFields on Institution {
+  ...TextualInstitutionFields
+  photo {
+    url
+    ref
+  }
+  logo {
+    url
+    ref
+  }
+}
+
 query myInstitutions($userId: ID!) {
   institutions(where: { owner: { id: { equals: $userId } } }) {
-    ...BasicInstitutionInfo
+    id
+    ...EditableInstitutionFields
+  }
+}
+
+mutation addInstitution(
+  $ownerId: ID!
+  $name: String!
+  $gender: InstitutionGenderType!
+  $ageFrom: Int!
+  $ageTo: Int!
+  $placesAvailable: Int!
+  $placesTotal: Int!
+  $street: String!
+  $streetNumber: String!
+  $zip: String!
+  $city: String!
+  $homepage: String
+  $email: String
+  $phone: String
+  $mobilePhone: String
+  $descriptionPlain: String
+  $photo: ImageFieldInput
+  $logo: ImageFieldInput
+) {
+  createInstitution(
+    data: {
+      owner: { connect: { id: $ownerId } }
+      name: $name
+      gender: $gender
+      ageFrom: $ageFrom
+      ageTo: $ageTo
+      placesAvailable: $placesAvailable
+      placesTotal: $placesTotal
+      street: $street
+      streetNumber: $streetNumber
+      zip: $zip
+      city: $city
+      homepage: $homepage
+      email: $email
+      phone: $phone
+      mobilePhone: $mobilePhone
+      descriptionPlain: $descriptionPlain
+      photo: $photo
+      logo: $logo
+    }
+  ) {
+    id
+    ...EditableInstitutionFields
+  }
+}
+
+query institutionById($id: ID!) {
+  institution(where: { id: $id }) {
+    id
+    ...EditableInstitutionFields
   }
 }

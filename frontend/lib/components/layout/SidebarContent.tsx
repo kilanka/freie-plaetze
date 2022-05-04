@@ -17,12 +17,16 @@ export const SidebarContent: React.FC = () => {
 	return (
 		<>
 			{myInstitutions?.institutions?.map((institution) => (
-				<SidebarItem key={institution.name} href="#" icon={BsHouseFill}>
+				<SidebarItem
+					key={institution.name}
+					href={`/members/institution/${institution.id}`}
+					icon={BsHouseFill}
+				>
 					{institution.name}
 				</SidebarItem>
 			))}
 
-			<SidebarItem href="#" icon={MdAddBox}>
+			<SidebarItem href="/members/add-institution" icon={MdAddBox}>
 				Einrichtung hinzufügen
 			</SidebarItem>
 			{/* <Divider /> */}

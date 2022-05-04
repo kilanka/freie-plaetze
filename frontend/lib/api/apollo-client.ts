@@ -1,6 +1,7 @@
 // Based on https://github.com/shshaw/next-apollo-ssr/blob/909ae5922377fe0c759c0c1f37a6b32aa773f301/data/apollo.js
 
-import {ApolloClient, InMemoryCache, NormalizedCacheObject, createHttpLink} from "@apollo/client";
+import {ApolloClient, InMemoryCache, NormalizedCacheObject} from "@apollo/client";
+import {createUploadLink} from "apollo-upload-client";
 
 const isServer = typeof window === "undefined";
 const windowApolloState = !isServer && (window.__NEXT_DATA__ as any).apolloState;
@@ -13,7 +14,7 @@ export function getApolloClient() {
 	if (isServer || !clientSideApolloClient) {
 		const newClient = new ApolloClient({
 			ssrMode: isServer,
-			link: createHttpLink({
+			link: createUploadLink({
 				uri: `${process.env.NEXT_PUBLIC_BACKEND_URL!}/api/graphql`,
 				credentials: "include",
 			}),
