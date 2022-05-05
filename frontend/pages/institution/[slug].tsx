@@ -12,12 +12,11 @@ import {
 } from "@chakra-ui/react";
 import type {GetServerSidePropsContext, InferGetServerSidePropsType, NextPage} from "next";
 import React from "react";
-import {IoCall, IoLocationSharp, IoMail, IoPhonePortrait} from "react-icons/io5";
+import {IoCall, IoHome, IoLocationSharp, IoMail, IoPhonePortrait} from "react-icons/io5";
 
 import {getApolloClient} from "../../lib/api/apollo-client";
 import {useInstitutionBySlugQuery} from "../../lib/api/generated";
 import {getSdk} from "../../lib/api/generated/ssr";
-import {Description} from "../../lib/components/content/institution/Description";
 import {Gist} from "../../lib/components/content/institution/Gist";
 import {PlacesStat} from "../../lib/components/content/institution/PlacesStat";
 import {Link} from "../../lib/components/next/Link";
@@ -59,7 +58,11 @@ const Page: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 						</Text>
 						<Stack spacing={{base: 4, md: 6}} divider={<StackDivider borderColor="gray.200" />}>
 							<Box>
-								<Description documentJson={institution.description?.document} />
+								{institution.descriptionPlain?.split("\n").map((paragraph) => (
+									<Text key={paragraph} mb={2}>
+										{paragraph}
+									</Text>
+								))}
 							</Box>
 							<PlacesStat institution={institution} />
 
@@ -68,6 +71,16 @@ const Page: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 									Kontakt
 								</Heading>
 								<Stack direction="column" spacing={5}>
+									{institution.homepage && (
+										<Stack direction="row" spacing={4}>
+											<Icon w={6} h={6} as={IoHome} />
+											<Box>
+												<Link href={institution.homepage} target="_blank">
+													{institution.homepage}
+												</Link>
+											</Box>
+										</Stack>
+									)}
 									<Stack direction="row" spacing={4}>
 										<Icon w={6} h={6} as={IoLocationSharp} />
 										<Text>

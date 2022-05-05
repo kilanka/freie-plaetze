@@ -21,9 +21,6 @@ fragment BasicInstitutionInfo on Institution {
   }
   ...PlacesStat
   ...Gist
-  description {
-    document
-  }
 }
 
 query searchInstitutions($cityOrZip: String!, $radius: Int!, $skip: Int, $take: Int) {
@@ -48,6 +45,7 @@ query institutions($skip: Int, $take: Int) {
 query institutionBySlug($slug: String!) {
   institution(where: { slug: $slug }) {
     ...BasicInstitutionInfo
+    descriptionPlain
     logo {
       url
       ref
@@ -55,6 +53,7 @@ query institutionBySlug($slug: String!) {
     street
     streetNumber
     zip
+    homepage
     email
     phone
     mobilePhone
