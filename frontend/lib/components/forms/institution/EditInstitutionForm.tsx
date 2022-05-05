@@ -1,9 +1,9 @@
-import {ApolloError} from "@apollo/client";
-import {Stack, useToast} from "@chakra-ui/react";
+import {Stack} from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 import React from "react";
 
 import {useInstitutionByIdQuery, useUpdateInstitutionMutation} from "../../../api/generated";
+import {useMutationErrorHandler} from "../../../hooks/useMutationErrorHandler";
 import {
 	convertApiFormatToImageInputFormat,
 	convertImageInputFormatToApiFormat,
@@ -22,7 +22,10 @@ export interface EditInstitutionFormProps {
 
 export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institutionId}) => {
 	const [updateInstitution] = useUpdateInstitutionMutation();
-	const toast = useToast();
+	const {wrapMutationFunction} = useMutationErrorHandler({
+		process: "Aktualisieren der Einrichtung",
+		successMessage: "Angaben erfolgreich aktualisiert",
+	});
 
 	const {data} = useInstitutionByIdQuery({variables: {id: institutionId}});
 
@@ -63,49 +66,20 @@ export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institu
 				isInitialValid
 				initialValues={initialFormValues}
 				validationSchema={institutionFormSchema}
-				onSubmit={async (data) => {
-					try {
-						const result = await updateInstitution({
-							variables: {
-								institutionId,
-								...data,
-								ageFrom: Number.parseInt(data.ageFrom, 10),
-								ageTo: Number.parseInt(data.ageTo, 10),
-								placesAvailable: Number.parseInt(data.placesAvailable, 10),
-								placesTotal: Number.parseInt(data.placesTotal, 10),
-								photo: convertImageInputFormatToApiFormat(data.photo),
-								logo: convertImageInputFormatToApiFormat(data.logo),
-							},
-						});
-						toast({
-							status: "success",
-							title: "Angaben erfolgreich gespeichert",
-							isClosable: true,
-							position: "top",
-							duration: 3000,
-						});
-					} catch (error: unknown) {
-						let errorTitle = "Fehler beim Hinzufügen der Einrichtung";
-						let errorMessage =
-							error instanceof ApolloError
-								? error.graphQLErrors[0].message
-								: "Bitte überprüfen Sie Ihre Internetverbindung und versuchen es erneut.";
-
-						if (errorMessage.includes("Position not found")) {
-							errorTitle = "Adresse nicht gefunden";
-							errorMessage =
-								"Bitte überprüfen Sie die Adressdaten Ihrer Einrichtung und versuchen Sie es erneut.";
-						}
-
-						toast({
-							status: "error",
-							title: errorTitle,
-							description: errorMessage,
-							isClosable: true,
-							position: "top",
-						});
-					}
-				}}
+				onSubmit={wrapMutationFunction(async (data) => {
+					await updateInstitution({
+						variables: {
+							institutionId,
+							...data,
+							ageFrom: Number.parseInt(data.ageFrom, 10),
+							ageTo: Number.parseInt(data.ageTo, 10),
+							placesAvailable: Number.parseInt(data.placesAvailable, 10),
+							placesTotal: Number.parseInt(data.placesTotal, 10),
+							photo: convertImageInputFormatToApiFormat(data.photo),
+							logo: convertImageInputFormatToApiFormat(data.logo),
+						},
+					});
+				})}
 			>
 				<Stack as={Form} spacing={12}>
 					<InstitutionFormContent />

@@ -149,6 +149,7 @@ query institutionById($id: ID!) {
   institution(where: { id: $id }) {
     id
     ...EditableInstitutionFields
+    lastUpdated
   }
 }
 
@@ -196,5 +197,13 @@ mutation updateInstitution(
   ) {
     id
     ...EditableInstitutionFields
+  }
+}
+
+mutation updateAvailablePlaces($institutionId: ID!, $placesAvailable: Int!) {
+  updateInstitution(where: { id: $institutionId }, data: { placesAvailable: $placesAvailable }) {
+    id
+    placesAvailable
+    lastUpdated
   }
 }

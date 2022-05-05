@@ -5,17 +5,27 @@ import {PlacesStatFragment} from "../../../api/generated";
 
 export interface PlacesStatProps extends StatProps {
 	institution: PlacesStatFragment;
+	overrideAvailablePlaces?: number;
 }
 
-export const PlacesStat: React.FC<PlacesStatProps> = ({institution, ...statProps}) => {
+export const PlacesStat: React.FC<PlacesStatProps> = ({
+	institution,
+	overrideAvailablePlaces,
+	...statProps
+}) => {
 	return (
 		<Stat {...statProps}>
 			<StatLabel>Freie Plätze</StatLabel>
 			<StatNumber>
-				{institution.placesAvailable} / {institution.placesTotal}
+				{overrideAvailablePlaces ?? institution.placesAvailable} / {institution.placesTotal}
 			</StatNumber>
 			<StatHelpText>
-				Stand {new Date(institution.lastUpdated).toLocaleDateString("de-DE")}
+				Stand{" "}
+				{(typeof overrideAvailablePlaces !== undefined &&
+				overrideAvailablePlaces !== institution.placesAvailable
+					? new Date()
+					: new Date(institution.lastUpdated)
+				).toLocaleDateString("de-DE")}
 			</StatHelpText>
 		</Stat>
 	);

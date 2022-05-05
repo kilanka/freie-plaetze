@@ -4,6 +4,7 @@ import {useRouter} from "next/router";
 import React, {useEffect} from "react";
 
 import {useInstitutionByIdQuery} from "../../../lib/api/generated";
+import {EditAvailablePlacesForm} from "../../../lib/components/forms/institution/EditAvailablePlacesForm";
 import {EditInstitutionForm} from "../../../lib/components/forms/institution/EditInstitutionForm";
 import {Title} from "../../../lib/components/Title";
 import {emptyGetServerSideProps} from "../../../lib/util";
@@ -50,6 +51,7 @@ const Page: NextPage = () => {
 					/>
 				</Alert>
 			)}
+			<EditAvailablePlacesForm institutionId={institution.id} />
 			<EditInstitutionForm institutionId={institution.id} />
 		</Container>
 	);

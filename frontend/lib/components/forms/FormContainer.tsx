@@ -3,7 +3,7 @@ import React from "react";
 
 export interface FormContainerProps {
 	title: string;
-	description: string;
+	description?: string;
 }
 
 export const FormContainer: React.FC<FormContainerProps> = ({title, description, children}) => {
@@ -12,7 +12,7 @@ export const FormContainer: React.FC<FormContainerProps> = ({title, description,
 			<Heading as="h1" fontSize="3xl">
 				{title}
 			</Heading>
-			<Text fontSize="lg">{description}</Text>
+			{description && <Text fontSize="lg">{description}</Text>}
 
 			{children}
 		</Stack>
