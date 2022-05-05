@@ -9,6 +9,7 @@ import * as yup from "yup";
 
 import {FormBox} from "../../lib/components/forms/FormBox";
 import {Link} from "../../lib/components/next/Link";
+import {Title} from "../../lib/components/Title";
 import {useAppDispatch} from "../../lib/store";
 import {login} from "../../lib/store/auth";
 
@@ -26,6 +27,7 @@ const Page: NextPage = () => {
 
 	return (
 		<Container maxWidth="container.xl" pt={8} alignItems="center">
+			<Title>Anmeldung</Title>
 			<FormBox title="Melden Sie sich an" subtitle="um Einrichtungen hinzuzufügen oder zu ändern">
 				<Formik
 					initialValues={{email: "", password: ""}}

@@ -1,4 +1,5 @@
 import {SimpleGrid, Stack} from "@chakra-ui/react";
+import {useFormikContext} from "formik";
 import {
 	InputControl,
 	NumberInputControl,
@@ -10,7 +11,7 @@ import React from "react";
 import * as yup from "yup";
 
 import {InstitutionGenderType} from "../../../api/generated";
-import {ImageInputControl} from "../fields/ImageInputControl";
+import {ImageInputControl, ImageInputFormData} from "../fields/ImageInputControl";
 
 const makeRequiredMessage = (inputName: string) => `Bitte geben Sie ${inputName} ein.`;
 
@@ -56,13 +57,18 @@ export const institutionFormInitialValues = {
 	mobilePhone: "",
 	descriptionPlain: "",
 
-	photo: null as File | null,
-	logo: null as File | null,
+	photo: {},
+	logo: {},
 };
 
-export type InstitutionFormData = typeof institutionFormInitialValues;
+export type InstitutionFormData = typeof institutionFormInitialValues & {
+	photo?: ImageInputFormData;
+	logo?: ImageInputFormData;
+};
 
 export const InstitutionFormContent: React.FC = () => {
+	const {dirty: isDirty, isValid} = useFormikContext();
+
 	return (
 		<>
 			<Stack spacing={4}>
@@ -128,7 +134,9 @@ export const InstitutionFormContent: React.FC = () => {
 				<ImageInputControl name="logo" label="Logo der Einrichtung oder des Trägers" />
 			</SimpleGrid>
 
-			<SubmitButton colorScheme="blue">Speichern</SubmitButton>
+			<SubmitButton colorScheme="blue" isDisabled={!isDirty || !isValid}>
+				Speichern
+			</SubmitButton>
 		</>
 	);
 };

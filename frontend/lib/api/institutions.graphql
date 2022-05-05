@@ -17,6 +17,7 @@ fragment BasicInstitutionInfo on Institution {
   name
   photo {
     url
+    ref
   }
   ...PlacesStat
   ...Gist
@@ -49,6 +50,7 @@ query institutionBySlug($slug: String!) {
     ...BasicInstitutionInfo
     logo {
       url
+      ref
     }
     street
     streetNumber
@@ -145,6 +147,53 @@ mutation addInstitution(
 
 query institutionById($id: ID!) {
   institution(where: { id: $id }) {
+    id
+    ...EditableInstitutionFields
+  }
+}
+
+mutation updateInstitution(
+  $institutionId: ID!
+  $name: String!
+  $gender: InstitutionGenderType!
+  $ageFrom: Int!
+  $ageTo: Int!
+  $placesAvailable: Int!
+  $placesTotal: Int!
+  $street: String!
+  $streetNumber: String!
+  $zip: String!
+  $city: String!
+  $homepage: String
+  $email: String
+  $phone: String
+  $mobilePhone: String
+  $descriptionPlain: String
+  $photo: ImageFieldInput
+  $logo: ImageFieldInput
+) {
+  updateInstitution(
+    where: { id: $institutionId }
+    data: {
+      name: $name
+      gender: $gender
+      ageFrom: $ageFrom
+      ageTo: $ageTo
+      placesAvailable: $placesAvailable
+      placesTotal: $placesTotal
+      street: $street
+      streetNumber: $streetNumber
+      zip: $zip
+      city: $city
+      homepage: $homepage
+      email: $email
+      phone: $phone
+      mobilePhone: $mobilePhone
+      descriptionPlain: $descriptionPlain
+      photo: $photo
+      logo: $logo
+    }
+  ) {
     id
     ...EditableInstitutionFields
   }

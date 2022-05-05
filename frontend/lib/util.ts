@@ -8,3 +8,7 @@ export const emptyGetServerSideProps = wrapper.getServerSideProps(() => async ()
 export function getAbsoluteImageUrl(imagePath: string) {
 	return process.env.NEXT_PUBLIC_BACKEND_URL! + imagePath;
 }
+
+export function stringToInt(string: string) {
+	return Number.parseInt(string, 10);
+}

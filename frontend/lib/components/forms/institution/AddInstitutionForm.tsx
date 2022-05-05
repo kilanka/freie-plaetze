@@ -7,6 +7,8 @@ import {useSelector} from "react-redux";
 
 import {useAddInstitutionMutation} from "../../../api/generated";
 import {selectUserId} from "../../../store/auth";
+import {stringToInt} from "../../../util";
+import {convertImageInputFormatToApiFormat} from "../fields/ImageInputControl";
 import {FormContainer} from "../FormContainer";
 import {
 	InstitutionFormContent,
@@ -16,7 +18,7 @@ import {
 
 export const AddInstitutionForm: React.FC = () => {
 	const userId = useSelector(selectUserId);
-	const [addInstitution] = useAddInstitutionMutation();
+	const [addInstitution] = useAddInstitutionMutation({refetchQueries: ["myInstitutions"]});
 	const toast = useToast();
 	const router = useRouter();
 
@@ -34,12 +36,12 @@ export const AddInstitutionForm: React.FC = () => {
 							variables: {
 								ownerId: userId,
 								...data,
-								ageFrom: Number.parseInt(data.ageFrom, 10),
-								ageTo: Number.parseInt(data.ageTo, 10),
-								placesAvailable: Number.parseInt(data.placesAvailable, 10),
-								placesTotal: Number.parseInt(data.placesTotal, 10),
-								photo: data.photo && {upload: data.photo},
-								logo: data.logo && {upload: data.logo},
+								ageFrom: stringToInt(data.ageFrom),
+								ageTo: stringToInt(data.ageTo),
+								placesAvailable: stringToInt(data.placesAvailable),
+								placesTotal: stringToInt(data.placesTotal),
+								photo: convertImageInputFormatToApiFormat(data.photo),
+								logo: convertImageInputFormatToApiFormat(data.logo),
 							},
 						});
 						if (result.data?.createInstitution?.id) {

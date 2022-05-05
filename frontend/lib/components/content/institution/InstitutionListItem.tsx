@@ -1,16 +1,4 @@
-import {
-	Box,
-	Flex,
-	Grid,
-	HStack,
-	Heading,
-	Img,
-	LinkBox,
-	LinkOverlay,
-	Spacer,
-	Stack,
-	Text,
-} from "@chakra-ui/react";
+import {Grid, Heading, Img, LinkBox, LinkOverlay, Stack, Text} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
 
