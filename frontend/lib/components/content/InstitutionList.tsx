@@ -1,4 +1,4 @@
-import {SimpleGrid, Text} from "@chakra-ui/layout";
+import {Text} from "@chakra-ui/react";
 import {Spinner} from "@chakra-ui/spinner";
 import {produce} from "immer";
 import React from "react";
@@ -7,6 +7,7 @@ import {useDebounce} from "use-debounce";
 
 import {useSearchInstitutionsQuery} from "../../api/generated";
 import {InstitutionListItem} from "./institution/InstitutionListItem";
+import {InstitutionStack} from "./InstitutionStack";
 
 export type InstitutionListProps = {cityOrZip: string; radius: number};
 
@@ -66,7 +67,7 @@ export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
 	});
 
 	return (
-		<SimpleGrid columns={1} autoRows="min-content" gap={{base: 16, md: 8}} textAlign="center">
+		<InstitutionStack>
 			{(() => {
 				if (filterByLocation && isResultEmpty) {
 					return (
@@ -81,12 +82,16 @@ export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
 				return (
 					<>
 						{institutions?.map((institution) => (
-							<InstitutionListItem key={institution.id} institution={institution} />
+							<InstitutionListItem
+								key={institution.id}
+								institution={institution}
+								href={`/institution/${institution.slug}`}
+							/>
 						))}
 						{(loading || hasNextPage) && <Spinner ref={sentryRef} justifySelf="center" />}
 					</>
 				);
 			})()}
-		</SimpleGrid>
+		</InstitutionStack>
 	);
 };

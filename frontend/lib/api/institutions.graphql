@@ -23,6 +23,22 @@ fragment BasicInstitutionInfo on Institution {
   ...Gist
 }
 
+fragment InstitutionPageContent on Institution {
+  ...BasicInstitutionInfo
+  descriptionPlain
+  logo {
+    url
+    ref
+  }
+  street
+  streetNumber
+  zip
+  homepage
+  email
+  phone
+  mobilePhone
+}
+
 query searchInstitutions($cityOrZip: String!, $radius: Int!, $skip: Int, $take: Int) {
   nearbyInstitutions(
     cityOrZip: $cityOrZip
@@ -35,28 +51,9 @@ query searchInstitutions($cityOrZip: String!, $radius: Int!, $skip: Int, $take: 
   }
 }
 
-query institutions($skip: Int, $take: Int) {
-  institutionsCount
-  institutions(skip: $skip, take: $take) {
-    ...BasicInstitutionInfo
-  }
-}
-
 query institutionBySlug($slug: String!) {
   institution(where: { slug: $slug }) {
-    ...BasicInstitutionInfo
-    descriptionPlain
-    logo {
-      url
-      ref
-    }
-    street
-    streetNumber
-    zip
-    homepage
-    email
-    phone
-    mobilePhone
+    ...InstitutionPageContent
   }
 }
 
@@ -91,9 +88,11 @@ fragment EditableInstitutionFields on Institution {
 }
 
 query myInstitutions($userId: ID!) {
-  institutions(where: { owner: { id: { equals: $userId } } }) {
+  institutions(where: { owner: { id: { equals: $userId } } }, orderBy: { name: asc }) {
     id
     ...EditableInstitutionFields
+    ...InstitutionPageContent
+    ...BasicInstitutionInfo
   }
 }
 
@@ -148,7 +147,7 @@ query institutionById($id: ID!) {
   institution(where: { id: $id }) {
     id
     ...EditableInstitutionFields
-    lastUpdated
+    ...InstitutionPageContent
   }
 }
 

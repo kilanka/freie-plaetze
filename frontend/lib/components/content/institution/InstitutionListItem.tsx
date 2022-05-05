@@ -10,9 +10,10 @@ import {PlacesStat} from "./PlacesStat";
 
 export type InstitutionListItemProps = {
 	institution: BasicInstitutionInfoFragment;
+	href: string;
 };
 
-export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institution}) => {
+export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institution, href}) => {
 	return (
 		<LinkBox>
 			<Grid
@@ -32,7 +33,7 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 					textAlign={{base: "center", md: "left"}}
 					spacing={{base: 2, md: 4}}
 				>
-					<NextLink passHref href={`/institution/${institution.slug}`}>
+					<NextLink passHref href={href}>
 						<LinkOverlay>
 							<Heading as="h3" size="lg" fontWeight="medium">
 								{institution.name}
