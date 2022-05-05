@@ -5,10 +5,12 @@ import type {NextPage} from "next";
 import React from "react";
 
 import {InstitutionList} from "../lib/components/content/InstitutionList";
+import {Title} from "../lib/components/Title";
 
 const HomePage: NextPage = () => {
 	return (
 		<>
+			<Title />
 			<Box
 				as="section"
 				id="focus"

@@ -74,7 +74,9 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 							</HStack>
 						</MenuButton>
 						<MenuList>
-							<MenuItem>Benutzerdaten</MenuItem>
+							<NextLink href="/members/user">
+								<MenuItem>Benutzerdaten</MenuItem>
+							</NextLink>
 							<NextLink href="/members">
 								<MenuItem>Meine Einrichtungen</MenuItem>
 							</NextLink>

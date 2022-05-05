@@ -43,6 +43,10 @@ export const authSlice = createSlice({
 			state.isUserLoggedIn = false;
 			state.user = authSlice.getInitialState().user;
 		},
+		updateUserData: (state, action: PayloadAction<{email: string; name: string}>) => {
+			state.user.name = action.payload.name;
+			state.user.email = action.payload.email;
+		},
 	},
 
 	extraReducers: {
@@ -53,7 +57,7 @@ export const authSlice = createSlice({
 	},
 });
 
-export const {loginSuccess, loginError, logout} = authSlice.actions;
+export const {loginSuccess, loginError, logout, updateUserData} = authSlice.actions;
 
 /**
  * Returns a thunk action that performs a sign in with the given credentials. Finally, either a

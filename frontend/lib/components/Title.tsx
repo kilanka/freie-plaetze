@@ -2,7 +2,7 @@ import Head from "next/head";
 import React, {ReactText} from "react";
 
 export interface TitleProps {
-	children: ReactText;
+	children?: ReactText;
 }
 
 export const Title: React.FC<TitleProps> = ({children}) => {

@@ -12,3 +12,7 @@ export function getAbsoluteImageUrl(imagePath: string) {
 export function stringToInt(string: string) {
 	return Number.parseInt(string, 10);
 }
+
+export function makeRequiredMessage(inputName: string) {
+	return `Bitte geben Sie ${inputName} ein.`;
+}

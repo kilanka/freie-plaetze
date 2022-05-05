@@ -11,9 +11,8 @@ import React from "react";
 import * as yup from "yup";
 
 import {InstitutionGenderType} from "../../../api/generated";
+import {makeRequiredMessage} from "../../../util";
 import {ImageInputControl, ImageInputFormData} from "../fields/ImageInputControl";
-
-const makeRequiredMessage = (inputName: string) => `Bitte geben Sie ${inputName} ein.`;
 
 export const institutionFormSchema = yup.object({
 	name: yup.string().required(makeRequiredMessage("den Namen der Einrichtung")),

@@ -33,7 +33,7 @@ const Page: NextPage = () => {
 	const institution = data.institution;
 
 	return (
-		<Container maxWidth="container.lg" mt={8} as={Stack} gap={8}>
+		<Container maxWidth="container.lg" mt={8} as={Stack} gap={12}>
 			<Title>{institution.name}</Title>
 			{isNewAlertVisible && (
 				<Alert status="success" variant="left-accent">
