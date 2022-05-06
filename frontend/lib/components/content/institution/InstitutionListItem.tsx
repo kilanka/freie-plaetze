@@ -19,6 +19,7 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 			<Grid
 				templateColumns={{md: "1fr auto auto"}}
 				gap={{base: 6, md: 10}}
+				bgColor="white"
 				borderRadius="lg"
 				borderWidth="1px"
 				borderColor="gray.200"

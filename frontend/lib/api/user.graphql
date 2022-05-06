@@ -5,3 +5,9 @@ mutation updateUser($userId: ID!, $name: String!, $email: String!) {
     email
   }
 }
+
+mutation updateUserPassword($userId: ID!, $password: String!) {
+  updateUser(where: { id: $userId }, data: { password: $password }) {
+    id
+  }
+}

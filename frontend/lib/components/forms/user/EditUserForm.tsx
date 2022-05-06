@@ -3,22 +3,30 @@ import {Form, Formik} from "formik";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {useUpdateUserMutation} from "../../../api/generated";
+import {useUpdateUserMutation, useUpdateUserPasswordMutation} from "../../../api/generated";
 import {useMutationErrorHandler} from "../../../hooks/useMutationErrorHandler";
 import {selectUser, updateUserData} from "../../../store/auth";
 import {FormContainer} from "../FormContainer";
-import {UserFormContent, UserFormData, userFormSchema} from "./UserFormContent";
+import {
+	UserFormContent,
+	UserFormData,
+	userFormInitialValues,
+	userFormSchema,
+} from "./UserFormContent";
 
 export const EditUserForm: React.FC = () => {
 	const {id: userId, name, email} = useSelector(selectUser);
 	const [updateUser] = useUpdateUserMutation();
+	const [updatePassword] = useUpdateUserPasswordMutation();
 	const {wrapMutationFunction} = useMutationErrorHandler({
 		process: "Aktualisieren der Benutzerdaten",
 		successMessage: "Benutzerdaten erfolgreich aktualisiert",
 	});
 	const dispatch = useDispatch();
 
-	const initialFormValues: UserFormData = {name, email};
+	const [arePasswordFieldsVisible, setArePasswordFieldsVisible] = React.useState(false);
+
+	const initialFormValues: UserFormData = {...userFormInitialValues, name, email};
 
 	return (
 		<FormContainer
@@ -30,13 +38,30 @@ export const EditUserForm: React.FC = () => {
 				isInitialValid
 				initialValues={initialFormValues}
 				validationSchema={userFormSchema}
-				onSubmit={wrapMutationFunction(async (data) => {
-					await updateUser({variables: {userId, ...data}});
-					dispatch(updateUserData(data));
+				onSubmit={wrapMutationFunction(async (data, {resetForm}) => {
+					await updateUser({
+						variables: {
+							userId,
+							name: data.name,
+							email: data.email,
+						},
+					});
+					dispatch(updateUserData({name: data.name, email: data.email}));
+
+					if (data.password) {
+						await updatePassword({variables: {userId, password: data.password}});
+						setArePasswordFieldsVisible(false);
+						resetForm();
+					}
 				})}
 			>
 				<Stack as={Form} spacing={12}>
-					<UserFormContent />
+					<UserFormContent
+						arePasswordFieldsVisible={arePasswordFieldsVisible}
+						showPasswordFields={() => {
+							setArePasswordFieldsVisible(true);
+						}}
+					/>
 				</Stack>
 			</Formik>
 		</FormContainer>

@@ -14,10 +14,15 @@ export function useMutationErrorHandler({process, successMessage}: MutationError
 
 	const handleMutationError = (error: unknown) => {
 		let errorTitle = `Fehler beim ${process}`;
-		let errorMessage =
-			error instanceof ApolloError
-				? error.graphQLErrors[0].message
-				: "Bitte überprüfen Sie Ihre Internetverbindung und versuchen es erneut.";
+		let errorMessage = "";
+		if (error instanceof ApolloError) {
+			if (error.graphQLErrors.length > 0) {
+				errorMessage = error.graphQLErrors[0].message;
+			} else if (error.networkError) {
+				console.error(error.message);
+				errorMessage = "Bitte überprüfen Sie Ihre Internetverbindung und versuchen es erneut.";
+			}
+		}
 
 		if (errorMessage.includes("Position not found")) {
 			errorTitle = "Adresse nicht gefunden";

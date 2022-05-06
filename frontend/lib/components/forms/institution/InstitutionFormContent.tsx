@@ -1,4 +1,4 @@
-import {SimpleGrid, Stack} from "@chakra-ui/react";
+import {Stack} from "@chakra-ui/react";
 import {useFormikContext} from "formik";
 import {
 	InputControl,
@@ -13,6 +13,7 @@ import * as yup from "yup";
 import {InstitutionGenderType} from "../../../api/generated";
 import {makeRequiredMessage} from "../../../util";
 import {ImageInputControl, ImageInputFormData} from "../fields/ImageInputControl";
+import {FormColumns} from "../FormColumns";
 
 export const institutionFormSchema = yup.object({
 	name: yup.string().required(makeRequiredMessage("den Namen der Einrichtung")),
@@ -72,13 +73,13 @@ export const InstitutionFormContent: React.FC = () => {
 		<>
 			<Stack spacing={4}>
 				<InputControl isRequired name="name" label="Name der Einrichtung" />
-				<SimpleGrid gap={6} columns={{md: 2}}>
+				<FormColumns>
 					<InputControl isRequired name="street" label="Straße" />
 					<InputControl isRequired name="streetNumber" label="Hausnummer" />
 
 					<InputControl isRequired name="zip" label="Postleitzahl" />
 					<InputControl isRequired name="city" label="Stadt" />
-				</SimpleGrid>
+				</FormColumns>
 			</Stack>
 
 			<Stack spacing={4}>
@@ -87,7 +88,7 @@ export const InstitutionFormContent: React.FC = () => {
 					<option value={InstitutionGenderType.F}>nur Mädchen</option>
 					<option value={InstitutionGenderType.M}>nur Jungen</option>
 				</SelectControl>
-				<SimpleGrid gap={{base: 4, md: 6}} columns={2}>
+				<FormColumns noResponsive>
 					<NumberInputControl
 						isRequired
 						name="ageFrom"
@@ -112,7 +113,7 @@ export const InstitutionFormContent: React.FC = () => {
 						label="Plätze insgesamt"
 						numberInputProps={{min: 1}}
 					/>
-				</SimpleGrid>
+				</FormColumns>
 			</Stack>
 
 			<Stack spacing={4}>
@@ -128,10 +129,10 @@ export const InstitutionFormContent: React.FC = () => {
 				textareaProps={{minH: "60"}}
 			/>
 
-			<SimpleGrid gap={6} columns={{md: 2}}>
+			<FormColumns>
 				<ImageInputControl name="photo" label="Foto von der Einrichtung" />
 				<ImageInputControl name="logo" label="Logo der Einrichtung oder des Trägers" />
-			</SimpleGrid>
+			</FormColumns>
 
 			<SubmitButton colorScheme="blue" isDisabled={!isDirty || !isValid}>
 				Speichern
