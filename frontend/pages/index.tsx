@@ -18,7 +18,7 @@ const HomePage: NextPage = () => {
 				pb={32}
 				mb={16}
 				position="relative"
-				clipPath="url(#heroClipPath)"
+				clipPath={{base: "url(#heroClipPathMobile)", md: "url(#heroClipPath)"}}
 			>
 				<Box
 					as="svg"
@@ -41,6 +41,9 @@ const HomePage: NextPage = () => {
 					/>
 					<clipPath id="heroClipPath" clipPathUnits="objectBoundingBox">
 						<path d="M 0 0.9 Q 0.5 1 1 0.9 L 1 0 L 0 0 L 0 0.9" />
+					</clipPath>
+					<clipPath id="heroClipPathMobile" clipPathUnits="objectBoundingBox">
+						<path d="M 0 0.96 Q 0.5 1 1 0.96 L 1 0 L 0 0 L 0 0.96" />
 					</clipPath>
 				</Box>
 
