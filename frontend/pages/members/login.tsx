@@ -3,7 +3,7 @@ import {Checkbox, Stack, Text} from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 import {InputControl, SubmitButton} from "formik-chakra-ui";
 import type {NextPage} from "next";
-import Router from "next/router";
+import {useRouter} from "next/router";
 import React from "react";
 import * as yup from "yup";
 
@@ -24,6 +24,10 @@ const formSchema = yup.object({
 const Page: NextPage = () => {
 	const dispatch = useAppDispatch();
 	const [errorMessage, setErrorMessage] = React.useState("");
+	const router = useRouter();
+
+	const redirectDestination =
+		(!Array.isArray(router.query.redirect) && router.query.redirect) || "/members";
 
 	return (
 		<Container maxWidth="container.xl" pt={8} alignItems="center">
@@ -37,7 +41,7 @@ const Page: NextPage = () => {
 						if (error) {
 							setErrorMessage(error);
 						} else {
-							await Router.replace("/members");
+							await router.replace(redirectDestination);
 						}
 					}}
 				>

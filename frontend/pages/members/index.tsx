@@ -8,9 +8,9 @@ import {InstitutionListItem} from "../../lib/components/content/institution/Inst
 import {InstitutionStack} from "../../lib/components/content/InstitutionStack";
 import {Title} from "../../lib/components/Title";
 import {selectUserId} from "../../lib/store/auth";
-import {emptyGetServerSideProps} from "../../lib/util";
+import {membersOnlyGetServerSideProps} from "../../lib/util";
 
-export const getServerSideProps = emptyGetServerSideProps;
+export const getServerSideProps = membersOnlyGetServerSideProps;
 
 const Page: NextPage = () => {
 	const userId = useSelector(selectUserId);

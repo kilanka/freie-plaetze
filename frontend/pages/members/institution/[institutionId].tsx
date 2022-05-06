@@ -8,9 +8,9 @@ import {InstitutionPageContent} from "../../../lib/components/content/institutio
 import {EditAvailablePlacesForm} from "../../../lib/components/forms/institution/EditAvailablePlacesForm";
 import {EditInstitutionForm} from "../../../lib/components/forms/institution/EditInstitutionForm";
 import {Title} from "../../../lib/components/Title";
-import {emptyGetServerSideProps} from "../../../lib/util";
+import {membersOnlyGetServerSideProps} from "../../../lib/util";
 
-export const getServerSideProps = emptyGetServerSideProps;
+export const getServerSideProps = membersOnlyGetServerSideProps;
 
 const Page: NextPage = () => {
 	const router = useRouter();

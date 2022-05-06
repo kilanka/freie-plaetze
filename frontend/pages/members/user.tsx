@@ -4,9 +4,9 @@ import React from "react";
 
 import {EditUserForm} from "../../lib/components/forms/user/EditUserForm";
 import {Title} from "../../lib/components/Title";
-import {emptyGetServerSideProps} from "../../lib/util";
+import {membersOnlyGetServerSideProps} from "../../lib/util";
 
-export const getServerSideProps = emptyGetServerSideProps;
+export const getServerSideProps = membersOnlyGetServerSideProps;
 
 const Page: NextPage = () => {
 	return (
