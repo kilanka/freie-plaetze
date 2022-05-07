@@ -19,7 +19,7 @@ import React from "react";
 import {FiChevronDown, FiMenu} from "react-icons/fi";
 import {useSelector} from "react-redux";
 
-import {useClientOnlyLoginState} from "../../hooks/use-client-only-login-state";
+import {useClientOnlyLoginState} from "../../hooks/useClientOnlyLoginState";
 import {useAppDispatch} from "../../store";
 import {logout, selectUser} from "../../store/auth";
 import {LinkButton} from "../next/LinkButton";

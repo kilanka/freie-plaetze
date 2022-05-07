@@ -1,7 +1,7 @@
 import {Box, Drawer, DrawerContent, useDisclosure} from "@chakra-ui/react";
 import React, {ReactNode} from "react";
 
-import {useClientOnlyLoginState} from "../../hooks/use-client-only-login-state";
+import {useClientOnlyLoginState} from "../../hooks/useClientOnlyLoginState";
 import {NavBar} from "./NavBar";
 import {Sidebar, sidebarWidth} from "./Sidebar";
 

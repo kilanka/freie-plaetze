@@ -28,7 +28,7 @@ export const Sidebar: React.FC<SidebarProps> = ({onClose, ...boxProps}) => {
 				<CloseButton display={{base: "flex", md: "none"}} onClick={onClose} />
 			</Flex>
 
-			<SidebarContent />
+			<SidebarContent onClose={onClose} />
 		</Box>
 	);
 };
