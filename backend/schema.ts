@@ -17,6 +17,7 @@ import {lengthToDegrees} from "@turf/helpers";
 
 import {isProduction} from "./environment";
 import {getPositionByAddress, getPositionByZipOrCity} from "./interactions/geo";
+import {sendWelcomeEmail} from "./interactions/mail";
 import {slugify} from "./util";
 
 type FilterArgs = {
@@ -74,6 +75,7 @@ export const lists = {
 			}),
 			isAdmin: checkbox({
 				access: {
+					create: isUserAdmin,
 					read: isUserAdminOrCurrentUserItem,
 					update: isUserAdmin,
 				},
@@ -86,6 +88,13 @@ export const lists = {
 					update: isUserAdmin,
 				},
 			}),
+		},
+		hooks: {
+			afterOperation: async ({operation, item}) => {
+				if (operation === "create") {
+					await sendWelcomeEmail((item as any).email, (item as any).name);
+				}
+			},
 		},
 	}),
 

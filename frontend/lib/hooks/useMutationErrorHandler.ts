@@ -27,7 +27,9 @@ export function useMutationErrorHandler({process, successMessage}: MutationError
 		if (errorMessage.includes("Position not found")) {
 			errorTitle = "Adresse nicht gefunden";
 			errorMessage =
-				"Bitte überprüfen Sie die Adressdaten Ihrer Einrichtung und versuchen Sie es erneut.";
+				"Bitte überprüfen Sie die Adressdaten der Einrichtung und versuchen Sie es erneut.";
+		} else if (errorMessage.includes("Unique constraint failed on the fields: (`email`)")) {
+			errorMessage = "Ein Konto mit der angegebenen E-Mail-Adresse existiert bereits.";
 		}
 
 		showToast({

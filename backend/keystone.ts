@@ -20,6 +20,8 @@ const {withAuth} = createAuth({
 	sessionData: "id isAdmin",
 	initFirstItem: {
 		fields: ["name", "email", "password"],
+		itemData: {isAdmin: true},
+		skipKeystoneWelcome: true,
 	},
 });
 

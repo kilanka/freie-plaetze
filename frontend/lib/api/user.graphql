@@ -1,3 +1,11 @@
+mutation registerUser($name: String!, $email: String!, $password: String!) {
+  createUser(data: { email: $email, name: $name, password: $password }) {
+    id
+    name
+    email
+  }
+}
+
 mutation updateUser($userId: ID!, $name: String!, $email: String!) {
   updateUser(where: { id: $userId }, data: { name: $name, email: $email }) {
     id

@@ -31,8 +31,8 @@ const Page: NextPage = () => {
 
 	return (
 		<Container maxWidth="container.xl" pt={8} alignItems="center">
-			<Title>Anmeldung</Title>
-			<FormBox title="Melden Sie sich an" subtitle="um Einrichtungen hinzuzufügen oder zu ändern">
+			<Title>Anmelden</Title>
+			<FormBox title="Anmelden" subtitle="um Einrichtungen zu ändern oder hinzuzufügen">
 				<Formik
 					initialValues={{email: "", password: ""}}
 					validationSchema={formSchema}
