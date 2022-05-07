@@ -14,13 +14,14 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import {useRouter} from "next/router";
 import React from "react";
 import {FiChevronDown, FiMenu} from "react-icons/fi";
 import {useSelector} from "react-redux";
 
 import {useClientOnlyLoginState} from "../../hooks/use-client-only-login-state";
 import {useAppDispatch} from "../../store";
-import {logout, selectIsUserLoggedIn, selectUser} from "../../store/auth";
+import {logout, selectUser} from "../../store/auth";
 import {LinkButton} from "../next/LinkButton";
 import {Logo} from "./Logo";
 import {sidebarWidth} from "./Sidebar";
@@ -34,6 +35,7 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 	const dispatch = useAppDispatch();
 	const isUserLoggedIn = useClientOnlyLoginState();
 	const {name: userName} = useSelector(selectUser);
+	const router = useRouter();
 
 	return (
 		<Flex
@@ -82,8 +84,9 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 							</NextLink>
 							<MenuDivider />
 							<MenuItem
-								onClick={() => {
+								onClick={async () => {
 									dispatch(logout());
+									await router.push("/");
 								}}
 							>
 								Abmelden
