@@ -12,21 +12,19 @@ export const PlacesStat: React.FC<PlacesStatProps> = ({
 	institution,
 	overrideAvailablePlaces,
 	...statProps
-}) => {
-	return (
-		<Stat {...statProps}>
-			<StatLabel>Freie Plätze</StatLabel>
-			<StatNumber>
-				{overrideAvailablePlaces ?? institution.placesAvailable} / {institution.placesTotal}
-			</StatNumber>
-			<StatHelpText>
-				Stand{" "}
-				{(typeof overrideAvailablePlaces !== undefined &&
-				overrideAvailablePlaces !== institution.placesAvailable
-					? new Date()
-					: new Date(institution.lastUpdated)
-				).toLocaleDateString("de-DE")}
-			</StatHelpText>
-		</Stat>
-	);
-};
+}) => (
+	<Stat {...statProps}>
+		<StatLabel>Freie Plätze</StatLabel>
+		<StatNumber>
+			{overrideAvailablePlaces ?? institution.placesAvailable} / {institution.placesTotal}
+		</StatNumber>
+		<StatHelpText>
+			Stand{" "}
+			{(typeof overrideAvailablePlaces === "undefined" ||
+			overrideAvailablePlaces === institution.placesAvailable
+				? new Date(institution.lastUpdated)
+				: new Date()
+			).toLocaleDateString("de-DE")}
+		</StatHelpText>
+	</Stat>
+);
