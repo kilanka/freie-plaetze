@@ -11,21 +11,20 @@
     "migrate:draft": "keystone prisma migrate dev --create-only"
   },
   "dependencies": {
-    "@faker-js/faker": "6.1.2",
-    "@keystone-6/auth": "1.0.2",
-    "@keystone-6/core": "1.0.1",
-    "@keystone-6/fields-document": "1.0.1",
-    "@next/env": "^12.1.5",
-    "@turf/helpers": "6.5.0",
-    "axios": "0.26.1",
+    "@faker-js/faker": "^6.3.1",
+    "@keystone-6/auth": "2.0.0",
+    "@keystone-6/core": "1.1.0",
+    "@keystone-6/fields-document": "2.0.0",
+    "@next/env": "^12.1.6",
+    "@turf/helpers": "^6.5.0",
+    "axios": "^0.27.2",
     "email-templates": "^9.0.0",
-    "lodash": "4.17.21",
+    "lodash": "^4.17.21",
     "nodemailer": "^6.7.5",
     "pug": "^3.0.2",
-    "slugify": "1.6.5"
+    "slugify": "^1.6.5"
   },
   "devDependencies": {
-    "@types/download": "^8.0.1",
     "@types/email-templates": "^8.0.4",
     "@types/nodemailer": "^6.4.4",
     "typescript": "^4.6.4",
