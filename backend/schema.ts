@@ -90,6 +90,17 @@ export const lists = {
 			}),
 		},
 		hooks: {
+			beforeOperation: async ({operation, context, item}) => {
+				if (operation === "delete") {
+					// Delete the user's institutions
+					const institutions = await context.db.Institution.findMany({
+						where: {owner: {id: {equals: item.id.toString()}}},
+					});
+					await context.db.Institution.deleteMany({
+						where: institutions.map((institution) => ({id: institution.id.toString()})),
+					});
+				}
+			},
 			afterOperation: async ({operation, item}) => {
 				if (operation === "create") {
 					await sendWelcomeEmail((item as any).email, (item as any).name);

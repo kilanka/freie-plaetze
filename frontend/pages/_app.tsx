@@ -1,5 +1,6 @@
 import {ApolloProvider} from "@apollo/client";
 import {ChakraProvider} from "@chakra-ui/react";
+import {Provider as ModalProvider} from "@ebay/nice-modal-react";
 import {AppProps} from "next/app";
 import React from "react";
 
@@ -14,9 +15,11 @@ const MyApp = ({Component, pageProps}: AppProps) => {
 	return (
 		<ApolloProvider client={client}>
 			<ChakraProvider theme={theme}>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
+				<ModalProvider>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				</ModalProvider>
 			</ChakraProvider>
 		</ApolloProvider>
 	);

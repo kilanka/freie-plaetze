@@ -205,3 +205,9 @@ mutation updateAvailablePlaces($institutionId: ID!, $placesAvailable: Int!) {
     lastUpdated
   }
 }
+
+mutation deleteInstitution($institutionId: ID!) {
+  deleteInstitution(where: { id: $institutionId }) {
+    id
+  }
+}

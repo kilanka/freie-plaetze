@@ -5,6 +5,7 @@ import React, {useEffect} from "react";
 
 import {useInstitutionByIdQuery} from "../../../lib/api/generated";
 import {InstitutionPageContent} from "../../../lib/components/content/institution/InstitutionPageContent";
+import {DeleteInstitutionForm} from "../../../lib/components/forms/institution/DeleteInstitutionForm";
 import {EditAvailablePlacesForm} from "../../../lib/components/forms/institution/EditAvailablePlacesForm";
 import {EditInstitutionForm} from "../../../lib/components/forms/institution/EditInstitutionForm";
 import {Title} from "../../../lib/components/Title";
@@ -54,6 +55,7 @@ const Page: NextPage = () => {
 			<InstitutionPageContent institution={institution} />
 			<EditAvailablePlacesForm institutionId={institution.id} />
 			<EditInstitutionForm institutionId={institution.id} />
+			<DeleteInstitutionForm institutionId={institution.id} />
 		</Container>
 	);
 };

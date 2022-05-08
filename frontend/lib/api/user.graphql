@@ -19,3 +19,9 @@ mutation updateUserPassword($userId: ID!, $password: String!) {
     id
   }
 }
+
+mutation deleteUserAccount($userId: ID!) {
+  deleteUser(where: { id: $userId }) {
+    id
+  }
+}
