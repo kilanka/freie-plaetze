@@ -4,7 +4,7 @@ import React from "react";
 export interface InstitutionStackProps extends StackProps {}
 
 export const InstitutionStack: React.FC<InstitutionStackProps> = ({children, ...stackPops}) => (
-	<Stack gap={{base: 16, md: 8}} textAlign="center" {...stackPops}>
+	<Stack gap={{base: 16, md: 8}} {...stackPops}>
 		{children}
 	</Stack>
 );

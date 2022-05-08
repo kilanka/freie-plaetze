@@ -39,16 +39,17 @@ fragment InstitutionPageContent on Institution {
   mobilePhone
 }
 
-query searchInstitutions($cityOrZip: String!, $radius: Int!, $skip: Int, $take: Int) {
+query searchInstitutions($cityOrZip: String!, $radius: Int!, $offset: Int, $limit: Int) {
   nearbyInstitutions(
     cityOrZip: $cityOrZip
     radius: $radius
-    skip: $skip
-    take: $take
+    offset: $offset
+    limit: $limit
     orderBy: { placesAvailable: desc }
   ) {
     ...BasicInstitutionInfo
   }
+  nearbyInstitutionsCount(cityOrZip: $cityOrZip, radius: $radius)
 }
 
 query institutionBySlug($slug: String!) {

@@ -4,7 +4,6 @@ import React from "react";
 
 import {BasicInstitutionInfoFragment} from "../../../api/generated";
 import {getAbsoluteImageUrl} from "../../../util";
-import {Image} from "../../next/Image";
 import {Gist} from "./Gist";
 import {PlacesStat} from "./PlacesStat";
 

@@ -13,10 +13,9 @@ import {
 	timestamp,
 } from "@keystone-6/core/fields";
 import {document} from "@keystone-6/fields-document";
-import {lengthToDegrees} from "@turf/helpers";
 
 import {isProduction} from "./environment";
-import {getPositionByAddress, getPositionByZipOrCity} from "./interactions/geo";
+import {getPositionByAddress, getPositionFilters} from "./interactions/geo";
 import {sendWelcomeEmail} from "./interactions/mail";
 import {slugify} from "./util";
 
@@ -236,37 +235,40 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
         cityOrZip: String
         where: InstitutionWhereInput! = {}
         orderBy: [InstitutionOrderByInput!]! = []
-        take: Int
-        skip: Int! = 0
+        limit: Int
+        offset: Int! = 0
       ): [Institution!]!
+			nearbyInstitutionsCount(
+				radius: Int!
+        cityOrZip: String
+        where: InstitutionWhereInput! = {}
+      ): Int
     }`,
 	resolvers: {
 		Query: {
-			nearbyInstitutions: async (root, {cityOrZip, radius, where, ...parameters}, context) => {
+			nearbyInstitutions: async (
+				root,
+				{cityOrZip, radius, where, orderBy, limit, offset},
+				context
+			) => {
 				try {
-					const positionFilters: any = {};
-
-					if (cityOrZip !== "") {
-						const pos = await getPositionByZipOrCity(cityOrZip);
-						const radiusDeg = lengthToDegrees(radius, "kilometers");
-
-						positionFilters.positionLat = {
-							gt: pos.positionLat - radiusDeg,
-							lt: pos.positionLat + radiusDeg,
-						};
-						positionFilters.positionLng = {
-							gt: pos.positionLng - radiusDeg,
-							lt: pos.positionLng + radiusDeg,
-						};
-					}
-
-					const result = await context.db.Institution.findMany({
-						where: {...positionFilters, ...where},
-						...parameters,
+					return await context.db.Institution.findMany({
+						where: {...(await getPositionFilters(cityOrZip, radius)), ...where},
+						orderBy,
+						skip: offset,
+						take: limit,
 					});
-					return result;
 				} catch {
 					return [];
+				}
+			},
+			nearbyInstitutionsCount: async (root, {cityOrZip, radius, where}, context) => {
+				try {
+					return await context.db.Institution.count({
+						where: {...(await getPositionFilters(cityOrZip, radius)), ...where},
+					});
+				} catch {
+					return 0;
 				}
 			},
 		},

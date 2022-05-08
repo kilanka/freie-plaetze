@@ -1,5 +1,4 @@
 import {Redirect} from "next";
-import {redirect} from "next/dist/server/api-utils";
 
 import {wrapper} from "./store";
 import {selectIsUserLoggedIn} from "./store/auth";

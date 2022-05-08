@@ -1,6 +1,7 @@
 // Based on https://github.com/shshaw/next-apollo-ssr/blob/909ae5922377fe0c759c0c1f37a6b32aa773f301/data/apollo.js
 
 import {ApolloClient, InMemoryCache, NormalizedCacheObject} from "@apollo/client";
+import {offsetLimitPagination} from "@apollo/client/utilities";
 import {createUploadLink} from "apollo-upload-client";
 
 const isServer = typeof window === "undefined";
@@ -18,7 +19,15 @@ export function getApolloClient() {
 				uri: `${process.env.NEXT_PUBLIC_BACKEND_URL!}/api/graphql`,
 				credentials: "include",
 			}),
-			cache: new InMemoryCache().restore(windowApolloState || {}),
+			cache: new InMemoryCache({
+				typePolicies: {
+					Query: {
+						fields: {
+							nearbyInstitutions: offsetLimitPagination(["cityOrZip", "radius"]),
+						},
+					},
+				},
+			}).restore(windowApolloState || {}),
 
 			/**
         // Default options to disable SSR for all queries.

@@ -1,3 +1,4 @@
+import {lengthToDegrees} from "@turf/helpers";
 import axios from "axios";
 
 import {nominatimSearchEndpoint} from "../environment";
@@ -47,3 +48,23 @@ export const getPositionByZipOrCity = async (cityOrZip: string) =>
 	queryPosition({
 		[/^\d+$/.test(cityOrZip) ? "postalcode" : "city"]: cityOrZip,
 	});
+
+export async function getPositionFilters(cityOrZip: string, radius: number) {
+	const positionFilters: any = {};
+
+	if (cityOrZip !== "") {
+		const pos = await getPositionByZipOrCity(cityOrZip);
+		const radiusDeg = lengthToDegrees(radius, "kilometers");
+
+		positionFilters.positionLat = {
+			gt: pos.positionLat - radiusDeg,
+			lt: pos.positionLat + radiusDeg,
+		};
+		positionFilters.positionLng = {
+			gt: pos.positionLng - radiusDeg,
+			lt: pos.positionLng + radiusDeg,
+		};
+	}
+
+	return positionFilters;
+}
