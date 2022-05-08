@@ -66,7 +66,7 @@ export const EditAvailablePlacesForm: React.FC<EditAvailablePlacesFormProps> = (
 						<SliderControl
 							name="placesAvailable"
 							sliderProps={{max: institution.placesTotal}}
-							helperText="Bewegen Sie den Slider, um die Anzahl freie Plätze in der Einrichtung einzustellen."
+							helperText="Bewegen Sie den Slider, um die Anzahl freier Plätze in der Einrichtung einzustellen."
 						/>
 						<SubmitButton colorScheme="blue" isDisabled={!isDirty}>
 							Aktualisieren
