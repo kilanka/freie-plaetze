@@ -1,71 +1,57 @@
-import {Box, Container, Flex, HStack, Heading, Stack, Text} from "@chakra-ui/react";
+import {
+	Container,
+	Flex,
+	HStack,
+	Heading,
+	List,
+	ListIcon,
+	ListItem,
+	Stack,
+	Text,
+} from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 import {InputControl, NumberInputControl} from "formik-chakra-ui";
-import type {NextPage} from "next";
+import {NextPage} from "next";
 import React from "react";
+import {IoIosArrowDroprightCircle} from "react-icons/io";
 
 import {InstitutionList} from "../lib/components/content/InstitutionList";
+import {ParagraphLink} from "../lib/components/content/ParagraphLink";
+import {HeaderSection} from "../lib/components/HeaderSection";
 import {Title} from "../lib/components/Title";
 
 const HomePage: NextPage = () => {
 	return (
 		<>
 			<Title />
-			<Box
-				as="section"
-				id="focus"
-				pt={32}
-				pb={32}
-				mb={16}
-				position="relative"
-				clipPath={{base: "url(#heroClipPathMobile)", md: "url(#heroClipPath)"}}
-			>
-				<Box
-					as="svg"
-					preserveAspectRatio="none"
-					viewBox="0 0 800 310"
-					position="absolute"
-					top={0}
-					width="100%"
-					height="100%"
-					bgGradient="linear(to-br, blue.200, green.100)"
-					color="whiteAlpha.300"
-				>
-					<path
-						d="M 0 336 C 63 328 88 252 133 208 C 168 174 210 149 234 107 C 260 62 284 12 296 0 L 0 0"
-						fill="currentColor"
-					/>
-					<path
-						d="M 800 310 L 800 80 C 800 80 785 99 740 115 C 706 133 668 144 639 171 C 606 201 574 234 560 310"
-						fill="currentColor"
-					/>
-					<clipPath id="heroClipPath" clipPathUnits="objectBoundingBox">
-						<path d="M 0 0.9 Q 0.5 1 1 0.9 L 1 0 L 0 0 L 0 0.9" />
-					</clipPath>
-					<clipPath id="heroClipPathMobile" clipPathUnits="objectBoundingBox">
-						<path d="M 0 0.96 Q 0.5 1 1 0.96 L 1 0 L 0 0 L 0 0.96" />
-					</clipPath>
-				</Box>
+			<HeaderSection>
+				<Heading fontSize="4xl">
+					Angebote der stationären Kinder- und Jugendhilfe in Ihrer Nähe
+				</Heading>
 
-				<Container maxWidth="container.xl" as={Stack} gap={24} position="relative" zIndex={1}>
-					<Stack gap={4}>
-						<Heading fontSize="4xl">Sie brauchen Hilfe zur Erziehung?</Heading>
-						<Text fontSize="xl" mb={10}>
-							Einrichtungen, die Sie bei der Erziehung unterstützen können, finden Sie auf dieser
-							Seite.
-						</Text>
-					</Stack>
-
-					<Stack gap={4}>
-						<Heading fontSize="4xl">Wer hat Anspruch?</Heading>
-						<Text fontSize="xl">
-							Jeder Sorgeberechtigter der die Erziehung seines Kindes nicht mehr selbstständig
-							bewältigen kann. Zudem haben Sie das <b>Wunsch- &amp; Wahlrecht</b> und können somit
-							bei der Wahl des Angebotes mitentscheiden!
-						</Text>
-					</Stack>
-				</Container>
-			</Box>
+				<Stack gap={4}>
+					<Text>Hier finden Sie freie Plätze in Einrichtungen für folgende Hilfeformen:</Text>
+					<List spacing={4}>
+						<ListItem>
+							<ListIcon as={IoIosArrowDroprightCircle} color="blue.500" boxSize={6} />
+							Heimerziehung, sonstige betreute Wohnform (<ParagraphLink paragraph="34" />)
+						</ListItem>
+						<ListItem>
+							<ListIcon as={IoIosArrowDroprightCircle} color="blue.500" boxSize={6} />
+							Intensive sozialpädagogische Einzelbetreuung (<ParagraphLink paragraph="35" />)
+						</ListItem>
+						<ListItem>
+							<ListIcon as={IoIosArrowDroprightCircle} color="blue.500" boxSize={6} />
+							Eingliederungshilfe für Kinder und Jugendliche mit seelischer Behinderung oder
+							drohender seelischer Behinderung (<ParagraphLink paragraph="35a" />)
+						</ListItem>
+						<ListItem>
+							<ListIcon as={IoIosArrowDroprightCircle} color="blue.500" boxSize={6} />
+							Hilfe für junge Volljährige (<ParagraphLink paragraph="41" />)
+						</ListItem>
+					</List>
+				</Stack>
+			</HeaderSection>
 
 			<Container as="section" maxWidth="container.xl">
 				{/* eslint-disable-next-line @typescript-eslint/no-empty-function */}

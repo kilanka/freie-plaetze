@@ -11,6 +11,7 @@ import {
 	MenuDivider,
 	MenuItem,
 	MenuList,
+	Stack,
 	Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -95,11 +96,14 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 					</Menu>
 				</Flex>
 			)) || (
-				<Box>
-					<LinkButton href="/members/login" colorScheme="blue" display={{base: "none", md: "flex"}}>
+				<Stack direction="row" gap={2} display={{base: "none", md: "flex"}}>
+					<LinkButton href="/about" variant="outline">
+						Über Uns
+					</LinkButton>
+					<LinkButton href="/members/login" colorScheme="blue">
 						Anmelden
 					</LinkButton>
-				</Box>
+				</Stack>
 			)}
 		</Flex>
 	);
