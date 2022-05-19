@@ -140,6 +140,18 @@ export const lists = {
 				graphql: {read: {isNonNull: true}},
 			}),
 
+			type: select({
+				type: "enum",
+				options: [
+					{value: "p34", label: "Heimerziehung"},
+					{value: "p35", label: "Einzelbetreuung"},
+					{value: "p35a", label: "Eingliederungshilfe"},
+					{value: "p41", label: "Hilfe für junge Volljährige"},
+					{value: "p42", label: "Inobhutnahme"},
+				],
+				validation: {isRequired: true},
+				graphql: {read: {isNonNull: true}},
+			}),
 			gender: select({
 				type: "enum",
 				options: [

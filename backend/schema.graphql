@@ -181,6 +181,7 @@ type Institution {
   slug: String!
   owner: User
   lastUpdated: DateTime!
+  type: InstitutionTypeType!
   gender: InstitutionGenderType!
   ageFrom: Int!
   ageTo: Int!
@@ -204,6 +205,14 @@ type Institution {
 
 scalar DateTime
   @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+
+enum InstitutionTypeType {
+  p34
+  p35
+  p35a
+  p41
+  p42
+}
 
 enum InstitutionGenderType {
   mixed
@@ -266,6 +275,7 @@ input InstitutionWhereInput {
   slug: StringFilter
   owner: UserWhereInput
   lastUpdated: DateTimeFilter
+  type: InstitutionTypeTypeNullableFilter
   gender: InstitutionGenderTypeNullableFilter
   ageFrom: IntFilter
   ageTo: IntFilter
@@ -293,6 +303,13 @@ input DateTimeFilter {
   gt: DateTime
   gte: DateTime
   not: DateTimeFilter
+}
+
+input InstitutionTypeTypeNullableFilter {
+  equals: InstitutionTypeType
+  in: [InstitutionTypeType!]
+  notIn: [InstitutionTypeType!]
+  not: InstitutionTypeTypeNullableFilter
 }
 
 input InstitutionGenderTypeNullableFilter {
@@ -329,6 +346,7 @@ input InstitutionOrderByInput {
   name: OrderDirection
   slug: OrderDirection
   lastUpdated: OrderDirection
+  type: OrderDirection
   gender: OrderDirection
   ageFrom: OrderDirection
   ageTo: OrderDirection
@@ -352,6 +370,7 @@ input InstitutionUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   lastUpdated: DateTime
+  type: InstitutionTypeType
   gender: InstitutionGenderType
   ageFrom: Int
   ageTo: Int
@@ -399,6 +418,7 @@ input InstitutionCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   lastUpdated: DateTime
+  type: InstitutionTypeType!
   gender: InstitutionGenderType!
   ageFrom: Int
   ageTo: Int

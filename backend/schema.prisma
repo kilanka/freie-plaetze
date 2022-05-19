@@ -27,6 +27,7 @@ model Institution {
   owner            User?                 @relation("Institution_owner", fields: [ownerId], references: [id])
   ownerId          String?               @map("owner")
   lastUpdated      DateTime              @updatedAt
+  type             InstitutionTypeType
   gender           InstitutionGenderType
   ageFrom          Int
   ageTo            Int
@@ -58,6 +59,14 @@ model Institution {
   photo_id         String?
 
   @@index([ownerId])
+}
+
+enum InstitutionTypeType {
+  p34
+  p35
+  p35a
+  p41
+  p42
 }
 
 enum InstitutionGenderType {
