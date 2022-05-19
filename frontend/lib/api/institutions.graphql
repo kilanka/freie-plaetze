@@ -15,6 +15,7 @@ fragment BasicInstitutionInfo on Institution {
   id
   slug
   name
+  type
   photo {
     url
     ref
@@ -60,6 +61,7 @@ query institutionBySlug($slug: String!) {
 
 fragment TextualInstitutionFields on Institution {
   name
+  type
   gender
   ageFrom
   ageTo
@@ -100,6 +102,7 @@ query myInstitutions($userId: ID!) {
 mutation addInstitution(
   $ownerId: ID!
   $name: String!
+  $type: InstitutionTypeType!
   $gender: InstitutionGenderType!
   $ageFrom: Int!
   $ageTo: Int!
@@ -121,6 +124,7 @@ mutation addInstitution(
     data: {
       owner: { connect: { id: $ownerId } }
       name: $name
+      type: $type
       gender: $gender
       ageFrom: $ageFrom
       ageTo: $ageTo
@@ -155,6 +159,7 @@ query institutionById($id: ID!) {
 mutation updateInstitution(
   $institutionId: ID!
   $name: String!
+  $type: InstitutionTypeType!
   $gender: InstitutionGenderType!
   $ageFrom: Int!
   $ageTo: Int!
@@ -176,6 +181,7 @@ mutation updateInstitution(
     where: { id: $institutionId }
     data: {
       name: $name
+      type: $type
       gender: $gender
       ageFrom: $ageFrom
       ageTo: $ageTo

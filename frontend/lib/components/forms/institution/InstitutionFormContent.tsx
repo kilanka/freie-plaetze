@@ -10,7 +10,8 @@ import {
 import React from "react";
 import * as yup from "yup";
 
-import {InstitutionGenderType} from "../../../api/generated";
+import {InstitutionGenderType, InstitutionTypeType} from "../../../api/generated";
+import {institutionTypeNames} from "../../../constants";
 import {makeRequiredMessage} from "../../../util";
 import {ImageInputControl, ImageInputFormData} from "../fields/ImageInputControl";
 import {FormColumns} from "../FormColumns";
@@ -42,6 +43,7 @@ export const institutionFormSchema = yup.object({
 
 export const institutionFormInitialValues = {
 	name: "",
+	type: InstitutionTypeType.P34,
 	gender: InstitutionGenderType.Mixed,
 	ageFrom: "",
 	ageTo: "",
@@ -83,6 +85,13 @@ export const InstitutionFormContent: React.FC = () => {
 			</Stack>
 
 			<Stack spacing={4}>
+				<SelectControl isRequired name="type" label="Hilfeform">
+					{Object.entries(institutionTypeNames).map(([type, typeName]) => (
+						<option key={type} value={type}>
+							{typeName} (§ {type.slice(1)} SGB VIII)
+						</option>
+					))}
+				</SelectControl>
 				<SelectControl isRequired name="gender" label="Geschlecht">
 					<option value={InstitutionGenderType.Mixed}>heterogen</option>
 					<option value={InstitutionGenderType.F}>nur Mädchen</option>

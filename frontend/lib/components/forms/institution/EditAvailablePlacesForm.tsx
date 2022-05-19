@@ -1,28 +1,12 @@
-import {ApolloError} from "@apollo/client";
-import {Stack, useToast} from "@chakra-ui/react";
+import {Stack} from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 import {SliderControl, SubmitButton} from "formik-chakra-ui";
 import React from "react";
 
-import {
-	useInstitutionByIdQuery,
-	useUpdateAvailablePlacesMutation,
-	useUpdateInstitutionMutation,
-} from "../../../api/generated";
+import {useInstitutionByIdQuery, useUpdateAvailablePlacesMutation} from "../../../api/generated";
 import {useMutationErrorHandler} from "../../../hooks/useMutationErrorHandler";
-import {stringToInt} from "../../../util";
 import {PlacesStat} from "../../content/institution/PlacesStat";
-import {
-	convertApiFormatToImageInputFormat,
-	convertImageInputFormatToApiFormat,
-} from "../fields/ImageInputControl";
 import {FormContainer} from "../FormContainer";
-import {
-	InstitutionFormContent,
-	InstitutionFormData,
-	institutionFormInitialValues,
-	institutionFormSchema,
-} from "./InstitutionFormContent";
 
 export interface EditAvailablePlacesFormProps {
 	institutionId: string;

@@ -8,6 +8,7 @@ import {InstitutionList} from "../lib/components/content/InstitutionList";
 import {InstitutionTypeListItem} from "../lib/components/content/InstitutionTypeListItem";
 import {HeaderSection} from "../lib/components/HeaderSection";
 import {Title} from "../lib/components/Title";
+import {institutionTypeNames} from "../lib/constants";
 
 const HomePage: NextPage = () => {
 	return (
@@ -21,22 +22,11 @@ const HomePage: NextPage = () => {
 				<Stack gap={4}>
 					<Text>Hier finden Sie freie Plätze in Einrichtungen für folgende Hilfeformen:</Text>
 					<List spacing={4}>
-						<InstitutionTypeListItem paragraph="34">
-							Heimerziehung, sonstige betreute Wohnform
-						</InstitutionTypeListItem>
-						<InstitutionTypeListItem paragraph="35">
-							Intensive sozialpädagogische Einzelbetreuung
-						</InstitutionTypeListItem>
-						<InstitutionTypeListItem paragraph="35a">
-							Eingliederungshilfe für Kinder und Jugendliche mit seelischer Behinderung oder
-							drohender seelischer Behinderung
-						</InstitutionTypeListItem>
-						<InstitutionTypeListItem paragraph="41">
-							Hilfe für junge Volljährige
-						</InstitutionTypeListItem>
-						<InstitutionTypeListItem paragraph="42">
-							Inobhutnahme von Kindern und Jugendlichen
-						</InstitutionTypeListItem>
+						{Object.entries(institutionTypeNames).map(([type, typeName]) => (
+							<InstitutionTypeListItem key={type} paragraph={type.slice(1)}>
+								{typeName}
+							</InstitutionTypeListItem>
+						))}
 					</List>
 				</Stack>
 			</HeaderSection>

@@ -143,6 +143,8 @@ export const lists = {
 			type: select({
 				type: "enum",
 				options: [
+					// Values are SGB 8 paragraphs, prefixed with a "p" for error-free type generation in
+					// frontend code
 					{value: "p34", label: "Heimerziehung"},
 					{value: "p35", label: "Einzelbetreuung"},
 					{value: "p35a", label: "Eingliederungshilfe"},
