@@ -13,8 +13,10 @@ import React from "react";
 import {IoCall, IoHome, IoLocationSharp, IoMail, IoPhonePortrait} from "react-icons/io5";
 
 import {InstitutionPageContentFragment} from "../../../api/generated";
-import {getAbsoluteImageUrl} from "../../../util";
+import {institutionTypeNames} from "../../../constants";
+import {getAbsoluteImageUrl, institutionTypeToParagraphNumber} from "../../../util";
 import {Link} from "../../next/Link";
+import {ParagraphLink} from "../ParagraphLink";
 import {Gist} from "./Gist";
 import {PlacesStat} from "./PlacesStat";
 
@@ -28,8 +30,13 @@ export const InstitutionPageContent: React.FC<InstitutionPageContentProps> = ({i
 			<Heading as="h1" fontWeight={500} mb={4}>
 				{institution?.name}
 			</Heading>
+
 			<Text fontSize="lg" fontWeight="bold" mb={4}>
 				<Gist institution={institution} />
+			</Text>
+			<Text fontSize="lg" mb={8}>
+				Hilfeform: {institutionTypeNames[institution.type]} (
+				<ParagraphLink paragraph={institutionTypeToParagraphNumber(institution.type)} />)
 			</Text>
 			<Stack spacing={{base: 4, md: 6}} divider={<StackDivider borderColor="gray.200" />}>
 				<Box>

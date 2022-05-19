@@ -3,8 +3,10 @@ import NextLink from "next/link";
 import React from "react";
 
 import {BasicInstitutionInfoFragment} from "../../../api/generated";
+import {institutionGenderNames} from "../../../constants";
 import {getAbsoluteImageUrl} from "../../../util";
 import {Gist} from "./Gist";
+import {GistBullet} from "./GistBullet";
 import {PlacesStat} from "./PlacesStat";
 
 export type InstitutionListItemProps = {
@@ -53,7 +55,11 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 				/>
 
 				<Text order={3} fontSize="lg" fontWeight="bold" display={{base: "block", md: "none"}}>
-					<Gist institution={institution} />
+					{institution.city}
+					<GistBullet />
+					{institutionGenderNames[institution.gender]}
+					<GistBullet />
+					{institution.ageFrom}&nbsp;-&nbsp;{institution.ageTo}&nbsp;Jahre
 				</Text>
 
 				{institution.photo?.url && (

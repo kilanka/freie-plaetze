@@ -12,7 +12,7 @@ import * as yup from "yup";
 
 import {InstitutionGenderType, InstitutionTypeType} from "../../../api/generated";
 import {institutionTypeNames} from "../../../constants";
-import {makeRequiredMessage} from "../../../util";
+import {institutionTypeToParagraphNumber, makeRequiredMessage} from "../../../util";
 import {ImageInputControl, ImageInputFormData} from "../fields/ImageInputControl";
 import {FormColumns} from "../FormColumns";
 
@@ -88,7 +88,8 @@ export const InstitutionFormContent: React.FC = () => {
 				<SelectControl isRequired name="type" label="Hilfeform">
 					{Object.entries(institutionTypeNames).map(([type, typeName]) => (
 						<option key={type} value={type}>
-							{typeName} (§ {type.slice(1)} SGB VIII)
+							{typeName} (§ {institutionTypeToParagraphNumber(type as InstitutionTypeType)} SGB
+							VIII)
 						</option>
 					))}
 				</SelectControl>

@@ -1,8 +1,13 @@
-fragment Gist on Institution {
-  city
-  gender
+fragment AgeRange on Institution {
   ageFrom
   ageTo
+}
+
+fragment Gist on Institution {
+  city
+  type
+  gender
+  ...AgeRange
 }
 
 fragment PlacesStat on Institution {
@@ -15,7 +20,6 @@ fragment BasicInstitutionInfo on Institution {
   id
   slug
   name
-  type
   photo {
     url
     ref

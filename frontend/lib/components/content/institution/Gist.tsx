@@ -1,7 +1,10 @@
 import React from "react";
 
-import {GistFragment, InstitutionGenderType} from "../../../api/generated";
+import {GistFragment} from "../../../api/generated";
+import {institutionGenderNames, institutionTypeShortNames} from "../../../constants";
+import {institutionTypeToParagraphNumber} from "../../../util";
 import {GistBullet} from "./GistBullet";
+import {InstitutionAgeRange} from "./InstitutionAgeRange";
 
 export type GistProps = {
 	institution: GistFragment;
@@ -12,15 +15,12 @@ export const Gist: React.FC<GistProps> = ({institution}) => {
 		<>
 			{institution.city}
 			<GistBullet />
-			{
-				{
-					[InstitutionGenderType.Mixed]: "geschlechtsgemischt",
-					[InstitutionGenderType.F]: "nur Mädchen",
-					[InstitutionGenderType.M]: "nur Jungen",
-				}[institution.gender]
-			}
+			{institutionTypeShortNames[institution.type]} (§{" "}
+			{institutionTypeToParagraphNumber(institution.type)})
 			<GistBullet />
-			{institution.ageFrom}&nbsp;-&nbsp;{institution.ageTo}&nbsp;Jahre
+			{institutionGenderNames[institution.gender]}
+			<GistBullet />
+			<InstitutionAgeRange institution={institution} />
 		</>
 	);
 };

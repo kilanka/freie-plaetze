@@ -4,11 +4,13 @@ import {InputControl, NumberInputControl} from "formik-chakra-ui";
 import {NextPage} from "next";
 import React from "react";
 
+import {InstitutionTypeType} from "../lib/api/generated";
 import {InstitutionList} from "../lib/components/content/InstitutionList";
 import {InstitutionTypeListItem} from "../lib/components/content/InstitutionTypeListItem";
 import {HeaderSection} from "../lib/components/HeaderSection";
 import {Title} from "../lib/components/Title";
 import {institutionTypeNames} from "../lib/constants";
+import {institutionTypeToParagraphNumber} from "../lib/util";
 
 const HomePage: NextPage = () => {
 	return (
@@ -23,7 +25,10 @@ const HomePage: NextPage = () => {
 					<Text>Hier finden Sie freie Plätze in Einrichtungen für folgende Hilfeformen:</Text>
 					<List spacing={4}>
 						{Object.entries(institutionTypeNames).map(([type, typeName]) => (
-							<InstitutionTypeListItem key={type} paragraph={type.slice(1)}>
+							<InstitutionTypeListItem
+								key={type}
+								paragraph={institutionTypeToParagraphNumber(type as InstitutionTypeType)}
+							>
 								{typeName}
 							</InstitutionTypeListItem>
 						))}
