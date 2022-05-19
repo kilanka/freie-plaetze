@@ -1,22 +1,11 @@
-import {
-	Container,
-	Flex,
-	HStack,
-	Heading,
-	List,
-	ListIcon,
-	ListItem,
-	Stack,
-	Text,
-} from "@chakra-ui/react";
+import {Container, Flex, HStack, Heading, List, Stack, Text} from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 import {InputControl, NumberInputControl} from "formik-chakra-ui";
 import {NextPage} from "next";
 import React from "react";
-import {IoIosArrowDroprightCircle} from "react-icons/io";
 
 import {InstitutionList} from "../lib/components/content/InstitutionList";
-import {ParagraphLink} from "../lib/components/content/ParagraphLink";
+import {InstitutionTypeListItem} from "../lib/components/content/InstitutionTypeListItem";
 import {HeaderSection} from "../lib/components/HeaderSection";
 import {Title} from "../lib/components/Title";
 
@@ -32,23 +21,22 @@ const HomePage: NextPage = () => {
 				<Stack gap={4}>
 					<Text>Hier finden Sie freie Plätze in Einrichtungen für folgende Hilfeformen:</Text>
 					<List spacing={4}>
-						<ListItem>
-							<ListIcon as={IoIosArrowDroprightCircle} color="blue.500" boxSize={6} />
-							Heimerziehung, sonstige betreute Wohnform (<ParagraphLink paragraph="34" />)
-						</ListItem>
-						<ListItem>
-							<ListIcon as={IoIosArrowDroprightCircle} color="blue.500" boxSize={6} />
-							Intensive sozialpädagogische Einzelbetreuung (<ParagraphLink paragraph="35" />)
-						</ListItem>
-						<ListItem>
-							<ListIcon as={IoIosArrowDroprightCircle} color="blue.500" boxSize={6} />
+						<InstitutionTypeListItem paragraph="34">
+							Heimerziehung, sonstige betreute Wohnform
+						</InstitutionTypeListItem>
+						<InstitutionTypeListItem paragraph="35">
+							Intensive sozialpädagogische Einzelbetreuung
+						</InstitutionTypeListItem>
+						<InstitutionTypeListItem paragraph="35a">
 							Eingliederungshilfe für Kinder und Jugendliche mit seelischer Behinderung oder
-							drohender seelischer Behinderung (<ParagraphLink paragraph="35a" />)
-						</ListItem>
-						<ListItem>
-							<ListIcon as={IoIosArrowDroprightCircle} color="blue.500" boxSize={6} />
-							Hilfe für junge Volljährige (<ParagraphLink paragraph="41" />)
-						</ListItem>
+							drohender seelischer Behinderung
+						</InstitutionTypeListItem>
+						<InstitutionTypeListItem paragraph="41">
+							Hilfe für junge Volljährige
+						</InstitutionTypeListItem>
+						<InstitutionTypeListItem paragraph="42">
+							Inobhutnahme von Kindern und Jugendlichen
+						</InstitutionTypeListItem>
 					</List>
 				</Stack>
 			</HeaderSection>
