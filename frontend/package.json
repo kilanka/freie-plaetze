@@ -2,15 +2,16 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8080",
+    "dev": "run-p next codegen:watch",
+    "next": "next dev -p 8080",
     "build": "npm run codegen && next build",
     "start": "next start -p 8080",
     "codegen": "graphql-codegen --config .graphqlrc",
     "codegen:watch": "npm run codegen -- --watch"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.2",
-    "@chakra-ui/react": "^1.8.8",
+    "@apollo/client": "^3.6.4",
+    "@chakra-ui/react": "^2.0.2",
     "@ebay/nice-modal-react": "1.2.5",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -19,29 +20,34 @@
     "formik": "^2.2.9",
     "formik-chakra-ui": "1.6.0",
     "framer-motion": "^6.3.3",
-    "graphql": "^16.4.0",
+    "graphql": "^16.5.0",
     "next": "^12.1.6",
     "next-redux-cookie-wrapper": "^2.1.2",
     "next-redux-wrapper": "^7.0.5",
     "nookies": "^2.5.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-icons": "^4.3.1",
     "react-infinite-scroll-hook": "^4.0.3",
     "react-redux": "^8.0.1",
     "use-debounce": "8.0.1",
     "use-file-picker": "^1.4.2",
-    "usehooks-ts": "^2.5.2",
+    "usehooks-ts": "^2.5.3",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/typescript-graphql-apollo": "^1.1.1",
-    "@graphql-codegen/typescript-operations": "^2.3.7",
-    "@graphql-codegen/typescript-react-apollo": "^3.2.13",
+    "@graphql-codegen/typescript-operations": "^2.4.0",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.14",
     "@types/apollo-upload-client": "^17.0.0",
-    "@types/react": "^17.0.39",
+    "@types/react": "^18.0.9",
+    "npm-run-all": "^4.1.5",
     "type-fest": "^2.12.2",
     "typescript": "^4.6.4"
+  },
+  "overrides": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }

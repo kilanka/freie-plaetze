@@ -4,6 +4,7 @@ import React from "react";
 export type FormBoxProps = {
 	title: string;
 	subtitle: string;
+	children?: React.ReactNode;
 };
 
 export const FormBox: React.FC<FormBoxProps> = ({title, subtitle, children}) => {

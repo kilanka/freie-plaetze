@@ -4,6 +4,7 @@ import {Link} from "../next/Link";
 
 interface ParagraphLinkProps {
 	paragraph: string;
+	children?: React.ReactNode;
 }
 
 export const ParagraphLink: React.FC<ParagraphLinkProps> = ({paragraph, children}) => (

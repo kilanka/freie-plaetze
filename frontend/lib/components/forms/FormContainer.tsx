@@ -4,6 +4,7 @@ import React from "react";
 export interface FormContainerProps {
 	title: string;
 	description?: string;
+	children?: React.ReactNode;
 }
 
 export const FormContainer: React.FC<FormContainerProps> = ({title, description, children}) => {
