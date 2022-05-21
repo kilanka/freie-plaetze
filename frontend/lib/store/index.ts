@@ -4,11 +4,13 @@ import {createWrapper} from "next-redux-wrapper";
 import {useDispatch, useStore} from "react-redux";
 
 import {authSlice} from "./auth";
+import {searchSlice} from "./search";
 
 const makeStore = wrapMakeStore(() =>
 	configureStore({
 		reducer: {
 			[authSlice.name]: authSlice.reducer,
+			[searchSlice.name]: searchSlice.reducer,
 		},
 		middleware: (getDefaultMiddleware) =>
 			getDefaultMiddleware().prepend(

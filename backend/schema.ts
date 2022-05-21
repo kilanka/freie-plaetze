@@ -237,37 +237,47 @@ export const lists = {
 	}),
 };
 
+async function getInstitutionSearchFilters(args: {
+	cityOrZip: string;
+	radius: number;
+	age: number | null;
+}) {
+	const positionFilters = await getPositionFilters(args.cityOrZip, args.radius);
+	const ageFilters = args.age ? {ageFrom: {lte: args.age}, ageTo: {gte: args.age}} : null;
+
+	return {...positionFilters, ...ageFilters};
+}
+
 export const extendGraphqlSchema = graphQLSchemaExtension({
 	typeDefs: `
     type Query {
       """
 			If \`cityOrZip\` is not empty, return institutions within \`radius\` km distance from
-			\`cityOrZip\`. Otherwise, return all institutions.
+			\`cityOrZip\`. Otherwise, do not filter by location. If \`age\` is not null, only those
+			institutions are returned whose age range includes \`age\`.
 			"""
-      nearbyInstitutions(
+      institutionSearchResults(
 				radius: Int!
         cityOrZip: String
+				age: Int
         where: InstitutionWhereInput! = {}
         orderBy: [InstitutionOrderByInput!]! = []
         limit: Int
         offset: Int! = 0
       ): [Institution!]!
-			nearbyInstitutionsCount(
+			institutionSearchResultsCount(
 				radius: Int!
         cityOrZip: String
+				age: Int
         where: InstitutionWhereInput! = {}
       ): Int
     }`,
 	resolvers: {
 		Query: {
-			nearbyInstitutions: async (
-				root,
-				{cityOrZip, radius, where, orderBy, limit, offset},
-				context
-			) => {
+			institutionSearchResults: async (root, {where, orderBy, limit, offset, ...args}, context) => {
 				try {
 					return await context.db.Institution.findMany({
-						where: {...(await getPositionFilters(cityOrZip, radius)), ...where},
+						where: {...(await getInstitutionSearchFilters(args)), ...where},
 						orderBy,
 						skip: offset,
 						take: limit,
@@ -276,10 +286,10 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
 					return [];
 				}
 			},
-			nearbyInstitutionsCount: async (root, {cityOrZip, radius, where}, context) => {
+			institutionSearchResultsCount: async (root, {where, ...args}, context) => {
 				try {
 					return await context.db.Institution.count({
-						where: {...(await getPositionFilters(cityOrZip, radius)), ...where},
+						where: {...(await getInstitutionSearchFilters(args)), ...where},
 					});
 				} catch {
 					return 0;

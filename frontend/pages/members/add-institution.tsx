@@ -4,7 +4,7 @@ import React from "react";
 
 import {AddInstitutionForm} from "../../lib/components/forms/institution/AddInstitutionForm";
 import {Title} from "../../lib/components/Title";
-import {membersOnlyGetServerSideProps} from "../../lib/util";
+import {membersOnlyGetServerSideProps} from "../../lib/util/access";
 
 export const getServerSideProps = membersOnlyGetServerSideProps;
 

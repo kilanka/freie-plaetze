@@ -4,19 +4,22 @@
 type Query {
   """
   If `cityOrZip` is not empty, return institutions within `radius` km distance from
-  `cityOrZip`. Otherwise, return all institutions.
+  `cityOrZip`. Otherwise, do not filter by location. If `age` is not null, only those
+  institutions are returned whose age range includes `age`.
   """
-  nearbyInstitutions(
+  institutionSearchResults(
     radius: Int!
     cityOrZip: String
+    age: Int
     where: InstitutionWhereInput! = {}
     orderBy: [InstitutionOrderByInput!]! = []
     limit: Int
     offset: Int! = 0
   ): [Institution!]!
-  nearbyInstitutionsCount(
+  institutionSearchResultsCount(
     radius: Int!
     cityOrZip: String
+    age: Int
     where: InstitutionWhereInput! = {}
   ): Int
   users(

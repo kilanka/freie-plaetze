@@ -5,7 +5,7 @@ import React from "react";
 import {DeleteUserAccountForm} from "../../lib/components/forms/user/DeleteUserAccountForm";
 import {EditUserForm} from "../../lib/components/forms/user/EditUserForm";
 import {Title} from "../../lib/components/Title";
-import {membersOnlyGetServerSideProps} from "../../lib/util";
+import {membersOnlyGetServerSideProps} from "../../lib/util/access";
 
 export const getServerSideProps = membersOnlyGetServerSideProps;
 

@@ -2,30 +2,27 @@ import {Alert, AlertDescription, AlertIcon, Box, HStack, Stack} from "@chakra-ui
 import {Spinner} from "@chakra-ui/spinner";
 import React from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
-import {useDebounce} from "use-debounce";
+import {useSelector} from "react-redux";
 
 import {useSearchInstitutionsQuery} from "../../api/generated";
+import {selectSearchArgs} from "../../store/search";
 import {LinkButton} from "../next/LinkButton";
 import {InstitutionListItem} from "./institution/InstitutionListItem";
 import {InstitutionStack} from "./InstitutionStack";
 
-export type InstitutionListProps = {cityOrZip: string; radius: number};
-
 const batchSize = 7;
-const debounceDelay = 700; // Ms
 
-export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
-	const [cityOrZip] = useDebounce(props.cityOrZip, debounceDelay);
-	const [radius] = useDebounce(props.radius, debounceDelay);
+export const InstitutionSearchResults: React.FC = (props) => {
+	const searchArgs = useSelector(selectSearchArgs);
 
 	const {loading, error, data, fetchMore} = useSearchInstitutionsQuery({
-		variables: {cityOrZip, radius, limit: batchSize},
+		variables: {...searchArgs, limit: batchSize},
 	});
 
-	const institutions = data?.nearbyInstitutions;
-	const institutionsCount = data?.nearbyInstitutionsCount;
+	const institutions = data?.institutionSearchResults;
+	const institutionsCount = data?.institutionSearchResultsCount;
 
-	const isResultEmpty = Boolean(error) || !institutionsCount || !institutions;
+	const isResultEmpty = !institutionsCount || !institutions;
 	const hasNextPage = !isResultEmpty && institutions.length < institutionsCount;
 
 	const [sentryRef] = useInfiniteScroll({
@@ -38,7 +35,7 @@ export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
 
 	return (
 		<InstitutionStack>
-			{isResultEmpty && cityOrZip !== "" && (
+			{isResultEmpty && searchArgs.cityOrZip !== "" && (
 				<Alert
 					status="info"
 					alignSelf="center"
@@ -53,8 +50,8 @@ export const InstitutionList: React.FC<InstitutionListProps> = (props) => {
 					<AlertDescription maxWidth="md">
 						<Stack gap={2}>
 							<Box>
-								Im Umkreis von {radius} km um <b>{cityOrZip}</b> sind leider keine Einrichtungen
-								eingetragen. Betreiben Sie eine Einrichtung?
+								Im Umkreis von {searchArgs.radius} km um <b>{searchArgs.cityOrZip}</b> sind leider
+								keine Einrichtungen eingetragen. Betreiben Sie eine Einrichtung?
 							</Box>
 							<HStack alignSelf="center">
 								<LinkButton variant="solid" colorScheme="blue" href="/members/register">

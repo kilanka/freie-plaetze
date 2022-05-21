@@ -44,17 +44,32 @@ fragment InstitutionPageContent on Institution {
   mobilePhone
 }
 
-query searchInstitutions($cityOrZip: String!, $radius: Int!, $offset: Int, $limit: Int) {
-  nearbyInstitutions(
+query searchInstitutions(
+  $cityOrZip: String!
+  $radius: Int!
+  $age: Int
+  $genderTypes: [InstitutionGenderType!]
+  $institutionTypes: [InstitutionTypeType!]
+  $offset: Int
+  $limit: Int
+) {
+  institutionSearchResults(
     cityOrZip: $cityOrZip
     radius: $radius
+    age: $age
     offset: $offset
     limit: $limit
+    where: { gender: { in: $genderTypes }, type: { in: $institutionTypes } }
     orderBy: { placesAvailable: desc }
   ) {
     ...BasicInstitutionInfo
   }
-  nearbyInstitutionsCount(cityOrZip: $cityOrZip, radius: $radius)
+  institutionSearchResultsCount(
+    cityOrZip: $cityOrZip
+    radius: $radius
+    age: $age
+    where: { gender: { in: $genderTypes }, type: { in: $institutionTypes } }
+  )
 }
 
 query institutionBySlug($slug: String!) {

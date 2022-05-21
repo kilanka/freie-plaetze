@@ -1,11 +1,10 @@
-import {Container, Flex, HStack, Heading, List, Stack, Text} from "@chakra-ui/react";
-import {Form, Formik} from "formik";
-import {InputControl, NumberInputControl} from "formik-chakra-ui";
+import {Container, Heading, List, Stack, Text} from "@chakra-ui/react";
 import {NextPage} from "next";
 import React from "react";
 
 import {InstitutionTypeType} from "../lib/api/generated";
-import {InstitutionList} from "../lib/components/content/InstitutionList";
+import {InstitutionSearchForm} from "../lib/components/content/InstitutionSearchForm";
+import {InstitutionSearchResults} from "../lib/components/content/InstitutionSearchResults";
 import {InstitutionTypeListItem} from "../lib/components/content/InstitutionTypeListItem";
 import {HeaderSection} from "../lib/components/HeaderSection";
 import {Title} from "../lib/components/Title";
@@ -37,28 +36,10 @@ const HomePage: NextPage = () => {
 			</HeaderSection>
 
 			<Container as="section" maxWidth="container.xl">
-				{/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-				<Formik initialValues={{location: "", radius: "40"}} onSubmit={() => {}}>
-					{({values}) => (
-						<>
-							<Flex as={Form} justifyContent="center" mb={16}>
-								<HStack maxWidth="2xl">
-									<InputControl name="location" label="Stadt / PLZ" />
-									<NumberInputControl
-										name="radius"
-										label="Umkreis"
-										numberInputProps={{min: 10, step: 10}}
-										maxWidth={24}
-									/>
-								</HStack>
-							</Flex>
-							<InstitutionList
-								cityOrZip={values.location}
-								radius={Number.parseInt(values.radius, 10)}
-							/>
-						</>
-					)}
-				</Formik>
+				<Stack gap={16}>
+					<InstitutionSearchForm />
+					<InstitutionSearchResults />
+				</Stack>
 			</Container>
 		</>
 	);

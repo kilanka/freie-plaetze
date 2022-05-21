@@ -1,8 +1,7 @@
 import {Redirect} from "next";
 
-import {InstitutionTypeType} from "./api/generated";
-import {wrapper} from "./store";
-import {selectIsUserLoggedIn} from "./store/auth";
+import {wrapper} from "../store";
+import {selectIsUserLoggedIn} from "../store/auth";
 
 /**
  * Can be exported as `getServerSideProps` from pages that shall redirect to the login page if a
@@ -29,19 +28,3 @@ export const membersOnlyGetServerSideProps = wrapper.getServerSideProps(
 			};
 		}
 );
-
-export function getAbsoluteImageUrl(imagePath: string) {
-	return process.env.NEXT_PUBLIC_BACKEND_URL! + imagePath;
-}
-
-export function stringToInt(string: string) {
-	return Number.parseInt(string, 10);
-}
-
-export function makeRequiredMessage(inputName: string) {
-	return `Bitte geben Sie ${inputName} ein.`;
-}
-
-export function institutionTypeToParagraphNumber(type: InstitutionTypeType) {
-	return type.slice(1);
-}

@@ -8,7 +8,7 @@ import {InstitutionListItem} from "../../lib/components/content/institution/Inst
 import {InstitutionStack} from "../../lib/components/content/InstitutionStack";
 import {Title} from "../../lib/components/Title";
 import {selectUserId} from "../../lib/store/auth";
-import {membersOnlyGetServerSideProps} from "../../lib/util";
+import {membersOnlyGetServerSideProps} from "../../lib/util/access";
 
 export const getServerSideProps = membersOnlyGetServerSideProps;
 

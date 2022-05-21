@@ -23,7 +23,12 @@ export function getApolloClient() {
 				typePolicies: {
 					Query: {
 						fields: {
-							nearbyInstitutions: offsetLimitPagination(["cityOrZip", "radius"]),
+							institutionSearchResults: offsetLimitPagination([
+								"cityOrZip",
+								"radius",
+								"age",
+								"where",
+							]),
 						},
 					},
 				},
