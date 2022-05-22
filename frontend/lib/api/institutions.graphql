@@ -72,6 +72,12 @@ query searchInstitutions(
   )
 }
 
+query institutionSlugs {
+  institutions {
+    slug
+  }
+}
+
 query institutionBySlug($slug: String!) {
   institution(where: { slug: $slug }) {
     ...InstitutionPageContent

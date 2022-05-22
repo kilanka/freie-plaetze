@@ -1,30 +1,14 @@
-import {
-	Box,
-	Container,
-	Grid,
-	GridItem,
-	Heading,
-	Icon,
-	Image,
-	Stack,
-	StackDivider,
-	Text,
-} from "@chakra-ui/react";
-import type {GetServerSidePropsContext, InferGetServerSidePropsType, NextPage} from "next";
+import {Container} from "@chakra-ui/react";
+import type {GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType, NextPage} from "next";
 import React from "react";
-import {IoCall, IoHome, IoLocationSharp, IoMail, IoPhonePortrait} from "react-icons/io5";
 
 import {getApolloClient} from "../../lib/api/apollo-client";
 import {useInstitutionBySlugQuery} from "../../lib/api/generated";
 import {getSdk} from "../../lib/api/generated/ssr";
-import {Gist} from "../../lib/components/content/institution/Gist";
 import {InstitutionPageContent} from "../../lib/components/content/institution/InstitutionPageContent";
-import {PlacesStat} from "../../lib/components/content/institution/PlacesStat";
-import {Link} from "../../lib/components/next/Link";
 import {Title} from "../../lib/components/Title";
-import {getAbsoluteImageUrl} from "../../lib/util";
 
-export const getServerSideProps = async ({params}: GetServerSidePropsContext) => {
+export const getStaticProps = async ({params}: GetStaticPropsContext) => {
 	const slug = params!.slug as string;
 
 	const {
@@ -34,10 +18,25 @@ export const getServerSideProps = async ({params}: GetServerSidePropsContext) =>
 	return {
 		notFound: !institution,
 		props: {slug},
+		revalidate: 60,
 	};
 };
 
-const Page: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({slug}) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+	const {
+		data: {institutions},
+	} = await getSdk(getApolloClient()).institutionSlugsQuery({});
+
+	return {
+		paths:
+			institutions?.map((institution) => ({
+				params: {slug: institution.slug},
+			})) ?? [],
+		fallback: "blocking",
+	};
+};
+
+const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({slug}) => {
 	const {data} = useInstitutionBySlugQuery({variables: {slug}});
 
 	const institution = data?.institution;
