@@ -5,9 +5,7 @@ import React from "react";
 import {DeleteUserAccountForm} from "../../lib/components/forms/user/DeleteUserAccountForm";
 import {EditUserForm} from "../../lib/components/forms/user/EditUserForm";
 import {Title} from "../../lib/components/Title";
-import {membersOnlyGetServerSideProps} from "../../lib/util/access";
-
-export const getServerSideProps = membersOnlyGetServerSideProps;
+import {membersOnlyGetInitialProps} from "../../lib/util/access";
 
 const Page: NextPage = () => {
 	return (
@@ -20,5 +18,7 @@ const Page: NextPage = () => {
 		</Container>
 	);
 };
+
+Page.getInitialProps = membersOnlyGetInitialProps;
 
 export default Page;

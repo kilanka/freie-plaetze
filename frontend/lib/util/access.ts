@@ -1,30 +1,28 @@
-import {Redirect} from "next";
+import Router from "next/router";
 
 import {wrapper} from "../store";
 import {selectIsUserLoggedIn} from "../store/auth";
 
 /**
- * Can be exported as `getServerSideProps` from pages that shall redirect to the login page if a
- * user is not logged in
+ * Can be added as `getInitialProps` to pages that shall redirect to the login page if a user is not
+ * logged in
  */
-export const membersOnlyGetServerSideProps = wrapper.getServerSideProps(
+export const membersOnlyGetInitialProps = wrapper.getInitialPageProps(
 	(store) =>
-		async ({req}) => {
-			let redirect: Redirect | undefined;
-
+		async ({res, req, pathname}) => {
 			if (!selectIsUserLoggedIn(store.getState())) {
-				let destination = "/members/login";
-				console.log(req.url);
-				if (req.url && req.url !== "/members/login") {
-					destination += `?redirect=${req.url}`;
-				}
+				const destination = "/members/login";
 
-				redirect = {permanent: false, destination};
+				if (req?.url ?? pathname !== "/members/login") {
+					if (req?.url && res) {
+						res.writeHead(307, {Location: `${destination}?redirect=${req.url}`});
+						res.end();
+					} else {
+						await Router.replace(destination);
+					}
+				}
 			}
 
-			return {
-				redirect,
-				props: {},
-			};
+			return {props: {}};
 		}
 );

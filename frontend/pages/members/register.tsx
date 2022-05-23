@@ -2,7 +2,7 @@ import {Container} from "@chakra-ui/layout";
 import {Stack, Text} from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 import {CheckboxSingleControl, InputControl, SubmitButton} from "formik-chakra-ui";
-import type {NextPage} from "next";
+import {NextPage} from "next";
 import {useRouter} from "next/router";
 import React from "react";
 import * as yup from "yup";
