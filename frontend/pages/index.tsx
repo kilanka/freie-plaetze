@@ -16,9 +16,7 @@ const HomePage: NextPage = () => {
 		<>
 			<Title />
 			<HeaderSection>
-				<Heading fontSize="4xl">
-					Angebote der stationären Kinder- und Jugendhilfe in Ihrer Nähe
-				</Heading>
+				<Heading size="xl">Angebote der stationären Kinder- und Jugendhilfe in Ihrer Nähe</Heading>
 
 				<Stack gap={4}>
 					<Text>Hier finden Sie freie Plätze in Einrichtungen für folgende Hilfeformen:</Text>

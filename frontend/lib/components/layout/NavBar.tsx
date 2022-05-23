@@ -44,11 +44,11 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 			px={{base: 4, md: 4}}
 			height={navBarHeight}
 			alignItems="center"
+			justifyContent="space-between"
 			bg="white"
 			borderBottomWidth="1px"
 			borderBottomColor="gray.200"
 			shadow="sm"
-			justifyContent="space-between"
 			{...flexProps}
 		>
 			<IconButton

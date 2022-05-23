@@ -9,8 +9,8 @@ export interface FormContainerProps {
 
 export const FormContainer: React.FC<FormContainerProps> = ({title, description, children}) => {
 	return (
-		<Stack p={8} gap={8} bg="white" rounded="lg" shadow="lg">
-			<Heading as="h1" fontSize="3xl">
+		<Stack p={8} spacing={8} bg="white" rounded="lg" shadow="lg">
+			<Heading as="h1" size="lg">
 				{title}
 			</Heading>
 			{description && <Text fontSize="lg">{description}</Text>}

@@ -9,9 +9,9 @@ export type FormBoxProps = {
 
 export const FormBox: React.FC<FormBoxProps> = ({title, subtitle, children}) => {
 	return (
-		<Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
-			<Stack align="center">
-				<Heading fontSize="4xl">{title}</Heading>
+		<Stack spacing={8} mx="auto" maxW="lg" py={8} px={4}>
+			<Stack align="center" textAlign="center">
+				<Heading size="xl">{title}</Heading>
 				<Text fontSize="lg" color="gray.600">
 					{subtitle}
 				</Text>

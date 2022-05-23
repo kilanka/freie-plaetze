@@ -3,10 +3,8 @@ import NextLink from "next/link";
 import React from "react";
 
 import {BasicInstitutionInfoFragment} from "../../../api/generated";
-import {institutionGenderNames} from "../../../constants";
 import {getAbsoluteImageUrl} from "../../../util";
 import {Gist} from "./Gist";
-import {GistBullet} from "./GistBullet";
 import {PlacesStat} from "./PlacesStat";
 
 export type InstitutionListItemProps = {
@@ -19,20 +17,20 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 		<LinkBox>
 			<Grid
 				templateColumns={{md: "1fr auto auto"}}
-				gap={{base: 6, md: 10}}
+				gap={{base: 6, md: 8}}
 				bgColor="white"
 				borderRadius="lg"
 				borderWidth="1px"
 				borderColor="gray.200"
 				shadow="md"
 				overflow="hidden"
+				textAlign={{base: "center", md: "left"}}
 			>
 				<Stack
 					direction="column"
 					order={0}
 					m={{base: 6, md: 8}}
 					mb={{base: 0, md: 8}}
-					textAlign={{base: "center", md: "left"}}
 					spacing={{base: 2, md: 4}}
 				>
 					<NextLink passHref href={href}>
@@ -43,7 +41,7 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 						</LinkOverlay>
 					</NextLink>
 					<Text fontSize="lg" fontWeight="bold" display={{base: "none", md: "block"}}>
-						<Gist institution={institution} />
+						<Gist hasInstitutionType institution={institution} />
 					</Text>
 				</Stack>
 
@@ -54,12 +52,14 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 					textAlign="center"
 				/>
 
-				<Text order={3} fontSize="lg" fontWeight="bold" display={{base: "block", md: "none"}}>
-					{institution.city}
-					<GistBullet />
-					{institutionGenderNames[institution.gender]}
-					<GistBullet />
-					{institution.ageFrom}&nbsp;-&nbsp;{institution.ageTo}&nbsp;Jahre
+				<Text
+					order={3}
+					display={{base: "block", md: "none"}}
+					fontSize="lg"
+					fontWeight="bold"
+					mx={2}
+				>
+					<Gist hasInstitutionType institution={institution} />
 				</Text>
 
 				{institution.photo?.url && (

@@ -61,7 +61,7 @@ const Page: NextPage = () => {
 									Passwort vergessen?
 								</Link>
 							</Stack>
-							{errorMessage && <Text>{errorMessage}</Text>}
+							{errorMessage && <Text color="red">{errorMessage}</Text>}
 							<SubmitButton colorScheme="blue">Anmelden</SubmitButton>
 							<Text textAlign="center">
 								Kein Benutzerkonto?{" "}

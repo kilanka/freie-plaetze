@@ -8,8 +8,8 @@ export interface HeaderSectionProps extends StackProps {
 export const HeaderSection: React.FC<HeaderSectionProps> = ({children, ...stackProps}) => (
 	<Box
 		as="section"
-		pt={32}
-		pb={40}
+		pt={{base: 16, md: 24}}
+		pb={{base: 28, md: 36}}
 		mb={16}
 		position="relative"
 		clipPath={{base: "url(#heroClipPathMobile)", md: "url(#heroClipPath)"}}
@@ -45,7 +45,7 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({children, ...stackP
 			maxWidth="container.xl"
 			as={Stack}
 			position="relative"
-			gap={12}
+			gap={8}
 			fontSize="xl"
 			{...stackProps}
 		>

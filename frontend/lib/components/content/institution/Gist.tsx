@@ -8,16 +8,21 @@ import {InstitutionAgeRange} from "./InstitutionAgeRange";
 
 export type GistProps = {
 	institution: GistFragment;
+	hasInstitutionType?: boolean;
 };
 
-export const Gist: React.FC<GistProps> = ({institution}) => {
+export const Gist: React.FC<GistProps> = ({institution, hasInstitutionType}) => {
 	return (
 		<>
 			{institution.city}
 			<GistBullet />
-			{institutionTypeShortNames[institution.type]} (§{" "}
-			{institutionTypeToParagraphNumber(institution.type)})
-			<GistBullet />
+			{hasInstitutionType && (
+				<>
+					{institutionTypeShortNames[institution.type]} (§&nbsp;
+					{institutionTypeToParagraphNumber(institution.type)})
+					<GistBullet />
+				</>
+			)}
 			{institutionGenderNames[institution.gender]}
 			<GistBullet />
 			<InstitutionAgeRange institution={institution} />

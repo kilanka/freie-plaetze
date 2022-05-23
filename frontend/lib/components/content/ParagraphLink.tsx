@@ -14,6 +14,6 @@ export const ParagraphLink: React.FC<ParagraphLinkProps> = ({paragraph, children
 		textDecorationStyle="dotted"
 		target="_blank"
 	>
-		{children ?? `§ ${paragraph} SGB VIII`}
+		{children ?? <>§&nbsp;{paragraph} SGB&nbsp;VIII</>}
 	</Link>
 );

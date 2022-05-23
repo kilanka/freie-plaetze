@@ -76,9 +76,9 @@ export const InstitutionPageContent: React.FC<InstitutionPageContentProps> = ({i
 						{institution.email && (
 							<Stack direction="row" spacing={4}>
 								<Icon w={6} h={6} as={IoMail} />
-								<Box>
-									<Link href={`mailto:${institution.email}`}>{institution.email}</Link>
-								</Box>
+								<Link href={`mailto:${institution.email}`} wordBreak="break-word">
+									{institution.email}
+								</Link>
 							</Stack>
 						)}
 						{institution.phone && (
