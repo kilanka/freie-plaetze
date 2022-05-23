@@ -1,6 +1,5 @@
-import {Divider} from "@chakra-ui/react";
 import React from "react";
-import {BiLogIn, BiUserPlus} from "react-icons/bi";
+import {BiInfoCircle, BiLogIn, BiUserPlus} from "react-icons/bi";
 import {BsHouseFill} from "react-icons/bs";
 import {MdAddBox} from "react-icons/md";
 import {useSelector} from "react-redux";
@@ -41,9 +40,13 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({onClose}) => {
 					</SidebarItem>
 				</>
 			)}
-			{/* <Divider /> */}
+
 			{!isUserLoggedIn && (
 				<>
+					<SidebarItem href="/about" icon={BiInfoCircle} onClick={onClose}>
+						Über Uns
+					</SidebarItem>
+					{/* <Divider /> */}
 					<SidebarItem href="/members/login" icon={BiLogIn} onClick={onClose}>
 						Anmelden
 					</SidebarItem>
