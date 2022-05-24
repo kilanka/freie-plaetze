@@ -34,7 +34,7 @@ const Page: NextPage = () => {
 			</HeaderSection>
 
 			<Container as="section" maxWidth="container.xl" mt={8}>
-				<Heading size="lg" mb={4}>
+				<Heading size="lg" mb={4} id="legal">
 					Impressum
 				</Heading>
 				<Text mb={8}>

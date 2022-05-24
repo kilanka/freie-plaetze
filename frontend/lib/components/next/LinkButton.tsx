@@ -1,10 +1,10 @@
-import {Button, ButtonProps} from "@chakra-ui/react";
+import {Button, ButtonProps, HTMLChakraProps} from "@chakra-ui/react";
 import {LinkProps as NextLinkProps} from "next/dist/client/link";
 import NextLink from "next/link";
 import React from "react";
 import {Except} from "type-fest";
 
-export type LinkButtonProps = Except<NextLinkProps, "as"> & ButtonProps;
+export type LinkButtonProps = Except<NextLinkProps, "as"> & ButtonProps & HTMLChakraProps<"a">;
 
 //  Has to be a new component because both chakra and next share the `as` keyword
 export const LinkButton: React.FC<LinkButtonProps> = ({
@@ -25,7 +25,9 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
 			shallow={shallow}
 			prefetch={prefetch}
 		>
-			<Button {...chakraProps}>{children}</Button>
+			<Button {...chakraProps} as="a">
+				{children}
+			</Button>
 		</NextLink>
 	);
 };

@@ -1,7 +1,8 @@
-import {Box, Drawer, DrawerContent, useDisclosure} from "@chakra-ui/react";
+import {Box, Drawer, DrawerContent, Flex, useDisclosure} from "@chakra-ui/react";
 import React, {ReactNode} from "react";
 
 import {useClientOnlyLoginState} from "../../hooks/useClientOnlyLoginState";
+import {Footer} from "./Footer";
 import {NavBar} from "./NavBar";
 import {Sidebar, sidebarWidth} from "./Sidebar";
 
@@ -14,7 +15,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
 
 	const {isOpen, onOpen, onClose} = useDisclosure();
 	return (
-		<Box minH="100vh" bg="gray.50">
+		<Flex minH="100vh" direction="column" bg="white.50">
 			{isUserLoggedIn && <Sidebar display={{base: "none", md: "block"}} onClose={() => onClose} />}
 			<Drawer
 				autoFocus={false}
@@ -31,9 +32,10 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
 			</Drawer>
 
 			<NavBar onOpen={onOpen} />
-			<Box as="main" minH="100%" ml={{md: isUserLoggedIn ? sidebarWidth : 0}}>
+			<Box as="main" minH="100%" ml={{md: isUserLoggedIn ? sidebarWidth : 0}} pb={16}>
 				{children}
 			</Box>
-		</Box>
+			<Footer mt="auto" />
+		</Flex>
 	);
 };

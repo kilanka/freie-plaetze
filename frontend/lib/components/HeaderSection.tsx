@@ -46,7 +46,7 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({children, ...stackP
 			as={Stack}
 			position="relative"
 			gap={8}
-			fontSize="xl"
+			fontSize="lg"
 			{...stackProps}
 		>
 			{children}

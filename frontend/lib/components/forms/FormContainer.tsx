@@ -9,7 +9,15 @@ export interface FormContainerProps {
 
 export const FormContainer: React.FC<FormContainerProps> = ({title, description, children}) => {
 	return (
-		<Stack p={8} spacing={8} bg="white" rounded="lg" shadow="lg">
+		<Stack
+			p={8}
+			spacing={8}
+			rounded="lg"
+			shadow="lg"
+			bg="white"
+			borderWidth="1px"
+			borderColor="gray.200"
+		>
 			<Heading as="h1" size="lg">
 				{title}
 			</Heading>

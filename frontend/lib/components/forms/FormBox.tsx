@@ -16,7 +16,7 @@ export const FormBox: React.FC<FormBoxProps> = ({title, subtitle, children}) => 
 					{subtitle}
 				</Text>
 			</Stack>
-			<Box rounded="lg" shadow="lg" bg="white" p={8}>
+			<Box rounded="lg" shadow="lg" bg="white" borderWidth="1px" borderColor="gray.200" p={8}>
 				{children}
 			</Box>
 		</Stack>
