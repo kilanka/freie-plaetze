@@ -32,10 +32,17 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
 			</Drawer>
 
 			<NavBar onOpen={onOpen} />
-			<Box as="main" minH="100%" ml={{md: isUserLoggedIn ? sidebarWidth : 0}} pb={16}>
+			<Flex
+				as="main"
+				direction="column"
+				flexBasis="auto"
+				flexGrow={1}
+				ml={{md: isUserLoggedIn ? sidebarWidth : 0}}
+				pb={16}
+			>
 				{children}
-			</Box>
-			<Footer mt="auto" />
+			</Flex>
+			<Footer />
 		</Flex>
 	);
 };
