@@ -9,13 +9,13 @@ import {getAbsoluteImageUrl} from "../../../util";
 
 export interface ImageInputFormData {
 	upload?: File;
-	ref?: string | null;
-	url?: string | null;
+	ref?: string | undefined;
+	url?: string | undefined;
 }
 
 export type ImageInputControlProps = BaseProps;
 
-export function convertImageInputFormatToApiFormat(input?: ImageInputFormData | null) {
+export function convertImageInputFormatToApiFormat(input?: ImageInputFormData | undefined) {
 	if (input?.upload) {
 		return {upload: input.upload};
 	}
@@ -28,7 +28,7 @@ export function convertImageInputFormatToApiFormat(input?: ImageInputFormData | 
 }
 
 export function convertApiFormatToImageInputFormat(
-	input?: {url?: string | null; ref?: string | null} | null
+	input?: {url?: string | undefined; ref?: string | undefined} | null | undefined
 ): ImageInputFormData {
 	return {
 		url: input?.url,
@@ -38,7 +38,7 @@ export function convertApiFormatToImageInputFormat(
 
 export const ImageInputControl: FC<ImageInputControlProps> = React.forwardRef(
 	({name, label, ...rest}: ImageInputControlProps, ref: ForwardedRef<HTMLInputElement>) => {
-		const {setFieldValue, values} = useFormikContext<any>();
+		const {setFieldValue, values} = useFormikContext<Record<string, ImageInputFormData>>();
 		const value: ImageInputFormData = values[name];
 
 		const [

@@ -7,25 +7,24 @@ import {nominatimSearchEndpoint} from "../environment";
  * https://nominatim.org/release-docs/develop/api/Search/
  */
 async function queryPosition(parameters: Record<string, string | number>) {
-	const result = (
-		await axios.get<any[]>(nominatimSearchEndpoint, {
-			params: {
-				country: "de",
-				format: "jsonv2",
-				limit: 1,
-				...parameters,
-			},
-			headers: {"User-Agent": "freie-plaetze.de"},
-		})
-	).data;
+	const response = await axios.get<any[]>(nominatimSearchEndpoint, {
+		params: {
+			country: "de",
+			format: "jsonv2",
+			limit: 1,
+			...parameters,
+		},
+		headers: {"User-Agent": "freie-plaetze.de"},
+	});
 
 	// Console.log(result);
 
-	if (result.length === 0) {
+	if (response.data.length === 0) {
 		throw new Error("Position not found");
 	}
 
-	const {lat, lon} = result[0];
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const {lat, lon} = response.data[0];
 	return {
 		positionLat: Number.parseFloat(lat),
 		positionLng: Number.parseFloat(lon),
@@ -66,5 +65,6 @@ export async function getPositionFilters(cityOrZip: string, radius: number) {
 		};
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	return positionFilters;
 }

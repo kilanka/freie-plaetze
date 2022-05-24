@@ -25,8 +25,8 @@ import {useAppDispatch} from "../../store";
 import {logout, selectUser} from "../../store/auth";
 import {LinkButton} from "../next/LinkButton";
 import {Logo} from "./Logo";
-import {sidebarWidth} from "./Sidebar";
 
+export const sidebarWidth = 80;
 export const navBarHeight = 16;
 
 export interface NavBarProps extends FlexProps {

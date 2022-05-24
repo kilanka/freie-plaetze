@@ -25,7 +25,7 @@ const {withAuth} = createAuth({
 		skipKeystoneWelcome: true,
 	},
 	passwordResetLink: {
-		sendToken: async ({itemId, identity, token, context}) => {
+		async sendToken({itemId, identity, token, context}) {
 			const user = await context.db.User.findOne({where: {id: itemId as string}});
 			await sendPasswordResetTokenEmail(identity, (user as any).name, token);
 		},

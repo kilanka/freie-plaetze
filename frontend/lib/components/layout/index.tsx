@@ -1,10 +1,10 @@
-import {Box, Drawer, DrawerContent, Flex, useDisclosure} from "@chakra-ui/react";
+import {Drawer, DrawerContent, Flex, useDisclosure} from "@chakra-ui/react";
 import React, {ReactNode} from "react";
 
 import {useClientOnlyLoginState} from "../../hooks/useClientOnlyLoginState";
 import {Footer} from "./Footer";
-import {NavBar} from "./NavBar";
-import {Sidebar, sidebarWidth} from "./Sidebar";
+import {NavBar, sidebarWidth} from "./NavBar";
+import {Sidebar} from "./Sidebar";
 
 export interface LayoutProps {
 	children?: ReactNode;

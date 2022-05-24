@@ -4,7 +4,7 @@ import {destroyCookie, setCookie} from "nookies";
 
 import {getApolloClient} from "../api/apollo-client";
 import {LoginDocument, LoginMutation, LoginMutationVariables} from "../api/generated";
-import {AppState, AppThunkAction} from ".";
+import type {AppState, AppThunkAction} from ".";
 
 export const authSlice = createSlice({
 	name: "auth",
@@ -18,13 +18,13 @@ export const authSlice = createSlice({
 	},
 
 	reducers: {
-		loginSuccess: (
+		loginSuccess(
 			state,
 			action: PayloadAction<{
 				sessionToken: string;
 				user: {id: string; email: string; name: string};
 			}>
-		) => {
+		) {
 			setCookie(null, "keystonejs-session", action.payload.sessionToken, {
 				path: "/",
 				httpOnly: false,
@@ -33,23 +33,24 @@ export const authSlice = createSlice({
 			state.isUserLoggedIn = true;
 			state.user = action.payload.user;
 		},
-		loginError: (state) => {
+		loginError(state) {
 			state.isUserLoggedIn = false;
 			state.user = authSlice.getInitialState().user;
 		},
-		logout: (state) => {
+		logout(state) {
 			destroyCookie(null, "keystonejs-session");
 
 			state.isUserLoggedIn = false;
 			state.user = authSlice.getInitialState().user;
 		},
-		updateUserData: (state, action: PayloadAction<{email: string; name: string}>) => {
+		updateUserData(state, action: PayloadAction<{email: string; name: string}>) {
 			state.user.name = action.payload.name;
 			state.user.email = action.payload.email;
 		},
 	},
 
 	extraReducers: {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		[HYDRATE]: (state, {payload}) => ({...state, ...payload.auth}),
 	},
 });

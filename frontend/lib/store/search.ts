@@ -3,7 +3,7 @@ import {HYDRATE} from "next-redux-wrapper";
 
 import {InstitutionGenderType, InstitutionTypeType} from "../api/generated";
 import {stringToInt} from "../util";
-import {AppState} from ".";
+import type {AppState} from ".";
 
 export const searchSlice = createSlice({
 	name: "search",
@@ -17,17 +17,17 @@ export const searchSlice = createSlice({
 	},
 
 	reducers: {
-		setGeoSearch: (state, {payload}: PayloadAction<{cityOrZip: string; radius: number}>) => {
+		setGeoSearch(state, {payload}: PayloadAction<{cityOrZip: string; radius: number}>) {
 			state.cityOrZip = payload.cityOrZip;
 			state.radius = payload.radius;
 		},
-		setFiltersActive: (state, {payload}: PayloadAction<boolean>) => {
+		setFiltersActive(state, {payload}: PayloadAction<boolean>) {
 			state.areFiltersActive = payload;
 		},
-		setFilters: (
+		setFilters(
 			state,
 			{payload}: PayloadAction<{age: string; types: InstitutionTypeType[]; gender: "" | "f" | "m"}>
-		) => {
+		) {
 			state.age = payload.age;
 			state.types = payload.types;
 			state.gender = payload.gender;
@@ -35,6 +35,7 @@ export const searchSlice = createSlice({
 	},
 
 	extraReducers: {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		[HYDRATE]: (state, {payload}) => ({...state, ...payload.search}),
 	},
 });

@@ -7,17 +7,6 @@ import React from "react";
 import {getApolloClient} from "../lib/api/apollo-client";
 
 class DocumentWithApollo extends Document {
-	// Reference: https://gist.github.com/Tylerian/16d48e5850b407ba9e3654e17d334c1e
-	constructor(props: DocumentProps) {
-		super(props);
-
-		/**
-		 * Attach apolloState to the "global" __NEXT_DATA__ so we can populate the ApolloClient cache
-		 */
-		const {__NEXT_DATA__, apolloState} = props as any;
-		__NEXT_DATA__.apolloState = apolloState;
-	}
-
 	static async getInitialProps(ctx: DocumentContext) {
 		const apolloClient = getApolloClient();
 
@@ -41,6 +30,19 @@ class DocumentWithApollo extends Document {
 		const apolloState = apolloClient.extract();
 
 		return {...initialProps, apolloState};
+	}
+
+	constructor(props: DocumentProps) {
+		super(props);
+
+		/**
+		 * Attach apolloState to the "global" __NEXT_DATA__ so we can populate the ApolloClient cache
+		 */
+		// @ts-expect-error: `apolloState` is unknown
+		const {__NEXT_DATA__, apolloState} = props;
+		// @ts-expect-error: `apolloState` is unknown
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		__NEXT_DATA__.apolloState = apolloState;
 	}
 }
 

@@ -2,14 +2,12 @@ import {Box, BoxProps, CloseButton, Flex} from "@chakra-ui/react";
 import React from "react";
 
 import {Logo} from "./Logo";
-import {navBarHeight} from "./NavBar";
+import {navBarHeight, sidebarWidth} from "./NavBar";
 import {SidebarContent} from "./SidebarContent";
 
 export interface SidebarProps extends BoxProps {
 	onClose: () => void;
 }
-
-export const sidebarWidth = 80;
 
 export const Sidebar: React.FC<SidebarProps> = ({onClose, ...boxProps}) => {
 	return (

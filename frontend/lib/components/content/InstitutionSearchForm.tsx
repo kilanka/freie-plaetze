@@ -54,7 +54,7 @@ export const InstitutionSearchForm: React.FC = () => {
 			gender: searchValues.gender,
 		},
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		onSubmit: () => {},
+		onSubmit() {},
 	});
 
 	const debouncedCityOrZip = useDebounce(formik.values.cityOrZip, debounceDelay);

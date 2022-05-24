@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {KeystoneContext} from "@keystone-6/core/types";
 
 import {getInstitutions, users} from "./data";

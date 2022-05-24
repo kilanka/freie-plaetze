@@ -1,13 +1,11 @@
 import Head from "next/head";
-import React, {ReactText} from "react";
+import React from "react";
 
 export interface TitleProps {
-	children?: ReactText;
+	children?: string;
 }
 
-export const Title: React.FC<TitleProps> = ({children}) => {
-	const title = children as ReactText;
-
+export const Title: React.FC<TitleProps> = ({children: title}) => {
 	return (
 		<Head>
 			<title>{title ? `${title} – Freie Plätze` : "Freie Plätze"}</title>

@@ -87,10 +87,12 @@ export const partialInstitutionData = [
 async function getImage() {
 	const seed = faker.random.alphaNumeric(5);
 	const sourceUrl = `https://picsum.photos/seed/${seed}/600/400`;
-	const imageStream = (await fetch(sourceUrl)).body!;
+	const response = await fetch(sourceUrl);
+	const imageStream = response.body!;
 
 	const upload = new Upload();
-	// @ts-expect-error `resolve` unknown but it still works?
+	// @ts-expect-error `resolve` is unknown
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 	upload.resolve({
 		createReadStream: () => imageStream,
 		filename: `${seed}.jpg`,

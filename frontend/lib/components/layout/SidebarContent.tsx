@@ -9,8 +9,6 @@ import {useClientOnlyLoginState} from "../../hooks/useClientOnlyLoginState";
 import {selectUserId} from "../../store/auth";
 import {SidebarItem} from "./SidebarItem";
 
-export const sidebarWidth = 60;
-
 export interface SidebarContentProps {
 	onClose: () => void;
 }

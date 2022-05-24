@@ -1,4 +1,6 @@
-import {createHash} from "crypto";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import {createHash} from "node:crypto";
 
 import {graphQLSchemaExtension, list} from "@keystone-6/core";
 import {
@@ -47,7 +49,7 @@ export const lists = {
 		},
 		access: {
 			filter: {
-				query: (args: FilterArgs) => {
+				query(args: FilterArgs) {
 					if (!isUserLoggedIn(args)) return false;
 					if (isUserAdmin(args)) return true;
 					return {id: {equals: args.session?.data.id}};
@@ -89,7 +91,7 @@ export const lists = {
 			}),
 		},
 		hooks: {
-			beforeOperation: async ({operation, context, item}) => {
+			async beforeOperation({operation, context, item}) {
 				if (operation === "delete") {
 					// Delete the user's institutions
 					const institutions = await context.db.Institution.findMany({
@@ -100,7 +102,7 @@ export const lists = {
 					});
 				}
 			},
-			afterOperation: async ({operation, item}) => {
+			async afterOperation({operation, item}) {
 				if (operation === "create") {
 					await sendWelcomeEmail((item as any).email, (item as any).name);
 				}
@@ -204,7 +206,7 @@ export const lists = {
 			photo: image(),
 		},
 		hooks: {
-			resolveInput: async ({resolvedData, item, context}) => {
+			async resolveInput({resolvedData, item, context}) {
 				// Update position if at least one address field was updated
 				if (resolvedData.street || resolvedData.streetNumber || resolvedData.zip) {
 					Object.assign(
@@ -240,11 +242,12 @@ export const lists = {
 async function getInstitutionSearchFilters(args: {
 	cityOrZip: string;
 	radius: number;
-	age: number | null;
+	age: number | undefined;
 }) {
 	const positionFilters = await getPositionFilters(args.cityOrZip, args.radius);
 	const ageFilters = args.age ? {ageFrom: {lte: args.age}, ageTo: {gte: args.age}} : null;
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	return {...positionFilters, ...ageFilters};
 }
 
@@ -277,7 +280,7 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
     }`,
 	resolvers: {
 		Query: {
-			institutionSearchResults: async (root, {where, orderBy, limit, offset, ...args}, context) => {
+			async institutionSearchResults(root, {where, orderBy, limit, offset, ...args}, context) {
 				try {
 					return await context.db.Institution.findMany({
 						where: {...(await getInstitutionSearchFilters(args)), ...where},
@@ -289,7 +292,7 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
 					return [];
 				}
 			},
-			institutionSearchResultsCount: async (root, {where, ...args}, context) => {
+			async institutionSearchResultsCount(root, {where, ...args}, context) {
 				try {
 					return await context.db.Institution.count({
 						where: {...(await getInstitutionSearchFilters(args)), ...where},
@@ -299,7 +302,7 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
 				}
 			},
 
-			isEmailRegistered: async (root, {email}, context) => {
+			async isEmailRegistered(root, {email}, context) {
 				try {
 					return (
 						(await context.db.User.count({

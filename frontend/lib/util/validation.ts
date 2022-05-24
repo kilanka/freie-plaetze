@@ -9,7 +9,7 @@ export function yupSequentialStringSchema(schemas: yup.StringSchema[]) {
 				await schema.validate(value);
 			}
 		} catch (error: unknown) {
-			const message = (error as any).message;
+			const message = (error as yup.ValidationError).message;
 			return context.createError({message});
 		}
 

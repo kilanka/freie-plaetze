@@ -5,7 +5,9 @@ import {offsetLimitPagination} from "@apollo/client/utilities";
 import {createUploadLink} from "apollo-upload-client";
 
 const isServer = typeof window === "undefined";
-const windowApolloState = !isServer && (window.__NEXT_DATA__ as any).apolloState;
+// @ts-expect-error `apolloState` does not exist on `__NEXT_DATA__`
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+const windowApolloState = !isServer && window.__NEXT_DATA__.apolloState;
 
 type Client = ApolloClient<NormalizedCacheObject>;
 

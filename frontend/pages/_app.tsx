@@ -9,7 +9,7 @@ import {Layout} from "../lib/components/layout";
 import {wrapper} from "../lib/store";
 import theme from "../lib/theme";
 
-const MyApp = ({Component, pageProps}: AppProps) => {
+const MyApp: React.FC<AppProps> = ({Component, pageProps}) => {
 	const client = getApolloClient();
 
 	return (
