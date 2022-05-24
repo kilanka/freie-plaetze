@@ -49,7 +49,7 @@ const Page: NextPage = () => {
 				</Text>
 
 				<Heading size="md" mb={4}>
-					Angaben gemäß &sect; 5 TMG
+					Angaben gemäß § 5 TMG
 				</Heading>
 				<Text mb={4}>
 					Marcel Pohl
@@ -61,7 +61,7 @@ const Page: NextPage = () => {
 				<Text mb={8}>E-Mail: info@freie-plaetze.de</Text>
 
 				<Heading size="md" mb={4}>
-					Verbraucherstreitbeilegung
+					Information gemäß § 36 VSBG
 				</Heading>
 				<Text mb={8}>
 					Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
