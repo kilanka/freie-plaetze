@@ -12,12 +12,15 @@ generator client {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  name         String        @default("")
-  email        String        @unique @default("")
-  password     String
-  isAdmin      Boolean       @default(false)
-  institutions Institution[] @relation("Institution_owner")
+  id                      String        @id @default(cuid())
+  name                    String        @default("")
+  email                   String        @unique @default("")
+  password                String
+  isAdmin                 Boolean       @default(false)
+  institutions            Institution[] @relation("Institution_owner")
+  passwordResetToken      String?
+  passwordResetIssuedAt   DateTime?
+  passwordResetRedeemedAt DateTime?
 }
 
 model Institution {

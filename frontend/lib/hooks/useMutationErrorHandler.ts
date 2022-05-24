@@ -1,6 +1,12 @@
 import {ApolloError} from "@apollo/client";
 import {useToast} from "@chakra-ui/react";
 
+export class DetailError extends Error {
+	constructor(message?: string) {
+		super(message ?? "Bitte warten Sie einen Moment und versuchen Sie es dann erneut.");
+	}
+}
+
 export interface MutationErrorHandlerArguments {
 	/**
 	 * Infinitive description of what the mutation did
@@ -24,7 +30,9 @@ export function useMutationErrorHandler({process, successMessage}: MutationError
 			}
 		}
 
-		if (errorMessage.includes("Position not found")) {
+		if (error instanceof DetailError) {
+			errorMessage = error.message;
+		} else if (errorMessage.includes("Position not found")) {
 			errorTitle = "Adresse nicht gefunden";
 			errorMessage =
 				"Bitte überprüfen Sie die Adressdaten der Einrichtung und versuchen Sie es erneut.";

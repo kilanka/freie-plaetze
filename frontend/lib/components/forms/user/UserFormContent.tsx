@@ -1,10 +1,11 @@
-import {Box, Button, SimpleGrid, Stack} from "@chakra-ui/react";
+import {Box, Button, Stack} from "@chakra-ui/react";
 import {useFormikContext} from "formik";
 import {InputControl, SubmitButton} from "formik-chakra-ui";
 import React from "react";
 import * as yup from "yup";
 
 import {makeRequiredMessage} from "../../../util";
+import {passwordFieldsSchema} from "../../../util/validation";
 import {FormColumns} from "../FormColumns";
 
 export const userFormSchema = yup.object({
@@ -14,11 +15,7 @@ export const userFormSchema = yup.object({
 		.required(makeRequiredMessage("Ihre E-Mail-Adresse"))
 		.email("Ungültige E-Mail-Adresse"),
 	password: yup.string(),
-	confirmPassword: yup
-		.string()
-		.test("passwords-match", "Die Passwörter stimmen nicht überein.", function (value) {
-			return this.parent.password === value;
-		}),
+	confirmPassword: passwordFieldsSchema.confirmPassword,
 });
 
 export const userFormInitialValues = {

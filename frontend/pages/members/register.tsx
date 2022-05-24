@@ -14,6 +14,7 @@ import {Title} from "../../lib/components/Title";
 import {useMutationErrorHandler} from "../../lib/hooks/useMutationErrorHandler";
 import {useAppDispatch} from "../../lib/store";
 import {login} from "../../lib/store/auth";
+import {passwordFieldsSchema} from "../../lib/util/validation";
 
 const formSchema = yup.object({
 	name: yup.string().required("Bitte geben Sie Ihren Namen ein."),
@@ -21,15 +22,7 @@ const formSchema = yup.object({
 		.string()
 		.required("Bitte geben Sie Ihre E-Mail-Adresse ein")
 		.email("Ungültige E-Mail-Adresse"),
-	password: yup
-		.string()
-		.required("Bitte geben Sie ein Passwort ein")
-		.min(8, "Das Passwort muss mindestens 8 Zeichen lang sein."),
-	confirmPassword: yup
-		.string()
-		.test("passwords-match", "Die Passwörter stimmen nicht überein.", function (value) {
-			return this.parent.password === value;
-		}),
+	...passwordFieldsSchema,
 	consent: yup
 		.bool()
 		.required("Um sich zu registrieren, müssen Sie unsere Datenschutzerklärung akzeptieren.")

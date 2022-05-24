@@ -57,7 +57,7 @@ const Page: NextPage = () => {
 						<Stack spacing={10}>
 							<Stack direction={["column", "row"]} align="start" justify="space-between">
 								<Checkbox>Angemeldet bleiben</Checkbox>
-								<Link color="blue.400" href="/members/forgot-pass">
+								<Link color="blue.400" href="/members/reset-password">
 									Passwort vergessen?
 								</Link>
 							</Stack>

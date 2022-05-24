@@ -28,3 +28,10 @@ export async function sendMail(template: string, to: string, locals: Record<stri
 export async function sendWelcomeEmail(email: string, name: string) {
 	await sendMail("welcome", email, {name, email, editAccountLink: `${frontentUrl}/members/user`});
 }
+
+export async function sendPasswordResetTokenEmail(email: string, name: string, token: string) {
+	await sendMail("reset-password", email, {
+		name,
+		resetLink: `${frontentUrl}/members/reset-password?email=${email}&token=${token}`,
+	});
+}

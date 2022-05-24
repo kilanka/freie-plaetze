@@ -15,3 +15,7 @@ export function makeRequiredMessage(inputName: string) {
 export function institutionTypeToParagraphNumber(type: InstitutionTypeType) {
 	return type.slice(1);
 }
+
+export function normalizeQueryParameter(parameter?: string | string[]) {
+	return typeof parameter === "string" && parameter ? parameter : undefined;
+}

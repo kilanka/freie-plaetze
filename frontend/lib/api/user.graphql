@@ -1,3 +1,7 @@
+query isEmailRegistered($email: String!) {
+  isEmailRegistered(email: $email)
+}
+
 mutation registerUser($name: String!, $email: String!, $password: String!) {
   createUser(data: { email: $email, name: $name, password: $password }) {
     id
@@ -23,5 +27,15 @@ mutation updateUserPassword($userId: ID!, $password: String!) {
 mutation deleteUserAccount($userId: ID!) {
   deleteUser(where: { id: $userId }) {
     id
+  }
+}
+
+mutation sendPasswordResetLink($email: String!) {
+  sendUserPasswordResetLink(email: $email)
+}
+
+mutation resetPassword($email: String!, $token: String!, $password: String!) {
+  redeemUserPasswordResetToken(email: $email, token: $token, password: $password) {
+    code
   }
 }

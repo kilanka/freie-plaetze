@@ -10,6 +10,7 @@ import {
 	sessionMaxAge,
 	sessionSecret,
 } from "./environment";
+import {sendPasswordResetTokenEmail} from "./interactions/mail";
 import {extendGraphqlSchema, lists} from "./schema";
 import {insertSeedData} from "./seed";
 
@@ -22,6 +23,13 @@ const {withAuth} = createAuth({
 		fields: ["name", "email", "password"],
 		itemData: {isAdmin: true},
 		skipKeystoneWelcome: true,
+	},
+	passwordResetLink: {
+		sendToken: async ({itemId, identity, token, context}) => {
+			const user = await context.db.User.findOne({where: {id: itemId as string}});
+			await sendPasswordResetTokenEmail(identity, (user as any).name, token);
+		},
+		tokensValidForMins: 30,
 	},
 });
 

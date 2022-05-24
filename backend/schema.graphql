@@ -22,6 +22,7 @@ type Query {
     age: Int
     where: InstitutionWhereInput! = {}
   ): Int
+  isEmailRegistered(email: String!): Boolean!
   users(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []
@@ -40,6 +41,10 @@ type Query {
   institutionsCount(where: InstitutionWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
+  validateUserPasswordResetToken(
+    email: String!
+    token: String!
+  ): ValidateUserPasswordResetTokenResult
 }
 
 type User {
@@ -55,11 +60,17 @@ type User {
     skip: Int! = 0
   ): [Institution!]
   institutionsCount(where: InstitutionWhereInput! = {}): Int
+  passwordResetToken: PasswordState
+  passwordResetIssuedAt: DateTime
+  passwordResetRedeemedAt: DateTime
 }
 
 type PasswordState {
   isSet: Boolean!
 }
+
+scalar DateTime
+  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input UserWhereUniqueInput {
   id: ID
@@ -75,6 +86,9 @@ input UserWhereInput {
   email: StringFilter
   isAdmin: BooleanFilter
   institutions: InstitutionManyRelationFilter
+  passwordResetToken: PasswordFilter
+  passwordResetIssuedAt: DateTimeNullableFilter
+  passwordResetRedeemedAt: DateTimeNullableFilter
 }
 
 input IDFilter {
@@ -133,11 +147,28 @@ input InstitutionManyRelationFilter {
   none: InstitutionWhereInput
 }
 
+input PasswordFilter {
+  isSet: Boolean!
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
+}
+
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
   isAdmin: OrderDirection
+  passwordResetIssuedAt: OrderDirection
+  passwordResetRedeemedAt: OrderDirection
 }
 
 enum OrderDirection {
@@ -151,6 +182,9 @@ input UserUpdateInput {
   password: String
   isAdmin: Boolean
   institutions: InstitutionRelateToManyForUpdateInput
+  passwordResetToken: String
+  passwordResetIssuedAt: DateTime
+  passwordResetRedeemedAt: DateTime
 }
 
 input InstitutionRelateToManyForUpdateInput {
@@ -171,6 +205,9 @@ input UserCreateInput {
   password: String
   isAdmin: Boolean
   institutions: InstitutionRelateToManyForCreateInput
+  passwordResetToken: String
+  passwordResetIssuedAt: DateTime
+  passwordResetRedeemedAt: DateTime
 }
 
 input InstitutionRelateToManyForCreateInput {
@@ -205,9 +242,6 @@ type Institution {
   logo: ImageFieldOutput
   photo: ImageFieldOutput
 }
-
-scalar DateTime
-  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 enum InstitutionTypeType {
   p34
@@ -480,6 +514,12 @@ type Mutation {
   createInitialUser(
     data: CreateInitialUserInput!
   ): UserAuthenticationWithPasswordSuccess!
+  sendUserPasswordResetLink(email: String!): Boolean!
+  redeemUserPasswordResetToken(
+    email: String!
+    token: String!
+    password: String!
+  ): RedeemUserPasswordResetTokenResult
 }
 
 union UserAuthenticationWithPasswordResult =
@@ -501,7 +541,23 @@ input CreateInitialUserInput {
   password: String
 }
 
+type RedeemUserPasswordResetTokenResult {
+  code: PasswordResetRedemptionErrorCode!
+  message: String!
+}
+
+enum PasswordResetRedemptionErrorCode {
+  FAILURE
+  TOKEN_EXPIRED
+  TOKEN_REDEEMED
+}
+
 union AuthenticatedItem = User
+
+type ValidateUserPasswordResetTokenResult {
+  code: PasswordResetRedemptionErrorCode!
+  message: String!
+}
 
 type KeystoneMeta {
   adminMeta: KeystoneAdminMeta!

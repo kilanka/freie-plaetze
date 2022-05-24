@@ -271,6 +271,9 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
 				age: Int
         where: InstitutionWhereInput! = {}
       ): Int
+
+
+			isEmailRegistered(email: String!): Boolean!
     }`,
 	resolvers: {
 		Query: {
@@ -293,6 +296,18 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
 					});
 				} catch {
 					return 0;
+				}
+			},
+
+			isEmailRegistered: async (root, {email}, context) => {
+				try {
+					return (
+						(await context.db.User.count({
+							where: {email: {equals: email}},
+						})) > 0
+					);
+				} catch {
+					return false;
 				}
 			},
 		},
