@@ -37,8 +37,8 @@ export const AddInstitutionForm: React.FC = () => {
 							...data,
 							ageFrom: stringToInt(data.ageFrom),
 							ageTo: stringToInt(data.ageTo),
-							placesAvailable: stringToInt(data.placesAvailable),
-							placesTotal: stringToInt(data.placesTotal),
+							arePlacesAvailable: JSON.parse(data.arePlacesAvailable) as boolean,
+
 							photo: convertImageInputFormatToApiFormat(data.photo),
 							logo: convertImageInputFormatToApiFormat(data.logo),
 						},

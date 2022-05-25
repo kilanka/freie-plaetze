@@ -225,8 +225,7 @@ type Institution {
   gender: InstitutionGenderType!
   ageFrom: Int!
   ageTo: Int!
-  placesAvailable: Int!
-  placesTotal: Int!
+  arePlacesAvailable: Boolean!
   street: String!
   streetNumber: String!
   zip: String!
@@ -316,8 +315,7 @@ input InstitutionWhereInput {
   gender: InstitutionGenderTypeNullableFilter
   ageFrom: IntFilter
   ageTo: IntFilter
-  placesAvailable: IntFilter
-  placesTotal: IntFilter
+  arePlacesAvailable: BooleanFilter
   street: StringFilter
   streetNumber: StringFilter
   zip: StringFilter
@@ -387,8 +385,7 @@ input InstitutionOrderByInput {
   gender: OrderDirection
   ageFrom: OrderDirection
   ageTo: OrderDirection
-  placesAvailable: OrderDirection
-  placesTotal: OrderDirection
+  arePlacesAvailable: OrderDirection
   street: OrderDirection
   streetNumber: OrderDirection
   zip: OrderDirection
@@ -411,8 +408,7 @@ input InstitutionUpdateInput {
   gender: InstitutionGenderType
   ageFrom: Int
   ageTo: Int
-  placesAvailable: Int
-  placesTotal: Int
+  arePlacesAvailable: Boolean
   street: String
   streetNumber: String
   zip: String
@@ -459,8 +455,7 @@ input InstitutionCreateInput {
   gender: InstitutionGenderType!
   ageFrom: Int
   ageTo: Int
-  placesAvailable: Int
-  placesTotal: Int
+  arePlacesAvailable: Boolean
   street: String
   streetNumber: String
   zip: String

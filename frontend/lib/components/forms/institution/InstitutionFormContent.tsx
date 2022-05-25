@@ -21,12 +21,6 @@ export const institutionFormSchema = yup.object({
 
 	ageFrom: yup.number().required(makeRequiredMessage("das Mindestalter in Ihrer Einrichtung")),
 	ageTo: yup.number().required(makeRequiredMessage("das Höchstalter in Ihrer Einrichtung")),
-	placesAvailable: yup
-		.number()
-		.required(makeRequiredMessage("die Anzahl momentan freier Plätze in Ihrer Einrichtung")),
-	placesTotal: yup
-		.number()
-		.required(makeRequiredMessage("die Anzahl insgesamt verfügbarer Plätze in Ihrer Einrichtung")),
 
 	street: yup.string().required(""),
 	streetNumber: yup.string().required(""),
@@ -47,8 +41,7 @@ export const institutionFormInitialValues = {
 	gender: InstitutionGenderType.Mixed,
 	ageFrom: "",
 	ageTo: "",
-	placesAvailable: "",
-	placesTotal: "",
+	arePlacesAvailable: "true",
 	street: "",
 	streetNumber: "",
 	zip: "",
@@ -111,19 +104,11 @@ export const InstitutionFormContent: React.FC = () => {
 						label="Höchstalter"
 						numberInputProps={{min: 1}}
 					/>
-					<NumberInputControl
-						isRequired
-						name="placesAvailable"
-						label="Freie Plätze"
-						numberInputProps={{min: 0}}
-					/>
-					<NumberInputControl
-						isRequired
-						name="placesTotal"
-						label="Plätze insgesamt"
-						numberInputProps={{min: 1}}
-					/>
 				</FormColumns>
+				<SelectControl isRequired name="arePlacesAvailable" label="Gibt es aktuell freie Plätze?">
+					<option value="true">Ja</option>
+					<option value="false">Nein</option>
+				</SelectControl>
 			</Stack>
 
 			<Stack spacing={4}>

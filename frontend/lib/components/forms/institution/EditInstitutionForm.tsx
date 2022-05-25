@@ -4,6 +4,7 @@ import React from "react";
 
 import {useInstitutionByIdQuery, useUpdateInstitutionMutation} from "../../../api/generated";
 import {useMutationErrorHandler} from "../../../hooks/useMutationErrorHandler";
+import {stringToInt} from "../../../util";
 import {
 	convertApiFormatToImageInputFormat,
 	convertImageInputFormatToApiFormat,
@@ -38,8 +39,7 @@ export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institu
 						...institution,
 						ageFrom: institution.ageFrom.toString(),
 						ageTo: institution.ageTo.toString(),
-						placesAvailable: institution.placesAvailable.toString(),
-						placesTotal: institution.placesTotal.toString(),
+						arePlacesAvailable: JSON.stringify(institution.arePlacesAvailable),
 						homepage: institution.homepage ?? "",
 						email: institution.email ?? "",
 						phone: institution.phone ?? "",
@@ -71,10 +71,9 @@ export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institu
 						variables: {
 							institutionId,
 							...data,
-							ageFrom: Number.parseInt(data.ageFrom, 10),
-							ageTo: Number.parseInt(data.ageTo, 10),
-							placesAvailable: Number.parseInt(data.placesAvailable, 10),
-							placesTotal: Number.parseInt(data.placesTotal, 10),
+							ageFrom: stringToInt(data.ageFrom),
+							ageTo: stringToInt(data.ageTo),
+							arePlacesAvailable: JSON.parse(data.arePlacesAvailable) as boolean,
 							photo: convertImageInputFormatToApiFormat(data.photo),
 							logo: convertImageInputFormatToApiFormat(data.logo),
 						},

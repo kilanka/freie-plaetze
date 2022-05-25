@@ -175,12 +175,7 @@ export const lists = {
 				graphql: {read: {isNonNull: true}},
 			}),
 
-			placesAvailable: integer({
-				validation: {isRequired: true, min: 0},
-				graphql: {read: {isNonNull: true}},
-			}),
-			placesTotal: integer({
-				validation: {isRequired: true, min: 0},
+			arePlacesAvailable: checkbox({
 				graphql: {read: {isNonNull: true}},
 			}),
 

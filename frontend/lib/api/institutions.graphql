@@ -11,8 +11,7 @@ fragment Gist on Institution {
 }
 
 fragment PlacesStat on Institution {
-  placesAvailable
-  placesTotal
+  arePlacesAvailable
   lastUpdated
 }
 
@@ -60,7 +59,7 @@ query searchInstitutions(
     offset: $offset
     limit: $limit
     where: { gender: { in: $genderTypes }, type: { in: $institutionTypes } }
-    orderBy: { placesAvailable: desc }
+    orderBy: { arePlacesAvailable: desc }
   ) {
     ...BasicInstitutionInfo
   }
@@ -90,8 +89,7 @@ fragment TextualInstitutionFields on Institution {
   gender
   ageFrom
   ageTo
-  placesAvailable
-  placesTotal
+  arePlacesAvailable
   street
   streetNumber
   zip
@@ -131,8 +129,7 @@ mutation addInstitution(
   $gender: InstitutionGenderType!
   $ageFrom: Int!
   $ageTo: Int!
-  $placesAvailable: Int!
-  $placesTotal: Int!
+  $arePlacesAvailable: Boolean!
   $street: String!
   $streetNumber: String!
   $zip: String!
@@ -153,8 +150,7 @@ mutation addInstitution(
       gender: $gender
       ageFrom: $ageFrom
       ageTo: $ageTo
-      placesAvailable: $placesAvailable
-      placesTotal: $placesTotal
+      arePlacesAvailable: $arePlacesAvailable
       street: $street
       streetNumber: $streetNumber
       zip: $zip
@@ -188,8 +184,7 @@ mutation updateInstitution(
   $gender: InstitutionGenderType!
   $ageFrom: Int!
   $ageTo: Int!
-  $placesAvailable: Int!
-  $placesTotal: Int!
+  $arePlacesAvailable: Boolean!
   $street: String!
   $streetNumber: String!
   $zip: String!
@@ -210,8 +205,7 @@ mutation updateInstitution(
       gender: $gender
       ageFrom: $ageFrom
       ageTo: $ageTo
-      placesAvailable: $placesAvailable
-      placesTotal: $placesTotal
+      arePlacesAvailable: $arePlacesAvailable
       street: $street
       streetNumber: $streetNumber
       zip: $zip
@@ -230,10 +224,13 @@ mutation updateInstitution(
   }
 }
 
-mutation updateAvailablePlaces($institutionId: ID!, $placesAvailable: Int!) {
-  updateInstitution(where: { id: $institutionId }, data: { placesAvailable: $placesAvailable }) {
+mutation updateArePlacesAvailable($institutionId: ID!, $arePlacesAvailable: Boolean!) {
+  updateInstitution(
+    where: { id: $institutionId }
+    data: { arePlacesAvailable: $arePlacesAvailable }
+  ) {
     id
-    placesAvailable
+    arePlacesAvailable
     lastUpdated
   }
 }

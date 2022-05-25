@@ -1,9 +1,9 @@
 import {Stack} from "@chakra-ui/react";
 import {Form, Formik} from "formik";
-import {SliderControl, SubmitButton} from "formik-chakra-ui";
+import {SwitchControl} from "formik-chakra-ui";
 import React from "react";
 
-import {useInstitutionByIdQuery, useUpdateAvailablePlacesMutation} from "../../../api/generated";
+import {useInstitutionByIdQuery, useUpdateArePlacesAvailableMutation} from "../../../api/generated";
 import {useMutationErrorHandler} from "../../../hooks/useMutationErrorHandler";
 import {PlacesStat} from "../../content/institution/PlacesStat";
 import {FormContainer} from "../FormContainer";
@@ -15,10 +15,9 @@ export interface EditAvailablePlacesFormProps {
 export const EditAvailablePlacesForm: React.FC<EditAvailablePlacesFormProps> = ({
 	institutionId,
 }) => {
-	const [updateAvailablePlaces] = useUpdateAvailablePlacesMutation();
+	const [updateArePlacesAvailable] = useUpdateArePlacesAvailableMutation();
 	const {wrapMutationFunction} = useMutationErrorHandler({
-		process: "Aktualisieren der Einrichtung",
-		successMessage: "Freie Plätze erfolgreich aktualisiert",
+		process: "Aktualisieren der Angaben",
 	});
 
 	const {data} = useInstitutionByIdQuery({variables: {id: institutionId}});
@@ -29,7 +28,7 @@ export const EditAvailablePlacesForm: React.FC<EditAvailablePlacesFormProps> = (
 	}
 
 	const initialFormValues = {
-		placesAvailable: institution.placesAvailable,
+		arePlacesAvailable: institution.arePlacesAvailable,
 	};
 
 	return (
@@ -38,23 +37,17 @@ export const EditAvailablePlacesForm: React.FC<EditAvailablePlacesFormProps> = (
 				enableReinitialize
 				initialValues={initialFormValues}
 				onSubmit={wrapMutationFunction(async (data) => {
-					await updateAvailablePlaces({variables: {institutionId, ...data}});
+					await updateArePlacesAvailable({variables: {institutionId, ...data}});
 				})}
 			>
-				{({dirty: isDirty, values}) => (
-					<Stack as={Form} spacing={12}>
-						<PlacesStat
-							institution={institution}
-							overrideAvailablePlaces={values.placesAvailable}
+				{({submitForm}) => (
+					<Stack as={Form} spacing={4}>
+						<PlacesStat institution={institution} />
+						<SwitchControl
+							name="arePlacesAvailable"
+							label="Gibt es aktuell freie Plätze?"
+							onChange={submitForm}
 						/>
-						<SliderControl
-							name="placesAvailable"
-							sliderProps={{max: institution.placesTotal}}
-							helperText="Bewegen Sie den Slider, um die Anzahl freier Plätze in der Einrichtung einzustellen."
-						/>
-						<SubmitButton colorScheme="blue" isDisabled={!isDirty}>
-							Aktualisieren
-						</SubmitButton>
 					</Stack>
 				)}
 			</Formik>
