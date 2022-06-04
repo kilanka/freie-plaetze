@@ -8,8 +8,6 @@ import {InstitutionSearchResults} from "../lib/components/content/InstitutionSea
 import {InstitutionTypeListItem} from "../lib/components/content/InstitutionTypeListItem";
 import {HeaderSection} from "../lib/components/HeaderSection";
 import {Title} from "../lib/components/Title";
-import {institutionTypeNames} from "../lib/constants";
-import {institutionTypeToParagraphNumber} from "../lib/util";
 
 const HomePage: NextPage = () => {
 	return (
@@ -21,13 +19,8 @@ const HomePage: NextPage = () => {
 				<Stack gap={4}>
 					<Text>Hier finden Sie freie Plätze in Einrichtungen für folgende Hilfeformen:</Text>
 					<List spacing={4}>
-						{Object.entries(institutionTypeNames).map(([type, typeName]) => (
-							<InstitutionTypeListItem
-								key={type}
-								paragraph={institutionTypeToParagraphNumber(type as InstitutionTypeType)}
-							>
-								{typeName}
-							</InstitutionTypeListItem>
+						{Object.values(InstitutionTypeType).map((type) => (
+							<InstitutionTypeListItem key={type} type={type as InstitutionTypeType} />
 						))}
 					</List>
 				</Stack>

@@ -1,5 +1,3 @@
-import {InstitutionTypeType} from "../api/generated";
-
 export function getAbsoluteImageUrl(imagePath: string) {
 	return process.env.NEXT_PUBLIC_BACKEND_URL! + imagePath;
 }
@@ -12,8 +10,8 @@ export function makeRequiredMessage(inputName: string) {
 	return `Bitte geben Sie ${inputName} ein.`;
 }
 
-export function institutionTypeToParagraphNumber(type: InstitutionTypeType) {
-	return type.slice(1);
+export function makeParagraphURL(paragraph: string) {
+	return `https://www.gesetze-im-internet.de/sgb_8/__${paragraph}.html`;
 }
 
 export function normalizeQueryParameter(parameter?: string | string[]) {

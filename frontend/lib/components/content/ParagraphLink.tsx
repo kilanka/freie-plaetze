@@ -4,16 +4,12 @@ import {Link} from "../next/Link";
 
 interface ParagraphLinkProps {
 	paragraph: string;
+	href: string;
 	children?: React.ReactNode;
 }
 
-export const ParagraphLink: React.FC<ParagraphLinkProps> = ({paragraph, children}) => (
-	<Link
-		href={`https://www.gesetze-im-internet.de/sgb_8/__${paragraph}.html`}
-		textDecoration="underline"
-		textDecorationStyle="dotted"
-		target="_blank"
-	>
+export const ParagraphLink: React.FC<ParagraphLinkProps> = ({paragraph, href, children}) => (
+	<Link href={href} textDecoration="underline" textDecorationStyle="dotted" target="_blank">
 		{children ?? <>§&nbsp;{paragraph} SGB&nbsp;VIII</>}
 	</Link>
 );

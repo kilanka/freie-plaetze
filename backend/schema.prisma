@@ -64,6 +64,7 @@ model Institution {
 }
 
 enum InstitutionTypeType {
+  p13
   p34
   p35
   p35a

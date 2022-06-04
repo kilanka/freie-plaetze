@@ -2,19 +2,17 @@ import {ListIcon, ListItem} from "@chakra-ui/react";
 import React from "react";
 import {IoIosArrowDroprightCircle} from "react-icons/io";
 
-import {ParagraphLink} from "./ParagraphLink";
+import {InstitutionTypeType} from "../../api/generated";
+import {institutionTypeNames} from "../../constants";
+import {InstitutionTypeParagraphLink} from "./InstitutionTypeParagraphLink";
 
 export interface InstitutionTypeListItemProps {
-	paragraph: string;
-	children: React.ReactNode;
+	type: InstitutionTypeType;
 }
 
-export const InstitutionTypeListItem: React.FC<InstitutionTypeListItemProps> = ({
-	paragraph,
-	children,
-}) => (
+export const InstitutionTypeListItem: React.FC<InstitutionTypeListItemProps> = ({type}) => (
 	<ListItem>
 		<ListIcon as={IoIosArrowDroprightCircle} color="blue.500" boxSize={6} />
-		{children} (<ParagraphLink paragraph={paragraph} />)
+		{institutionTypeNames[type]} (<InstitutionTypeParagraphLink type={type} />)
 	</ListItem>
 );

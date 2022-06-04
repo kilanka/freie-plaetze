@@ -1,8 +1,11 @@
 import React from "react";
 
 import {GistFragment} from "../../../api/generated";
-import {institutionGenderNames, institutionTypeShortNames} from "../../../constants";
-import {institutionTypeToParagraphNumber} from "../../../util";
+import {
+	institutionGenderNames,
+	institutionTypeParagraphNumbers,
+	institutionTypeShortNames,
+} from "../../../constants";
 import {GistBullet} from "./GistBullet";
 import {InstitutionAgeRange} from "./InstitutionAgeRange";
 
@@ -19,7 +22,7 @@ export const Gist: React.FC<GistProps> = ({institution, hasInstitutionType}) => 
 			{hasInstitutionType && (
 				<>
 					{institutionTypeShortNames[institution.type]} (§&nbsp;
-					{institutionTypeToParagraphNumber(institution.type)})
+					{institutionTypeParagraphNumbers[institution.type]})
 					<GistBullet />
 				</>
 			)}

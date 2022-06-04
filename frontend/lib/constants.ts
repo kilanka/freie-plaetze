@@ -1,6 +1,26 @@
 import {InstitutionGenderType, InstitutionTypeType} from "./api/generated";
+import {makeParagraphURL} from "./util";
+
+export const institutionTypeParagraphNumbers: Record<InstitutionTypeType, string> = {
+	[InstitutionTypeType.P13]: "13,3",
+	[InstitutionTypeType.P34]: "34",
+	[InstitutionTypeType.P35]: "35",
+	[InstitutionTypeType.P35a]: "35a",
+	[InstitutionTypeType.P41]: "41",
+	[InstitutionTypeType.P42]: "42",
+};
+
+export const institutionTypeParagraphURLs: Record<InstitutionTypeType, string> = {
+	[InstitutionTypeType.P13]: makeParagraphURL("13"),
+	[InstitutionTypeType.P34]: makeParagraphURL("34"),
+	[InstitutionTypeType.P35]: makeParagraphURL("35"),
+	[InstitutionTypeType.P35a]: makeParagraphURL("35a"),
+	[InstitutionTypeType.P41]: makeParagraphURL("41"),
+	[InstitutionTypeType.P42]: makeParagraphURL("42"),
+};
 
 export const institutionTypeNames: Record<InstitutionTypeType, string> = {
+	[InstitutionTypeType.P13]: "Sozialpädagogisch begleitetes Wohnen",
 	[InstitutionTypeType.P34]: "Heimerziehung, sonstige betreute Wohnform",
 	[InstitutionTypeType.P35]: "Intensive sozialpädagogische Einzelbetreuung ",
 	[InstitutionTypeType.P35a]:
@@ -10,6 +30,7 @@ export const institutionTypeNames: Record<InstitutionTypeType, string> = {
 };
 
 export const institutionTypeShortNames: Record<InstitutionTypeType, string> = {
+	[InstitutionTypeType.P13]: "Begleitetes Wohnen",
 	[InstitutionTypeType.P34]: "Heimerziehung",
 	[InstitutionTypeType.P35]: "Einzelbetreuung",
 	[InstitutionTypeType.P35a]: "Eingliederungshilfe",

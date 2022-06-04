@@ -24,15 +24,15 @@ import {useSelector} from "react-redux";
 import {useDebounce} from "usehooks-ts";
 
 import {InstitutionTypeType} from "../../api/generated";
-import {institutionTypeShortNames} from "../../constants";
+import {institutionTypeParagraphNumbers, institutionTypeShortNames} from "../../constants";
 import {useAppDispatch} from "../../store";
 import {selectSearch, setFilters, setFiltersActive, setGeoSearch} from "../../store/search";
-import {institutionTypeToParagraphNumber, stringToInt} from "../../util";
+import {stringToInt} from "../../util";
 
 const debounceDelay = 700; // Ms
 
 const institutionTypeOptions = Object.entries(institutionTypeShortNames).map(([type, name]) => {
-	const paragraph = institutionTypeToParagraphNumber(type as InstitutionTypeType);
+	const paragraph = institutionTypeParagraphNumbers[type as InstitutionTypeType];
 	return {
 		value: type as InstitutionTypeType,
 		label: `${name} (§ ${paragraph} SGB 8) `,

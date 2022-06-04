@@ -7,6 +7,7 @@ import {ParagraphLink} from "../lib/components/content/ParagraphLink";
 import {HeaderSection} from "../lib/components/HeaderSection";
 import {Link} from "../lib/components/next/Link";
 import {Title} from "../lib/components/Title";
+import {makeParagraphURL} from "../lib/util";
 
 const Page: NextPage = () => {
 	return (
@@ -23,8 +24,10 @@ const Page: NextPage = () => {
 					</ListItem>
 					<ListItem>
 						<ListIcon as={TiInputChecked} boxSize={8} /> hilft, Sorgeberechtigte im Rahmen des{" "}
-						<ParagraphLink paragraph="5">Wunsch- und Wahlrechts</ParagraphLink> bei der Wahl des
-						Angebots zu beteiligen.
+						<ParagraphLink paragraph="5" href={makeParagraphURL("5")}>
+							Wunsch- und Wahlrechts
+						</ParagraphLink>{" "}
+						bei der Wahl des Angebots zu beteiligen.
 					</ListItem>
 					<ListItem>
 						<ListIcon as={TiInputChecked} boxSize={8} /> ist und bleibt für Besucher und

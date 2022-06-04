@@ -14,9 +14,9 @@ import {IoCall, IoHome, IoLocationSharp, IoMail, IoPhonePortrait} from "react-ic
 
 import {InstitutionPageContentFragment} from "../../../api/generated";
 import {institutionTypeNames} from "../../../constants";
-import {getAbsoluteImageUrl, institutionTypeToParagraphNumber} from "../../../util";
+import {getAbsoluteImageUrl} from "../../../util";
 import {Link} from "../../next/Link";
-import {ParagraphLink} from "../ParagraphLink";
+import {InstitutionTypeParagraphLink} from "../InstitutionTypeParagraphLink";
 import {Gist} from "./Gist";
 import {PlacesStat} from "./PlacesStat";
 
@@ -36,7 +36,7 @@ export const InstitutionPageContent: React.FC<InstitutionPageContentProps> = ({i
 			</Text>
 			<Text fontSize="lg" mb={8}>
 				Hilfeform: {institutionTypeNames[institution.type]} (
-				<ParagraphLink paragraph={institutionTypeToParagraphNumber(institution.type)} />)
+				<InstitutionTypeParagraphLink type={institution.type} />)
 			</Text>
 			<Stack spacing={{base: 4, md: 6}} divider={<StackDivider borderColor="gray.200" />}>
 				<Box>
