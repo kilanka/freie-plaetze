@@ -157,6 +157,8 @@ export const InstitutionSearchForm: React.FC = () => {
 						as={Stack}
 						gap={4}
 						bgColor="white"
+						borderWidth="1px"
+						borderColor="gray.100"
 						p={4}
 						mt={2}
 						maxWidth="container.sm"
