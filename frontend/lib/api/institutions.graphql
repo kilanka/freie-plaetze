@@ -57,7 +57,7 @@ query searchInstitutions(
     offset: $offset
     limit: $limit
     where: { gender: { in: $genderTypes }, type: { in: $institutionTypes } }
-    orderBy: { arePlacesAvailable: desc }
+    orderBy: [{ arePlacesAvailable: desc }, { lastUpdated: desc }]
   ) {
     ...BasicInstitutionInfo
   }

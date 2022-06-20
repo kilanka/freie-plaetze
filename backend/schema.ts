@@ -264,6 +264,7 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
         limit: Int
         offset: Int! = 0
       ): [Institution!]!
+
 			institutionSearchResultsCount(
 				radius: Int!
         cityOrZip: String
@@ -277,25 +278,31 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
 	resolvers: {
 		Query: {
 			async institutionSearchResults(root, {where, orderBy, limit, offset, ...args}, context) {
+				let institutionSearchFilters: any = {};
 				try {
-					return await context.db.Institution.findMany({
-						where: {...(await getInstitutionSearchFilters(args)), ...where},
-						orderBy,
-						skip: offset,
-						take: limit,
-					});
+					institutionSearchFilters = await getInstitutionSearchFilters(args);
 				} catch {
 					return [];
 				}
+
+				return context.db.Institution.findMany({
+					where: {...institutionSearchFilters, ...where},
+					orderBy,
+					skip: offset,
+					take: limit,
+				});
 			},
 			async institutionSearchResultsCount(root, {where, ...args}, context) {
+				let institutionSearchFilters: any = {};
 				try {
-					return await context.db.Institution.count({
-						where: {...(await getInstitutionSearchFilters(args)), ...where},
-					});
+					institutionSearchFilters = await getInstitutionSearchFilters(args);
 				} catch {
 					return 0;
 				}
+
+				return context.db.Institution.count({
+					where: {...institutionSearchFilters, ...where},
+				});
 			},
 
 			async isEmailRegistered(root, {email}, context) {
