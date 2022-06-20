@@ -1,5 +1,6 @@
 import {
 	Box,
+	Flex,
 	Grid,
 	GridItem,
 	Heading,
@@ -14,7 +15,6 @@ import {IoCall, IoHome, IoLocationSharp, IoMail, IoPhonePortrait} from "react-ic
 
 import {InstitutionPageContentFragment} from "../../../api/generated";
 import {institutionTypeNames} from "../../../constants";
-import {getAbsoluteImageUrl} from "../../../util";
 import {Link} from "../../next/Link";
 import {InstitutionTypeParagraphLink} from "../InstitutionTypeParagraphLink";
 import {Gist} from "./Gist";
@@ -98,8 +98,13 @@ export const InstitutionPageContent: React.FC<InstitutionPageContentProps> = ({i
 			</Stack>
 		</GridItem>
 		<GridItem>
-			{institution.photo?.url && (
-				<Image src={getAbsoluteImageUrl(institution.photo.url)} rounded="md" w="100%" />
+			{institution.logoUrl && (
+				<Flex justify="center" mb={8}>
+					<Image src={institution.logoUrl} rounded="md" w={{base: "100%", sm: "70%"}} />
+				</Flex>
+			)}
+			{institution.photoInstitutionPageUrl && (
+				<Image src={institution.photoInstitutionPageUrl} rounded="md" w="100%" />
 			)}
 		</GridItem>
 	</Grid>

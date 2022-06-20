@@ -4,7 +4,6 @@ import NextLink from "next/link";
 import React from "react";
 
 import {BasicInstitutionInfoFragment} from "../../../api/generated";
-import {getAbsoluteImageUrl} from "../../../util";
 import {Gist} from "./Gist";
 import {PlacesStat} from "./PlacesStat";
 
@@ -64,9 +63,9 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 				</Text>
 
 				<Box order={2} position="relative" width={{base: "100%", md: 64}}>
-					{(institution.photo?.url && (
+					{(institution.photoListItemUrl && (
 						<Img
-							src={getAbsoluteImageUrl(institution.photo.url)}
+							src={institution.photoListItemUrl}
 							objectFit="cover"
 							position={{md: "absolute"}}
 							width="100%"

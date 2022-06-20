@@ -1,4 +1,5 @@
 import {loadEnvConfig} from "@next/env";
+import Imgproxy from "imgproxy";
 
 loadEnvConfig(process.cwd());
 
@@ -19,3 +20,11 @@ if (!secret) {
 
 export const sessionSecret = secret;
 export const sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
+
+export const imgproxy = new Imgproxy({
+	baseUrl: process.env.IMGPROXY_URL!,
+	key: process.env.IMGPROXY_KEY!,
+	salt: process.env.IMGPROXY_SALT!,
+	encode: true,
+	insecure: false,
+});

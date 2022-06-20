@@ -86,7 +86,7 @@ export const partialInstitutionData = [
 
 async function getImage() {
 	const seed = faker.random.alphaNumeric(5);
-	const sourceUrl = `https://picsum.photos/seed/${seed}/600/400`;
+	const sourceUrl = `https://picsum.photos/seed/${seed}/2400/1600`;
 	const response = await fetch(sourceUrl);
 	const imageStream = response.body!;
 

@@ -15,23 +15,34 @@ fragment PlacesStat on Institution {
   lastUpdated
 }
 
+fragment InstitutionPhoto on Institution {
+  photo {
+    url
+  }
+  photoListItemUrl: photoUrl(format: institutionListItem)
+  photoInstitutionPageUrl: photoUrl(format: institutionPage)
+}
+
+fragment InstitutionLogo on Institution {
+  logo {
+    url
+  }
+  logoUrl(format: institutionPage)
+}
+
 fragment BasicInstitutionInfo on Institution {
   id
   slug
   name
-  photo {
-    url
-  }
+  ...InstitutionPhoto
   ...PlacesStat
   ...Gist
 }
 
 fragment InstitutionPageContent on Institution {
   ...BasicInstitutionInfo
+  ...InstitutionLogo
   descriptionPlain
-  logo {
-    url
-  }
   street
   streetNumber
   zip
@@ -101,12 +112,8 @@ fragment TextualInstitutionFields on Institution {
 
 fragment EditableInstitutionFields on Institution {
   ...TextualInstitutionFields
-  photo {
-    url
-  }
-  logo {
-    url
-  }
+  ...InstitutionPhoto
+  ...InstitutionLogo
 }
 
 query myInstitutions($userId: ID!) {

@@ -20,6 +20,7 @@ import {isProduction} from "./environment";
 import {getPositionByAddress, getPositionFilters} from "./interactions/geo";
 import {sendWelcomeEmail} from "./interactions/mail";
 import {slugify} from "./util";
+import {makeImageFormatField} from "./util/image-formats";
 
 type FilterArgs = {
 	session?: {
@@ -199,7 +200,21 @@ export const lists = {
 			descriptionPlain: text(),
 
 			logo: image({storage: "images"}),
+			logoUrl: makeImageFormatField("Institution", "logo", {
+				institutionPage(builder) {
+					builder.resize("fit", 600, 200);
+				},
+			}),
+
 			photo: image({storage: "images"}),
+			photoUrl: makeImageFormatField("Institution", "photo", {
+				institutionListItem(builder) {
+					builder.resize("fill", 600, 400);
+				},
+				institutionPage(builder) {
+					builder.width(800);
+				},
+			}),
 		},
 		hooks: {
 			async resolveInput({resolvedData, item, context}) {

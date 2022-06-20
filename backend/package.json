@@ -21,6 +21,7 @@
     "@turf/helpers": "^6.5.0",
     "axios": "^0.27.2",
     "email-templates": "^9.0.0",
+    "imgproxy": "^1.0.0",
     "lodash": "^4.17.21",
     "nodemailer": "^6.7.5",
     "pug": "^3.0.2",

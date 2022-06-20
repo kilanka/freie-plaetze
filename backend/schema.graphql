@@ -239,7 +239,9 @@ type Institution {
   description: Institution_description_Document
   descriptionPlain: String
   logo: ImageFieldOutput
+  logoUrl(format: InstitutionLogoImageFormats): String
   photo: ImageFieldOutput
+  photoUrl(format: InstitutionPhotoImageFormats): String
 }
 
 enum InstitutionTypeType {
@@ -275,6 +277,15 @@ enum ImageExtension {
   png
   webp
   gif
+}
+
+enum InstitutionLogoImageFormats {
+  institutionPage
+}
+
+enum InstitutionPhotoImageFormats {
+  institutionListItem
+  institutionPage
 }
 
 input InstitutionWhereUniqueInput {

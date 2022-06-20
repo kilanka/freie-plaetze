@@ -9,8 +9,30 @@ services:
     ports:
       - 5432:5432
 
+  imgproxy:
+    image: darthsim/imgproxy:v3.6.0
+    volumes:
+      - ./backend/images:/images
+    environment:
+      IMGPROXY_KEY: 42
+      IMGPROXY_SALT: 42
+      IMGPROXY_LOCAL_FILESYSTEM_ROOT: /images
+      IMGPROXY_BASE_URL: local:///
+      IMGPROXY_ENABLE_WEBP_DETECTION: "true"
+      IMGPROXY_ENABLE_AVIF_DETECTION: "true"
+      IMGPROXY_DEVELOPMENT_ERRORS_MODE: "true"
+    ports:
+      - 8081:8080
+
   backend:
     build: .
+    depends_on:
+      - db
+    volumes:
+      - ./backend/images:/images
     environment:
       APP_ENV: staging
       DATABASE_URL: postgres://pguser:pgpass@db:5432/pguser
+      IMAGES_PATH: /images
+    ports:
+      - 3000:3000
