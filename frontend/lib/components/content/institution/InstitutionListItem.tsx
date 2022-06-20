@@ -1,6 +1,8 @@
-import {Grid, Heading, Img, LinkBox, LinkOverlay, Stack, Text} from "@chakra-ui/react";
+import {QuestionOutlineIcon} from "@chakra-ui/icons";
+import {Box, Flex, Grid, Heading, Img, LinkBox, LinkOverlay, Stack, Text} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
+import {IoHelpCircle} from "react-icons/io5";
 
 import {BasicInstitutionInfoFragment} from "../../../api/generated";
 import {getAbsoluteImageUrl} from "../../../util";
@@ -62,15 +64,27 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 					<Gist hasInstitutionType institution={institution} />
 				</Text>
 
-				{institution.photo?.url && (
-					<Img
-						order={2}
-						src={getAbsoluteImageUrl(institution.photo.url)}
-						h={{md: 36}}
-						w={{base: "100%", md: 64}}
-						objectFit="cover"
-					/>
-				)}
+				<Box order={2}>
+					{(institution.photo?.url && (
+						<Img
+							src={getAbsoluteImageUrl(institution.photo.url)}
+							objectFit="cover"
+							width={{base: "100%", md: 64}}
+							h={{md: 36}}
+						/>
+					)) || (
+						<Flex
+							display={{base: "none", md: "flex"}}
+							width={64}
+							height="100%"
+							justify="center"
+							align="center"
+							bgColor="gray.100"
+						>
+							<QuestionOutlineIcon boxSize={10} color="gray.300" />
+						</Flex>
+					)}
+				</Box>
 			</Grid>
 		</LinkBox>
 	);
