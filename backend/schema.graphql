@@ -261,13 +261,12 @@ type Institution_description_Document {
   document(hydrateRelationships: Boolean! = false): JSON!
 }
 
-interface ImageFieldOutput {
+type ImageFieldOutput {
   id: ID!
   filesize: Int!
   width: Int!
   height: Int!
   extension: ImageExtension!
-  ref: String!
   url: String!
 }
 
@@ -281,26 +280,6 @@ enum ImageExtension {
 input InstitutionWhereUniqueInput {
   id: ID
   slug: String
-}
-
-type LocalImageFieldOutput implements ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
-  ref: String!
-  url: String!
-}
-
-type CloudImageFieldOutput implements ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
-  ref: String!
-  url: String!
 }
 
 input InstitutionWhereInput {
@@ -433,8 +412,7 @@ input UserRelateToOneForUpdateInput {
 }
 
 input ImageFieldInput {
-  upload: Upload
-  ref: String
+  upload: Upload!
 }
 
 """

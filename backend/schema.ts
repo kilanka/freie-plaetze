@@ -198,8 +198,8 @@ export const lists = {
 			description: document(),
 			descriptionPlain: text(),
 
-			logo: image(),
-			photo: image(),
+			logo: image({storage: "images"}),
+			photo: image({storage: "images"}),
 		},
 		hooks: {
 			async resolveInput({resolvedData, item, context}) {

@@ -4,17 +4,19 @@
   "private": true,
   "scripts": {
     "dev": "keystone dev",
+    "seed": "npm run dev -- --seed",
     "start": "npm run migrate:deploy && keystone start",
     "build": "keystone build",
     "postinstall": "keystone postinstall",
     "migrate:deploy": "keystone prisma migrate deploy",
-    "migrate:draft": "keystone prisma migrate dev --create-only"
+    "migrate:draft": "keystone prisma migrate dev --create-only",
+    "migrate:reset": "keystone prisma migrate reset"
   },
   "dependencies": {
-    "@faker-js/faker": "^6.3.1",
-    "@keystone-6/auth": "2.0.0",
-    "@keystone-6/core": "1.1.0",
-    "@keystone-6/fields-document": "2.0.0",
+    "@faker-js/faker": "^7.2.0",
+    "@keystone-6/auth": "3.0.0",
+    "@keystone-6/core": "2.0.0",
+    "@keystone-6/fields-document": "3.0.0",
     "@next/env": "^12.1.6",
     "@turf/helpers": "^6.5.0",
     "axios": "^0.27.2",
@@ -27,7 +29,7 @@
   "devDependencies": {
     "@types/email-templates": "^8.0.4",
     "@types/nodemailer": "^6.4.4",
-    "typescript": "^4.6.4",
-    "undici": "^5.1.1"
+    "typescript": "^4.7.4",
+    "undici": "^5.5.1"
   }
 }

@@ -54,13 +54,20 @@ export default withAuth(
 			},
 		},
 		ui: {
-			isAccessAllowed: (context) => Boolean(context.session?.data),
+			isAccessAllowed: (context) => Boolean(context.session?.data.isAdmin),
 		},
 		lists,
 		session,
-		images: {
-			upload: "local",
-			local: {storagePath: imagesPath, baseUrl: "/images"},
+		storage: {
+			images: {
+				kind: "local",
+				type: "image",
+				generateUrl: (path) => `/images${path}`,
+				serverRoute: {
+					path: "/images",
+				},
+				storagePath: imagesPath,
+			},
 		},
 		extendGraphqlSchema,
 	})

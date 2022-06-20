@@ -21,7 +21,6 @@ fragment BasicInstitutionInfo on Institution {
   name
   photo {
     url
-    ref
   }
   ...PlacesStat
   ...Gist
@@ -32,7 +31,6 @@ fragment InstitutionPageContent on Institution {
   descriptionPlain
   logo {
     url
-    ref
   }
   street
   streetNumber
@@ -105,11 +103,9 @@ fragment EditableInstitutionFields on Institution {
   ...TextualInstitutionFields
   photo {
     url
-    ref
   }
   logo {
     url
-    ref
   }
 }
 
