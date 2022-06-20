@@ -2,9 +2,9 @@ import {ListIcon, ListItem} from "@chakra-ui/react";
 import React from "react";
 import {IoIosArrowDroprightCircle} from "react-icons/io";
 
-import {InstitutionTypeType} from "../../api/generated";
-import {institutionTypeNames} from "../../constants";
-import {InstitutionTypeParagraphLink} from "./InstitutionTypeParagraphLink";
+import {InstitutionTypeType} from "../../../api/generated";
+import {institutionTypeNames} from "../../../constants";
+import {InstitutionTypeParagraphLink} from "../InstitutionTypeParagraphLink";
 
 export interface InstitutionTypeListItemProps {
 	type: InstitutionTypeType;

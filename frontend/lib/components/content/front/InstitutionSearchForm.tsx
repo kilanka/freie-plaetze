@@ -23,11 +23,11 @@ import {MdClose, MdOutlineFilterAlt} from "react-icons/md";
 import {useSelector} from "react-redux";
 import {useDebounce} from "usehooks-ts";
 
-import {InstitutionTypeType} from "../../api/generated";
-import {institutionTypeParagraphNumbers, institutionTypeShortNames} from "../../constants";
-import {useAppDispatch} from "../../store";
-import {selectSearch, setFilters, setFiltersActive, setGeoSearch} from "../../store/search";
-import {stringToInt} from "../../util";
+import {InstitutionTypeType} from "../../../api/generated";
+import {institutionTypeParagraphNumbers, institutionTypeShortNames} from "../../../constants";
+import {useAppDispatch} from "../../../store";
+import {selectSearch, setFilters, setFiltersActive, setGeoSearch} from "../../../store/search";
+import {stringToInt} from "../../../util";
 
 const debounceDelay = 700; // Ms
 

@@ -4,11 +4,11 @@ import React from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import {useSelector} from "react-redux";
 
-import {useSearchInstitutionsQuery} from "../../api/generated";
-import {selectSearch, selectSearchArgs} from "../../store/search";
-import {LinkButton} from "../next/LinkButton";
-import {InstitutionListItem} from "./institution/InstitutionListItem";
-import {InstitutionStack} from "./InstitutionStack";
+import {useSearchInstitutionsQuery} from "../../../api/generated";
+import {selectSearch, selectSearchArgs} from "../../../store/search";
+import {LinkButton} from "../../next/LinkButton";
+import {InstitutionListItem} from "../institution/InstitutionListItem";
+import {InstitutionStack} from "../InstitutionStack";
 
 const batchSize = 7;
 

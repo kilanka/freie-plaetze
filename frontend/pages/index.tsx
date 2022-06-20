@@ -3,9 +3,9 @@ import {NextPage} from "next";
 import React from "react";
 
 import {InstitutionTypeType} from "../lib/api/generated";
-import {InstitutionSearchForm} from "../lib/components/content/InstitutionSearchForm";
-import {InstitutionSearchResults} from "../lib/components/content/InstitutionSearchResults";
-import {InstitutionTypeListItem} from "../lib/components/content/InstitutionTypeListItem";
+import {InstitutionSearchForm} from "../lib/components/content/front/InstitutionSearchForm";
+import {InstitutionSearchResults} from "../lib/components/content/front/InstitutionSearchResults";
+import {InstitutionTypeListItem} from "../lib/components/content/front/InstitutionTypeListItem";
 import {HeaderSection} from "../lib/components/HeaderSection";
 import {Title} from "../lib/components/Title";
 
