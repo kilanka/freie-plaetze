@@ -38,7 +38,7 @@ export function makeImageFormatField(
 
 				const builder = imgproxy.builder();
 				imageFormats[format](builder);
-				return builder.generateUrl(`${imageId}.${imageExtension}`);
+				return builder.format("webp").generateUrl(`${imageId}.${imageExtension}`);
 			},
 		}),
 	});
