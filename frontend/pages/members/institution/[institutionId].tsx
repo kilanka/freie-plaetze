@@ -9,7 +9,6 @@ import {DeleteInstitutionForm} from "../../../lib/components/forms/institution/D
 import {EditAvailablePlacesForm} from "../../../lib/components/forms/institution/EditAvailablePlacesForm";
 import {EditInstitutionForm} from "../../../lib/components/forms/institution/EditInstitutionForm";
 import {Title} from "../../../lib/components/Title";
-import {membersOnlyGetInitialProps} from "../../../lib/util/access";
 
 const Page: NextPage = () => {
 	const router = useRouter();
@@ -57,7 +56,5 @@ const Page: NextPage = () => {
 		</Container>
 	);
 };
-
-Page.getInitialProps = membersOnlyGetInitialProps;
 
 export default Page;

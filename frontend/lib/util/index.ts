@@ -1,3 +1,5 @@
+import {decompressFromEncodedURIComponent} from "lz-string";
+
 export function getAbsoluteImageUrl(imagePath: string) {
 	return process.env.NEXT_PUBLIC_BACKEND_URL! + imagePath;
 }
@@ -16,4 +18,15 @@ export function makeParagraphURL(paragraph: string) {
 
 export function normalizeQueryParameter(parameter?: string | string[]) {
 	return typeof parameter === "string" && parameter ? parameter : undefined;
+}
+
+export function parseCookie(cookieValue: string | undefined): any {
+	if (!cookieValue) return;
+
+	const decompressedCookie = decompressFromEncodedURIComponent(cookieValue);
+	if (typeof decompressedCookie !== "string") return;
+
+	try {
+		return JSON.parse(decompressedCookie);
+	} catch {}
 }

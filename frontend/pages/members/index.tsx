@@ -8,7 +8,6 @@ import {InstitutionListItem} from "../../lib/components/content/institution/Inst
 import {InstitutionStack} from "../../lib/components/content/InstitutionStack";
 import {Title} from "../../lib/components/Title";
 import {selectUserId} from "../../lib/store/auth";
-import {membersOnlyGetInitialProps} from "../../lib/util/access";
 
 const Page: NextPage = () => {
 	const userId = useSelector(selectUserId);
@@ -32,7 +31,5 @@ const Page: NextPage = () => {
 		</Container>
 	);
 };
-
-Page.getInitialProps = membersOnlyGetInitialProps;
 
 export default Page;

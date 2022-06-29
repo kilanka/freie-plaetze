@@ -4,7 +4,6 @@ import React from "react";
 
 import {AddInstitutionForm} from "../../lib/components/forms/institution/AddInstitutionForm";
 import {Title} from "../../lib/components/Title";
-import {membersOnlyGetInitialProps} from "../../lib/util/access";
 
 const Page: NextPage = () => {
 	return (
@@ -14,7 +13,5 @@ const Page: NextPage = () => {
 		</Container>
 	);
 };
-
-Page.getInitialProps = membersOnlyGetInitialProps;
 
 export default Page;
