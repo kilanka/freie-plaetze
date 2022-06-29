@@ -100,7 +100,7 @@ export const InstitutionPageContent: React.FC<InstitutionPageContentProps> = ({i
 		<GridItem>
 			{institution.logoUrl && (
 				<Flex justify="center" mb={8}>
-					<Image src={institution.logoUrl} rounded="md" w={{base: "100%", sm: "70%"}} />
+					<Image src={institution.logoUrl} rounded="md" w="70%" />
 				</Flex>
 			)}
 			{institution.photoInstitutionPageUrl && (

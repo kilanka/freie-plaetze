@@ -1,5 +1,5 @@
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
-import {Box, Flex, Grid, Heading, Img, LinkBox, LinkOverlay, Stack, Text} from "@chakra-ui/react";
+import {Flex, Grid, Heading, LinkBox, LinkOverlay, Stack, Text} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
 
@@ -50,6 +50,7 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 					institution={institution}
 					alignSelf="center"
 					textAlign="center"
+					zIndex={0}
 				/>
 
 				<Text
@@ -62,27 +63,27 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 					<Gist hasInstitutionType institution={institution} />
 				</Text>
 
-				<Box order={2} position="relative" width={{base: "100%", md: 64}}>
-					{(institution.photoListItemUrl && (
-						<Img
-							src={institution.photoListItemUrl}
-							objectFit="cover"
-							position={{md: "absolute"}}
-							width="100%"
-							height="100%"
+				<Flex
+					order={2}
+					width={{base: "100%", md: 64}}
+					height={{base: institution.photoListItemUrl ? 56 : 0, md: "100%"}}
+					bgColor={institution.photoListItemUrl ? "transparent" : "gray.100"}
+					backgroundImage={
+						institution.photoListItemUrl ? `url("${institution.photoListItemUrl}")` : undefined
+					}
+					backgroundSize="cover"
+					backgroundPosition="center"
+					justify="center"
+					align="center"
+				>
+					{!institution.photoListItemUrl && (
+						<QuestionOutlineIcon
+							display={{base: "none", md: "block"}}
+							boxSize={10}
+							color="gray.300"
 						/>
-					)) || (
-						<Flex
-							display={{base: "none", md: "flex"}}
-							height="100%"
-							justify="center"
-							align="center"
-							bgColor="gray.100"
-						>
-							<QuestionOutlineIcon boxSize={10} color="gray.300" />
-						</Flex>
 					)}
-				</Box>
+				</Flex>
 			</Grid>
 		</LinkBox>
 	);

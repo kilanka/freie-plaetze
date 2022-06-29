@@ -42,7 +42,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
 			>
 				{children}
 			</Flex>
-			<Footer />
+			<Footer ml={{md: isUserLoggedIn ? sidebarWidth : 0}} />
 		</Flex>
 	);
 };
