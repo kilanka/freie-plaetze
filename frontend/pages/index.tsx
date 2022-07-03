@@ -16,6 +16,7 @@ import {HeaderSection} from "../lib/components/HeaderSection";
 import {Title} from "../lib/components/Title";
 import {wrapper} from "../lib/store";
 import {selectSearchArgs} from "../lib/store/search";
+import {isServer} from "../lib/util";
 
 export const getStaticProps = wrapper.getStaticProps((store) => async () => {
 	const apolloClient = getApolloClient();
@@ -35,7 +36,13 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
 
 const HomePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({apolloCache}) => {
 	const apolloClient = useApolloClient();
-	apolloClient.restore(apolloCache);
+
+	if (isServer || typeof (window as any).isApolloHydrated === "undefined") {
+		apolloClient.restore(apolloCache);
+		if (!isServer) {
+			(window as any).isApolloHydrated = true;
+		}
+	}
 
 	return (
 		<>

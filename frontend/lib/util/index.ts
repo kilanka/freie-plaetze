@@ -1,5 +1,7 @@
 import {decompressFromEncodedURIComponent} from "lz-string";
 
+export const isServer = typeof window === "undefined";
+
 export function getAbsoluteImageUrl(imagePath: string) {
 	return process.env.NEXT_PUBLIC_BACKEND_URL! + imagePath;
 }
