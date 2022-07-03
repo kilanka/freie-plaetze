@@ -1,15 +1,42 @@
+import {useApolloClient} from "@apollo/client";
 import {Container, Heading, List, Stack, Text} from "@chakra-ui/react";
-import {NextPage} from "next";
+import {InferGetStaticPropsType, NextPage} from "next";
 import React from "react";
 
+import {getApolloClient} from "../lib/api/apollo-client";
 import {InstitutionTypeType} from "../lib/api/generated";
+import {getSdk} from "../lib/api/generated/ssr";
 import {InstitutionSearchForm} from "../lib/components/content/front/InstitutionSearchForm";
-import {InstitutionSearchResults} from "../lib/components/content/front/InstitutionSearchResults";
+import {
+	InstitutionSearchResults,
+	institutionSearchBatchSize,
+} from "../lib/components/content/front/InstitutionSearchResults";
 import {InstitutionTypeListItem} from "../lib/components/content/front/InstitutionTypeListItem";
 import {HeaderSection} from "../lib/components/HeaderSection";
 import {Title} from "../lib/components/Title";
+import {wrapper} from "../lib/store";
+import {selectSearchArgs} from "../lib/store/search";
 
-const HomePage: NextPage = () => {
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+	const apolloClient = getApolloClient();
+	await getSdk(apolloClient).searchInstitutionsQuery({
+		variables: {
+			...selectSearchArgs(store.getState()),
+			limit: institutionSearchBatchSize,
+		},
+	});
+	const apolloCache = apolloClient.extract();
+
+	return {
+		props: {apolloCache},
+		revalidate: 60,
+	};
+});
+
+const HomePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({apolloCache}) => {
+	const apolloClient = useApolloClient();
+	apolloClient.restore(apolloCache);
+
 	return (
 		<>
 			<Title />

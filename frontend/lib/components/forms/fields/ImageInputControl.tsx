@@ -19,6 +19,7 @@ export function convertImageInputFormatToApiFormat(input?: ImageInputFormData | 
 }
 
 export function convertApiFormatToImageInputFormat(
+	// eslint-disable-next-line @typescript-eslint/ban-types
 	input?: {url?: string | undefined} | null | undefined
 ): ImageInputFormData {
 	return {

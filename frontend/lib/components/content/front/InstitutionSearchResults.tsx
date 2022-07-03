@@ -10,14 +10,14 @@ import {LinkButton} from "../../next/LinkButton";
 import {InstitutionListItem} from "../institution/InstitutionListItem";
 import {InstitutionStack} from "../InstitutionStack";
 
-const batchSize = 7;
+export const institutionSearchBatchSize = 7;
 
 export const InstitutionSearchResults: React.FC = (props) => {
 	const search = useSelector(selectSearch);
 	const searchArgs = useSelector(selectSearchArgs);
 
 	const {loading, error, data, fetchMore} = useSearchInstitutionsQuery({
-		variables: {...searchArgs, limit: batchSize},
+		variables: {...searchArgs, limit: institutionSearchBatchSize},
 	});
 
 	const institutions = data?.institutionSearchResults;

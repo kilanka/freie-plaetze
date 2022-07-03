@@ -1,9 +1,8 @@
 import {Container} from "@chakra-ui/react";
-import type {GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType, NextPage} from "next";
+import {GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType, NextPage} from "next";
 import React from "react";
 
 import {getApolloClient} from "../../lib/api/apollo-client";
-import {useInstitutionBySlugQuery} from "../../lib/api/generated";
 import {getSdk} from "../../lib/api/generated/ssr";
 import {InstitutionPageContent} from "../../lib/components/content/institution/InstitutionPageContent";
 import {Title} from "../../lib/components/Title";
@@ -17,7 +16,7 @@ export const getStaticProps = async ({params}: GetStaticPropsContext) => {
 
 	return {
 		notFound: !institution,
-		props: {slug},
+		props: {institution: institution!},
 		revalidate: 60,
 	};
 };
@@ -36,14 +35,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	};
 };
 
-const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({slug}) => {
-	const {data} = useInstitutionBySlugQuery({variables: {slug}});
-
-	const institution = data?.institution;
-	if (!institution) {
-		return null;
-	}
-
+const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({institution}) => {
 	return (
 		<>
 			<Title>{institution?.name}</Title>
