@@ -149,6 +149,7 @@ export const lists = {
 					// Values are SGB 8 paragraphs, prefixed with a "p" for error-free type generation in
 					// frontend code
 					{value: "p13", label: "Begleitetes Wohnen"},
+					{value: "p19", label: "Eltern-Kind-Wohnen"},
 					{value: "p34", label: "Heimerziehung"},
 					{value: "p35", label: "Einzelbetreuung"},
 					{value: "p35a", label: "Eingliederungshilfe"},

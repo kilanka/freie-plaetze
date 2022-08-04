@@ -108,7 +108,7 @@ export async function getInstitutions() {
 			const name = faker.company.companyName();
 			return {
 				name,
-				type: faker.helpers.arrayElement(["p13", "p34", "p35", "p35a", "p41", "p42"]),
+				type: faker.helpers.arrayElement(["p13", "p19", "p34", "p35", "p35a", "p41", "p42"]),
 				gender: sample(["mixed", "f", "m"]),
 				ageFrom: faker.datatype.number(10),
 				ageTo: faker.datatype.number({min: 11, max: 20}),
