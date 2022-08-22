@@ -324,7 +324,7 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
 			async isEmailRegistered(root, {email}, context) {
 				try {
 					return (
-						(await context.db.User.count({
+						(await context.sudo().db.User.count({
 							where: {email: {equals: email}},
 						})) > 0
 					);
