@@ -26,7 +26,7 @@ const {withAuth} = createAuth({
 	},
 	passwordResetLink: {
 		async sendToken({itemId, identity, token, context}) {
-			const user = await context.db.User.findOne({where: {id: itemId as string}});
+			const user = await context.sudo().db.User.findOne({where: {id: itemId as string}});
 			await sendPasswordResetTokenEmail(identity, (user as any).name, token);
 		},
 		tokensValidForMins: 30,
