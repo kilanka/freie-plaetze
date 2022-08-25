@@ -178,6 +178,7 @@ export const InstitutionSearchForm: React.FC = () => {
 							<Select
 								ref={typeSelectRef}
 								isMulti
+								useBasicStyles
 								name="types"
 								placeholder="Wählen..."
 								options={institutionTypeOptions}
