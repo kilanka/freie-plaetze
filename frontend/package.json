@@ -29,7 +29,6 @@
     "next": "^12.2.5",
     "next-redux-cookie-wrapper": "^2.2.1",
     "next-redux-wrapper": "^7.0.5",
-    "nookies": "^2.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",

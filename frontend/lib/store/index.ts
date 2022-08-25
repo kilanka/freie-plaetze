@@ -15,7 +15,7 @@ const makeStore = wrapMakeStore(() =>
 		middleware: (getDefaultMiddleware) =>
 			getDefaultMiddleware().prepend(
 				nextReduxCookieMiddleware({
-					subtrees: [authSlice.name],
+					subtrees: [{subtree: authSlice.name, defaultState: authSlice.getInitialState()}],
 				})
 			),
 	})

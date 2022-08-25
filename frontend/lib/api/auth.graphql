@@ -13,3 +13,7 @@ mutation login($email: String!, $password: String!) {
     }
   }
 }
+
+mutation logout {
+  endSession
+}

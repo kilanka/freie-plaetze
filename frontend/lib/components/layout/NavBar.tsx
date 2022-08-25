@@ -86,8 +86,7 @@ export const NavBar: React.FC<NavBarProps> = ({onOpen, ...flexProps}) => {
 							<MenuDivider />
 							<MenuItem
 								onClick={async () => {
-									dispatch(logout());
-									await router.push("/");
+									await dispatch(logout());
 								}}
 							>
 								Abmelden

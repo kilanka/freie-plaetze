@@ -1,9 +1,15 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit";
 import {HYDRATE} from "next-redux-wrapper";
-import {destroyCookie, setCookie} from "nookies";
+import router from "next/router";
 
 import {getApolloClient} from "../api/apollo-client";
-import {LoginDocument, LoginMutation, LoginMutationVariables} from "../api/generated";
+import {
+	LoginDocument,
+	LoginMutation,
+	LoginMutationVariables,
+	LogoutDocument,
+} from "../api/generated";
+import {LogoutMutation} from "../api/generated/ssr";
 import type {AppState, AppThunkAction} from ".";
 
 export const authSlice = createSlice({
@@ -25,11 +31,6 @@ export const authSlice = createSlice({
 				user: {id: string; email: string; name: string};
 			}>
 		) {
-			setCookie(null, "keystonejs-session", action.payload.sessionToken, {
-				path: "/",
-				httpOnly: false,
-			});
-
 			state.isUserLoggedIn = true;
 			state.user = action.payload.user;
 		},
@@ -37,9 +38,7 @@ export const authSlice = createSlice({
 			state.isUserLoggedIn = false;
 			state.user = authSlice.getInitialState().user;
 		},
-		logout(state) {
-			destroyCookie(null, "keystonejs-session");
-
+		logoutFinished(state) {
 			state.isUserLoggedIn = false;
 			state.user = authSlice.getInitialState().user;
 		},
@@ -55,7 +54,7 @@ export const authSlice = createSlice({
 	},
 });
 
-export const {loginSuccess, loginError, logout, updateUserData} = authSlice.actions;
+export const {updateUserData} = authSlice.actions;
 
 /**
  * Returns a thunk action that performs a sign in with the given credentials. Finally, either a
@@ -80,13 +79,13 @@ export function login(
 		if (data?.authResult?.__typename) {
 			const authResult = data.authResult;
 			if (authResult.__typename === "UserAuthenticationWithPasswordFailure") {
-				dispatch(loginError());
+				dispatch(authSlice.actions.loginError());
 				return "E-Mail-Adresse oder Passwort ungültig";
 			}
 
 			if (authResult.__typename === "UserAuthenticationWithPasswordSuccess") {
 				dispatch(
-					loginSuccess({
+					authSlice.actions.loginSuccess({
 						sessionToken: authResult.sessionToken,
 						user: {
 							id: authResult.user.id ?? "",
@@ -99,8 +98,22 @@ export function login(
 			}
 		}
 
-		dispatch(loginError());
+		dispatch(authSlice.actions.loginError());
 		return "An unexpected error occurred. Please try again.";
+	};
+}
+
+/**
+ * Returns a thunk action that ends the user's session via the GraphQL API, dispatches a `logout`
+ * action and redirects to the index page.
+ */
+export function logout(): AppThunkAction {
+	const client = getApolloClient();
+
+	return async (dispatch) => {
+		await client.mutate<LogoutMutation>({mutation: LogoutDocument});
+		dispatch(authSlice.actions.logoutFinished());
+		await router.push("/");
 	};
 }
 

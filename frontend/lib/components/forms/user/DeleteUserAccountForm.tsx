@@ -1,10 +1,11 @@
 import {Button} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 import {useDeleteUserAccountMutation} from "../../../api/generated";
 import {useMutationErrorHandler} from "../../../hooks/useMutationErrorHandler";
+import {useAppDispatch} from "../../../store";
 import {logout, selectUserId} from "../../../store/auth";
 import {showConfirmationModal} from "../../modals/ConfirmationModal";
 import {FormContainer} from "../FormContainer";
@@ -16,7 +17,7 @@ export const DeleteUserAccountForm: React.FC = () => {
 		process: "Löschen Ihres Benutzerkontos",
 		successMessage: "Ihr Benutzerkonto wurde gelöscht",
 	});
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const router = useRouter();
 
 	return (
@@ -39,8 +40,7 @@ export const DeleteUserAccountForm: React.FC = () => {
 					) {
 						await wrapMutationFunction(async () => {
 							await deleteUserAccount({variables: {userId}});
-							dispatch(logout());
-							await router.push("/");
+							await dispatch(logout());
 						})();
 					}
 				}}
