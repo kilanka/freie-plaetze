@@ -1,6 +1,6 @@
 # Backend Dockerfile – frontend is deployed using Vercel
 
-FROM node:16-alpine
+FROM node:18-alpine
 RUN apk add --no-cache libc6-compat
 
 WORKDIR /app/backend
@@ -18,7 +18,7 @@ ENV IMAGES_PATH /images
 
 RUN addgroup --system --gid 1001 keystone
 RUN adduser --system --uid 1001 keystone
-RUN chown -R keystone:keystone node_modules/.keystone node_modules/.prisma
+RUN chown -R keystone:keystone node_modules/.keystone node_modules/.prisma .keystone
 
 RUN mkdir ${IMAGES_PATH} && chown -R keystone:keystone ${IMAGES_PATH}
 VOLUME /images
