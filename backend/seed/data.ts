@@ -1,5 +1,6 @@
 import {faker} from "@faker-js/faker";
-import {Upload} from "graphql-upload";
+// @ts-expect-error https://github.com/jaydenseric/graphql-upload/issues/282
+import Upload from "graphql-upload/Upload.js";
 import {sample} from "lodash";
 import {fetch} from "undici";
 
@@ -90,8 +91,8 @@ async function getImage() {
 	const response = await fetch(sourceUrl);
 	const imageStream = response.body!;
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 	const upload = new Upload();
-	// @ts-expect-error `resolve` is unknown
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 	upload.resolve({
 		createReadStream: () => imageStream,
@@ -99,13 +100,14 @@ async function getImage() {
 		encoding: "7bit",
 		mimetype: "application/jpeg",
 	});
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	return {upload};
 }
 
 export async function getInstitutions() {
 	return Promise.all(
 		partialInstitutionData.map(async (address) => {
-			const name = faker.company.companyName();
+			const name = faker.company.name();
 			return {
 				name,
 				type: faker.helpers.arrayElement(["p13", "p19", "p34", "p35", "p35a", "p41", "p42"]),
@@ -117,8 +119,8 @@ export async function getInstitutions() {
 				photo: await getImage(),
 				homepage: faker.internet.url(),
 				email: faker.internet.exampleEmail(name),
-				phone: faker.phone.phoneNumber("0#### ######"),
-				mobilePhone: faker.phone.phoneNumber("015# ########"),
+				phone: faker.phone.number("0#### ######"),
+				mobilePhone: faker.phone.number("015# ########"),
 				descriptionPlain: faker.lorem.paragraphs(),
 			};
 		})

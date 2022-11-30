@@ -17,7 +17,9 @@
     "chakra-ui-markdown-renderer": {
       "@chakra-ui/react": "^2.1.0"
     },
-    "graphql": "15.8.0"
+    "@keystone-6/core": {
+      "graphql": "16.6.0"
+    }
   },
   "xo": {
     "extends": "@bjoluc/xo-next",

@@ -1,36 +1,36 @@
 {
-  "name": "keystone-app",
-  "version": "2.0.14",
+  "name": "backend",
   "private": true,
   "scripts": {
     "dev": "keystone dev",
     "seed": "npm run dev -- --seed",
     "start": "npm run migrate:deploy && keystone start",
     "build": "keystone build",
-    "postinstall": "keystone postinstall",
+    "keystone-postinstall": "keystone postinstall",
     "migrate:deploy": "keystone prisma migrate deploy",
     "migrate:draft": "keystone prisma migrate dev --create-only",
     "migrate:reset": "keystone prisma migrate reset"
   },
   "dependencies": {
-    "@faker-js/faker": "^7.2.0",
-    "@keystone-6/auth": "3.0.0",
-    "@keystone-6/core": "2.0.0",
-    "@keystone-6/fields-document": "3.0.0",
-    "@next/env": "^12.1.6",
+    "@faker-js/faker": "^7.6.0",
+    "@keystone-6/auth": "5.0.1",
+    "@keystone-6/core": "3.1.3",
+    "@keystone-6/fields-document": "5.0.2",
+    "@next/env": "^13.0.5",
     "@turf/helpers": "^6.5.0",
-    "axios": "^0.27.2",
-    "email-templates": "^9.0.0",
+    "axios": "^1.2.0",
+    "email-templates": "^10.0.1",
+    "graphql-upload": "^15.0.2",
     "imgproxy": "^1.0.0",
     "lodash": "^4.17.21",
-    "nodemailer": "^6.7.5",
+    "nodemailer": "^6.8.0",
     "pug": "^3.0.2",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "undici": "^5.13.0"
   },
   "devDependencies": {
-    "@types/email-templates": "^8.0.4",
-    "@types/nodemailer": "^6.4.4",
-    "typescript": "^4.7.4",
-    "undici": "^5.5.1"
+    "@types/email-templates": "^10.0.1",
+    "@types/nodemailer": "^6.4.6",
+    "typescript": "^4.9.3"
   }
 }

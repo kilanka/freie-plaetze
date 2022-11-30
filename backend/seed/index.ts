@@ -4,6 +4,7 @@ import {KeystoneContext} from "@keystone-6/core/types";
 import {getInstitutions, users} from "./data";
 
 export async function insertSeedData(context: KeystoneContext) {
+	context = context.sudo();
 	console.log(`🌱 Inserting seed data`);
 
 	const createUser = async (userData: any) => {

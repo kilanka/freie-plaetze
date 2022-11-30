@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
+/* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-unsafe-assignment */
 import {createHash} from "node:crypto";
 
-import {graphQLSchemaExtension, list} from "@keystone-6/core";
+import {graphql, list} from "@keystone-6/core";
+import {allOperations, allowAll} from "@keystone-6/core/access";
 import {
 	checkbox,
 	float,
@@ -21,6 +21,8 @@ import {getPositionByAddress, getPositionFilters} from "./interactions/geo";
 import {sendWelcomeEmail} from "./interactions/mail";
 import {slugify} from "./util";
 import {makeImageFormatField} from "./util/image-formats";
+// eslint-disable-next-line import/order
+import {Context} from ".keystone/types";
 
 type FilterArgs = {
 	session?: {
@@ -49,6 +51,7 @@ export const lists = {
 			},
 		},
 		access: {
+			operation: allowAll,
 			filter: {
 				query(args: FilterArgs) {
 					if (!isUserLoggedIn(args)) return false;
@@ -114,9 +117,8 @@ export const lists = {
 	Institution: list({
 		access: {
 			operation: {
-				create: isUserLoggedIn,
-				update: isUserLoggedIn,
-				delete: isUserLoggedIn,
+				...allOperations(isUserLoggedIn),
+				query: async () => true,
 			},
 			filter: {
 				delete: filterInstitutionsOwnedByUser,
@@ -252,86 +254,104 @@ export const lists = {
 };
 
 async function getInstitutionSearchFilters(args: {
-	cityOrZip: string;
+	cityOrZip?: string | null;
 	radius: number;
-	age: number | undefined;
+	age?: number | null;
 }) {
-	const positionFilters = await getPositionFilters(args.cityOrZip, args.radius);
+	const positionFilters = await getPositionFilters(args.cityOrZip ?? "", args.radius);
 	const ageFilters = args.age ? {ageFrom: {lte: args.age}, ageTo: {gte: args.age}} : null;
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	return {...positionFilters, ...ageFilters};
 }
 
-export const extendGraphqlSchema = graphQLSchemaExtension({
-	typeDefs: `
-    type Query {
-      """
-			If \`cityOrZip\` is not empty, return institutions within \`radius\` km distance from
-			\`cityOrZip\`. Otherwise, do not filter by location. If \`age\` is not null, only those
-			institutions are returned whose age range includes \`age\`.
-			"""
-      institutionSearchResults(
-				radius: Int!
-        cityOrZip: String
-				age: Int
-        where: InstitutionWhereInput! = {}
-        orderBy: [InstitutionOrderByInput!]! = []
-        limit: Int
-        offset: Int! = 0
-      ): [Institution!]!
+export const extendGraphqlSchema = graphql.extend((base) => {
+	const commonInstitutionSearchArgs = {
+		radius: graphql.arg({type: graphql.nonNull(graphql.Int)}),
+		cityOrZip: graphql.arg({type: graphql.String}),
+		age: graphql.arg({type: graphql.Int}),
+		where: graphql.arg({
+			type: graphql.nonNull(base.inputObject("InstitutionWhereInput")),
+			defaultValue: {},
+		}),
+	};
 
-			institutionSearchResultsCount(
-				radius: Int!
-        cityOrZip: String
-				age: Int
-        where: InstitutionWhereInput! = {}
-      ): Int
+	return {
+		query: {
+			institutionSearchResults: graphql.field({
+				description:
+					"If `cityOrZip` is not empty, return institutions within `radius` km distance from `cityOrZip`. Otherwise, do not filter by location. If `age` is not null, only those institutions are returned whose age range includes `age`.",
+				type: graphql.nonNull(graphql.list(graphql.nonNull(base.object("Institution")))),
+				args: {
+					...commonInstitutionSearchArgs,
+					orderBy: graphql.arg({
+						type: graphql.nonNull(
+							graphql.list(graphql.nonNull(base.inputObject("InstitutionOrderByInput")))
+						),
+						defaultValue: [],
+					}),
+					limit: graphql.arg({type: graphql.Int}),
+					offset: graphql.arg({type: graphql.nonNull(graphql.Int), defaultValue: 0}),
+				},
+				async resolve(
+					source,
+					{radius, cityOrZip, age, where, orderBy, limit, offset},
+					context: Context
+				) {
+					let institutionSearchFilters: any = {};
+					try {
+						institutionSearchFilters = await getInstitutionSearchFilters({
+							radius,
+							cityOrZip: cityOrZip ?? "",
+							age: age === null ? undefined : age,
+						});
+					} catch {
+						return [];
+					}
 
+					return context.db.Institution.findMany({
+						where: {...institutionSearchFilters, ...where},
+						orderBy,
+						skip: offset,
+						take: limit === null ? undefined : limit,
+					});
+				},
+			}),
 
-			isEmailRegistered(email: String!): Boolean!
-    }`,
-	resolvers: {
-		Query: {
-			async institutionSearchResults(root, {where, orderBy, limit, offset, ...args}, context) {
-				let institutionSearchFilters: any = {};
-				try {
-					institutionSearchFilters = await getInstitutionSearchFilters(args);
-				} catch {
-					return [];
-				}
+			institutionSearchResultsCount: graphql.field({
+				type: graphql.nonNull(graphql.Int),
+				args: commonInstitutionSearchArgs,
+				async resolve(source, {where, ...args}, context: Context) {
+					let institutionSearchFilters: any = {};
+					try {
+						institutionSearchFilters = await getInstitutionSearchFilters(args);
+					} catch {
+						return 0;
+					}
 
-				return context.db.Institution.findMany({
-					where: {...institutionSearchFilters, ...where},
-					orderBy,
-					skip: offset,
-					take: limit,
-				});
-			},
-			async institutionSearchResultsCount(root, {where, ...args}, context) {
-				let institutionSearchFilters: any = {};
-				try {
-					institutionSearchFilters = await getInstitutionSearchFilters(args);
-				} catch {
-					return 0;
-				}
+					return context.db.Institution.count({
+						where: {...institutionSearchFilters, ...where},
+					});
+				},
+			}),
 
-				return context.db.Institution.count({
-					where: {...institutionSearchFilters, ...where},
-				});
-			},
-
-			async isEmailRegistered(root, {email}, context) {
-				try {
-					return (
-						(await context.sudo().db.User.count({
-							where: {email: {equals: email}},
-						})) > 0
-					);
-				} catch {
-					return false;
-				}
-			},
+			isEmailRegistered: graphql.field({
+				type: graphql.nonNull(graphql.Boolean),
+				args: {
+					email: graphql.arg({type: graphql.nonNull(graphql.String)}),
+				},
+				async resolve(source, {email}, context: Context) {
+					try {
+						return (
+							(await context.sudo().db.User.count({
+								where: {email: {equals: email}},
+							})) > 0
+						);
+					} catch {
+						return false;
+					}
+				},
+			}),
 		},
-	},
+	};
 });
