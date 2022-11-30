@@ -33,7 +33,7 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 					mb={{base: 0, md: 8}}
 					spacing={{base: 2, md: 4}}
 				>
-					<NextLink passHref href={href}>
+					<NextLink passHref legacyBehavior href={href}>
 						<LinkOverlay>
 							<Heading as="h3" size="lg" fontWeight="medium">
 								{institution.name}

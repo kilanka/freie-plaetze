@@ -1,12 +1,12 @@
 import {Alert, AlertDescription, AlertIcon, Box, HStack, Stack} from "@chakra-ui/react";
 import {Spinner} from "@chakra-ui/spinner";
+import {LinkButton} from "next-chakra-ui";
 import React from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import {useSelector} from "react-redux";
 
 import {useSearchInstitutionsQuery} from "../../../api/generated";
 import {selectSearch, selectSearchArgs} from "../../../store/search";
-import {LinkButton} from "../../next/LinkButton";
 import {InstitutionListItem} from "../institution/InstitutionListItem";
 import {InstitutionStack} from "../InstitutionStack";
 

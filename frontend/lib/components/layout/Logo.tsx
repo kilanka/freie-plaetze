@@ -1,7 +1,7 @@
 import {Text, TextProps} from "@chakra-ui/react";
 import React from "react";
 
-import {Link} from "../next/Link";
+import {Link} from "next-chakra-ui";
 
 export interface LogoProps extends TextProps {}
 

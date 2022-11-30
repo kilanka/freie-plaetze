@@ -1,11 +1,11 @@
 import {Container, Heading, List, ListIcon, ListItem, Text} from "@chakra-ui/react";
 import {NextPage} from "next";
+import {Link} from "next-chakra-ui";
 import React from "react";
 import {TiInputChecked} from "react-icons/ti";
 
 import {ParagraphLink} from "../lib/components/content/ParagraphLink";
 import {HeaderSection} from "../lib/components/HeaderSection";
-import {Link} from "../lib/components/next/Link";
 import {Title} from "../lib/components/Title";
 import {makeParagraphURL} from "../lib/util";
 

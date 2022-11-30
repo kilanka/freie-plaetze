@@ -1,8 +1,8 @@
 import {Box, BoxProps, Container, Stack, Text} from "@chakra-ui/react";
+import {Link} from "next-chakra-ui";
 import React from "react";
 import {IoLogoGithub, IoMail} from "react-icons/io5";
 
-import {Link} from "../next/Link";
 import {FooterButton} from "./FooterButton";
 
 export interface FooterProps extends BoxProps {}

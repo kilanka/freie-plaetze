@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Link} from "../next/Link";
+import {Link} from "next-chakra-ui";
 
 interface ParagraphLinkProps {
 	paragraph: string;

@@ -3,12 +3,12 @@ import {Checkbox, Stack, Text} from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 import {InputControl, SubmitButton} from "formik-chakra-ui";
 import {NextPage} from "next";
+import {Link} from "next-chakra-ui";
 import {useRouter} from "next/router";
 import React from "react";
 import * as yup from "yup";
 
 import {FormBox} from "../../lib/components/forms/FormBox";
-import {Link} from "../../lib/components/next/Link";
 import {Title} from "../../lib/components/Title";
 import {useAppDispatch} from "../../lib/store";
 import {login} from "../../lib/store/auth";

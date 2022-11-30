@@ -10,12 +10,12 @@ import {
 	StackDivider,
 	Text,
 } from "@chakra-ui/react";
+import {Link} from "next-chakra-ui";
 import React from "react";
 import {IoCall, IoHome, IoLocationSharp, IoMail, IoPhonePortrait} from "react-icons/io5";
 
 import {InstitutionPageContentFragment} from "../../../api/generated";
 import {institutionTypeNames} from "../../../constants";
-import {Link} from "../../next/Link";
 import {InstitutionTypeParagraphLink} from "../InstitutionTypeParagraphLink";
 import {Gist} from "./Gist";
 import {PlacesStat} from "./PlacesStat";

@@ -2,7 +2,7 @@ import {Flex, FlexProps, Icon} from "@chakra-ui/react";
 import React from "react";
 import {IconType} from "react-icons";
 
-import {Link} from "../next/Link";
+import {Link} from "next-chakra-ui";
 
 export interface SidebarItemProps extends FlexProps {
 	icon: IconType;

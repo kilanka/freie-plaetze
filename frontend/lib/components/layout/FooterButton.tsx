@@ -1,18 +1,16 @@
-import {Icon, IconButton} from "@chakra-ui/react";
+import {Icon} from "@chakra-ui/react";
+import {LinkIconButton, LinkIconButtonProps} from "next-chakra-ui";
 import React from "react";
 import {IconType} from "react-icons";
 
-import {LinkButton, LinkButtonProps} from "../next/LinkButton";
-
-export interface FooterButtonProps extends LinkButtonProps {
+export interface FooterButtonProps extends Omit<LinkIconButtonProps, "icon" | "aria-label"> {
 	children: string;
 	icon: IconType;
 }
 
 export const FooterButton: React.FC<FooterButtonProps> = ({children, icon, ...linkProps}) => {
 	return (
-		<IconButton
-			as={LinkButton}
+		<LinkIconButton
 			{...linkProps}
 			icon={<Icon as={icon} boxSize={5} />}
 			aria-label={children}

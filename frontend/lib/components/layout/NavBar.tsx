@@ -14,6 +14,7 @@ import {
 	Stack,
 	Text,
 } from "@chakra-ui/react";
+import {LinkButton} from "next-chakra-ui";
 import NextLink from "next/link";
 import {useRouter} from "next/router";
 import React from "react";
@@ -23,7 +24,6 @@ import {useSelector} from "react-redux";
 import {useClientOnlyLoginState} from "../../hooks/useClientOnlyLoginState";
 import {useAppDispatch} from "../../store";
 import {logout, selectUser} from "../../store/auth";
-import {LinkButton} from "../next/LinkButton";
 import {Logo} from "./Logo";
 
 export const sidebarWidth = 80;
