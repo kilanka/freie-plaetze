@@ -205,7 +205,7 @@ export const lists = {
 			logo: image({storage: "images"}),
 			logoUrl: makeImageFormatField("Institution", "logo", {
 				institutionPage(builder) {
-					builder.resize("fit", 600, 200);
+					builder.resize("fit", 600, 300, true).setOption("extend", "1");
 				},
 			}),
 
