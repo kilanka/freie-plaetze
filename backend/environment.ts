@@ -6,7 +6,8 @@ loadEnvConfig(process.cwd());
 export const isProduction = process.env.APP_ENV === "production";
 export const databaseUrl = process.env.DATABASE_URL!;
 export const frontentUrl = process.env.FRONTEND_URL!;
-export const nominatimSearchEndpoint = process.env.NOMINATIM_SEARCH_ENDPOINT!;
+export const nominatimCitySearchEndpoint = process.env.NOMINATIM_CITY_SEARCH_ENDPOINT!;
+export const nominatimAddressSearchEndpoint = process.env.NOMINATIM_ADDRESS_SEARCH_ENDPOINT!;
 export const imagesPath = process.env.IMAGES_PATH!;
 
 let secret = process.env.SESSION_SECRET;

@@ -1,13 +1,13 @@
 import {lengthToDegrees} from "@turf/helpers";
 import axios from "axios";
 
-import {nominatimSearchEndpoint} from "../environment";
+import {nominatimAddressSearchEndpoint, nominatimCitySearchEndpoint} from "../environment";
 
 /**
  * https://nominatim.org/release-docs/develop/api/Search/
  */
-async function queryPosition(parameters: Record<string, string | number>) {
-	const response = await axios.get<any[]>(nominatimSearchEndpoint, {
+async function queryPosition(endpointUrl: string, parameters: Record<string, string | number>) {
+	const response = await axios.get<any[]>(endpointUrl, {
 		params: {
 			country: "de",
 			format: "jsonv2",
@@ -38,13 +38,13 @@ type Address = {
 };
 
 export const getPositionByAddress = async ({street, streetNumber, zip}: Address) =>
-	queryPosition({
+	queryPosition(nominatimAddressSearchEndpoint, {
 		postalcode: zip,
 		street: `${streetNumber} ${street}`,
 	});
 
 export const getPositionByZipOrCity = async (cityOrZip: string) =>
-	queryPosition({
+	queryPosition(nominatimCitySearchEndpoint, {
 		[/^\d+$/.test(cityOrZip) ? "postalcode" : "city"]: cityOrZip,
 	});
 

@@ -14,5 +14,5 @@
     "editor.formatOnSave": true
   },
   "cSpell.language": "en,de",
-  "cSpell.words": ["imgproxy"]
+  "cSpell.words": ["imgproxy", "nominatim"]
 }
