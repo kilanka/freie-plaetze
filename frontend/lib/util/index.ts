@@ -7,6 +7,10 @@ export function getAbsoluteImageUrl(imagePath: string) {
 }
 
 export function stringToInt(string: string) {
+	if (string === "") {
+		return null;
+	}
+
 	return Number.parseInt(string, 10);
 }
 

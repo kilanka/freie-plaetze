@@ -19,8 +19,8 @@ import {FormColumns} from "../FormColumns";
 export const institutionFormSchema = yup.object({
 	name: yup.string().required(makeRequiredMessage("den Namen der Einrichtung")),
 
-	ageFrom: yup.number().required(makeRequiredMessage("das Mindestalter in Ihrer Einrichtung")),
-	ageTo: yup.number().required(makeRequiredMessage("das Höchstalter in Ihrer Einrichtung")),
+	ageFrom: yup.number().min(1, ""),
+	ageTo: yup.number().min(1, ""),
 
 	street: yup.string().required(""),
 	streetNumber: yup.string().required(""),
@@ -91,20 +91,10 @@ export const InstitutionFormContent: React.FC = () => {
 					<option value={InstitutionGenderType.M}>nur Jungen</option>
 				</SelectControl>
 				<FormColumns noResponsive>
-					<NumberInputControl
-						isRequired
-						name="ageFrom"
-						label="Mindestalter"
-						numberInputProps={{min: 0}}
-					/>
-					<NumberInputControl
-						isRequired
-						name="ageTo"
-						label="Höchstalter"
-						numberInputProps={{min: 1}}
-					/>
+					<NumberInputControl name="ageFrom" label="Mindestalter" numberInputProps={{min: 1}} />
+					<NumberInputControl name="ageTo" label="Höchstalter" numberInputProps={{min: 1}} />
 				</FormColumns>
-				<SelectControl isRequired name="arePlacesAvailable" label="Gibt es aktuell freie Plätze?">
+				<SelectControl name="arePlacesAvailable" label="Gibt es aktuell freie Plätze?">
 					<option value="true">Ja</option>
 					<option value="false">Nein</option>
 				</SelectControl>

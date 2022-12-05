@@ -130,8 +130,8 @@ mutation addInstitution(
   $name: String!
   $type: InstitutionTypeType!
   $gender: InstitutionGenderType!
-  $ageFrom: Int!
-  $ageTo: Int!
+  $ageFrom: Int
+  $ageTo: Int
   $arePlacesAvailable: Boolean!
   $street: String!
   $streetNumber: String!
@@ -185,8 +185,8 @@ mutation updateInstitution(
   $name: String!
   $type: InstitutionTypeType!
   $gender: InstitutionGenderType!
-  $ageFrom: Int!
-  $ageTo: Int!
+  $ageFrom: Int
+  $ageTo: Int
   $arePlacesAvailable: Boolean!
   $street: String!
   $streetNumber: String!

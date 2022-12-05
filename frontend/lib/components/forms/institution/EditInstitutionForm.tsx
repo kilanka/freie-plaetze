@@ -37,8 +37,8 @@ export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institu
 			institution
 				? {
 						...institution,
-						ageFrom: institution.ageFrom.toString(),
-						ageTo: institution.ageTo.toString(),
+						ageFrom: institution.ageFrom?.toString() ?? "",
+						ageTo: institution.ageTo?.toString() ?? "",
 						arePlacesAvailable: JSON.stringify(institution.arePlacesAvailable),
 						homepage: institution.homepage ?? "",
 						email: institution.email ?? "",

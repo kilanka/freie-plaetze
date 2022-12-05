@@ -171,8 +171,8 @@ type Institution {
   lastUpdated: DateTime!
   type: InstitutionTypeType!
   gender: InstitutionGenderType!
-  ageFrom: Int!
-  ageTo: Int!
+  ageFrom: Int
+  ageTo: Int
   arePlacesAvailable: Boolean!
   street: String!
   streetNumber: String!
@@ -253,8 +253,8 @@ input InstitutionWhereInput {
   lastUpdated: DateTimeFilter
   type: InstitutionTypeTypeNullableFilter
   gender: InstitutionGenderTypeNullableFilter
-  ageFrom: IntFilter
-  ageTo: IntFilter
+  ageFrom: IntNullableFilter
+  ageTo: IntNullableFilter
   arePlacesAvailable: BooleanFilter
   street: StringFilter
   streetNumber: StringFilter
@@ -294,7 +294,7 @@ input InstitutionGenderTypeNullableFilter {
   not: InstitutionGenderTypeNullableFilter
 }
 
-input IntFilter {
+input IntNullableFilter {
   equals: Int
   in: [Int!]
   notIn: [Int!]
@@ -302,7 +302,7 @@ input IntFilter {
   lte: Int
   gt: Int
   gte: Int
-  not: IntFilter
+  not: IntNullableFilter
 }
 
 input FloatNullableFilter {

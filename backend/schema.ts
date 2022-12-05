@@ -172,12 +172,10 @@ export const lists = {
 				graphql: {read: {isNonNull: true}},
 			}),
 			ageFrom: integer({
-				validation: {isRequired: true, min: 0},
-				graphql: {read: {isNonNull: true}},
+				validation: {min: 1},
 			}),
 			ageTo: integer({
-				validation: {isRequired: true, min: 0},
-				graphql: {read: {isNonNull: true}},
+				validation: {min: 1},
 			}),
 
 			arePlacesAvailable: checkbox({
