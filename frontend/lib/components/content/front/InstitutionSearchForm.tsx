@@ -26,7 +26,13 @@ import {useDebounce} from "usehooks-ts";
 import {InstitutionTypeType} from "../../../api/generated";
 import {institutionTypeParagraphNumbers, institutionTypeShortNames} from "../../../constants";
 import {useAppDispatch} from "../../../store";
-import {selectSearch, setFilters, setFiltersActive, setGeoSearch} from "../../../store/search";
+import {
+	searchSlice,
+	selectSearch,
+	setFilters,
+	setFiltersActive,
+	setGeoSearch,
+} from "../../../store/search";
 import {stringToInt} from "../../../util";
 
 const debounceDelay = 700; // Ms
@@ -62,7 +68,12 @@ export const InstitutionSearchForm: React.FC = () => {
 	const debouncedAge = useDebounce(formik.values.age, debounceDelay);
 
 	React.useEffect(() => {
-		dispatch(setGeoSearch({cityOrZip: debouncedCityOrZip, radius: stringToInt(debouncedRadius)}));
+		dispatch(
+			setGeoSearch({
+				cityOrZip: debouncedCityOrZip,
+				radius: stringToInt(debouncedRadius) ?? searchSlice.getInitialState().radius,
+			})
+		);
 	}, [dispatch, debouncedCityOrZip, debouncedRadius]);
 
 	React.useEffect(() => {
