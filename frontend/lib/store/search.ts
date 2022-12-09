@@ -1,7 +1,7 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit";
 import {HYDRATE} from "next-redux-wrapper";
 
-import {InstitutionGenderType, InstitutionTypeType} from "../api/generated";
+import {InstitutionGenderType} from "../api/generated";
 import {stringToInt} from "../util";
 import type {AppState} from ".";
 
@@ -12,7 +12,7 @@ export const searchSlice = createSlice({
 		radius: 40,
 		areFiltersActive: false,
 		age: "",
-		types: [] as InstitutionTypeType[],
+		paragraphs: [] as string[],
 		gender: "" as "" | "f" | "m",
 	},
 
@@ -26,17 +26,19 @@ export const searchSlice = createSlice({
 		},
 		setFilters(
 			state,
-			{payload}: PayloadAction<{age: string; types: InstitutionTypeType[]; gender: "" | "f" | "m"}>
+			{payload}: PayloadAction<{age: string; paragraphs: string[]; gender: "" | "f" | "m"}>
 		) {
 			state.age = payload.age;
-			state.types = payload.types;
+			state.paragraphs = payload.paragraphs;
 			state.gender = payload.gender;
 		},
 	},
 
-	extraReducers: {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-		[HYDRATE]: (state, {payload}) => ({...state, ...payload.search}),
+	extraReducers(builder) {
+		builder.addCase<typeof HYDRATE, PayloadAction<AppState, typeof HYDRATE>>(
+			HYDRATE,
+			(state, {payload}) => ({...state, ...payload.search})
+		);
 	},
 });
 
@@ -62,9 +64,6 @@ export const selectSearchArgs = (state: AppState) => {
 				  }[search.gender]
 				: Object.values(InstitutionGenderType),
 
-		institutionTypes:
-			search.areFiltersActive && search.types.length > 0
-				? search.types
-				: Object.values(InstitutionTypeType),
+		paragraphs: search.areFiltersActive ? search.paragraphs : null,
 	};
 };

@@ -15,8 +15,6 @@ import React from "react";
 import {IoCall, IoHome, IoLocationSharp, IoMail, IoPhonePortrait} from "react-icons/io5";
 
 import {InstitutionPageContentFragment} from "../../../api/generated";
-import {institutionTypeNames} from "../../../constants";
-import {InstitutionTypeParagraphLink} from "../InstitutionTypeParagraphLink";
 import {Gist} from "./Gist";
 import {PlacesStat} from "./PlacesStat";
 
@@ -35,8 +33,8 @@ export const InstitutionPageContent: React.FC<InstitutionPageContentProps> = ({i
 				<Gist institution={institution} />
 			</Text>
 			<Text fontSize="lg" mb={8}>
-				Hilfeform: {institutionTypeNames[institution.type]} (
-				<InstitutionTypeParagraphLink type={institution.type} />)
+				{institution.types?.length === 1 ? "Hilfeform" : "Hilfeformen"}:{" "}
+				{institution.types?.map((type) => `${type.name} (§ ${type.paragraph})`).join(", ")}
 			</Text>
 			<Stack spacing={{base: 4, md: 6}} divider={<StackDivider borderColor="gray.200" />}>
 				<Box>

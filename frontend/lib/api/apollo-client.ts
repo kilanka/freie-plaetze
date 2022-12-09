@@ -24,6 +24,7 @@ export function getApolloClient() {
 								"cityOrZip",
 								"radius",
 								"age",
+								"paragraphs",
 								"where",
 							]),
 						},

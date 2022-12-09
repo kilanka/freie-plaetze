@@ -1,15 +1,20 @@
+import {Link} from "next-chakra-ui";
 import React from "react";
 
-import {Link} from "next-chakra-ui";
+import {makeParagraphURL} from "../../util";
 
 interface ParagraphLinkProps {
 	paragraph: string;
-	href: string;
 	children?: React.ReactNode;
 }
 
-export const ParagraphLink: React.FC<ParagraphLinkProps> = ({paragraph, href, children}) => (
-	<Link href={href} textDecoration="underline" textDecorationStyle="dotted" target="_blank">
+export const ParagraphLink: React.FC<ParagraphLinkProps> = ({paragraph, children}) => (
+	<Link
+		href={makeParagraphURL(paragraph)}
+		textDecoration="underline"
+		textDecorationStyle="dotted"
+		target="_blank"
+	>
 		{children ?? <>§&nbsp;{paragraph} SGB&nbsp;VIII</>}
 	</Link>
 );

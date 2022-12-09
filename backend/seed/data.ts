@@ -4,84 +4,76 @@ import Upload from "graphql-upload/Upload.js";
 import {sample} from "lodash";
 import {fetch} from "undici";
 
+import {InstitutionCreateInput, UserCreateInput} from ".keystone/types";
+
 faker.seed(123);
 faker.setLocale("de");
 
-export const users = [
+export const users: UserCreateInput[] = [
 	{name: "Admin", email: "admin@example.org", password: "password", isAdmin: true},
 	{name: "User 1", email: "user1@example.org", password: "password", isAdmin: false},
 ];
 
-export const partialInstitutionData = [
+export const addresses = [
 	{
 		street: "Wollankstraße",
 		streetNumber: "131",
 		zip: "13187",
 		city: "Berlin",
-		owner: "Admin",
 	},
 	{
 		street: "Gleimstraße",
 		streetNumber: "49",
 		zip: "10437",
 		city: "Berlin",
-		owner: "Admin",
 	},
 	{
 		street: "Danziger Str.",
 		streetNumber: "50",
 		zip: "10435",
 		city: "Berlin",
-		owner: "Admin",
 	},
 	{
 		street: "Kniprodestraße",
 		streetNumber: "29",
 		zip: "10407",
 		city: "Berlin",
-		owner: "Admin",
 	},
 	{
 		street: "Helsingforser Str.",
 		streetNumber: "11-13",
 		zip: "10243",
 		city: "Berlin",
-		owner: "Admin",
 	},
 	{
 		street: "Falkenbergsweg",
 		streetNumber: "5",
 		zip: "21149",
 		city: "Hamburg",
-		owner: "User 1",
 	},
 	{
 		street: "Swebenhöhe",
 		streetNumber: "50",
 		zip: "22159",
 		city: "Hamburg",
-		owner: "User 1",
 	},
 	{
 		street: "Walderseestraße",
 		streetNumber: "99",
 		zip: "22605",
 		city: "Hamburg",
-		owner: "User 1",
 	},
 	{
 		street: "Ebelingplatz",
 		streetNumber: "8",
 		zip: "20537",
 		city: "Hamburg",
-		owner: "User 1",
 	},
 	{
 		street: "Krieterstraße",
 		streetNumber: "6",
 		zip: "21109",
 		city: "Hamburg",
-		owner: "User 1",
 	},
 ];
 
@@ -104,18 +96,28 @@ async function getImage() {
 	return {upload};
 }
 
-export async function getInstitutions() {
+export async function getInstitutions(): Promise<InstitutionCreateInput[]> {
 	return Promise.all(
-		partialInstitutionData.map(async (address) => {
+		addresses.map(async (address) => {
 			const name = faker.company.name();
-			return {
+
+			const institution: InstitutionCreateInput = {
+				...address,
+				owner: {
+					connect: {email: faker.helpers.arrayElement(["admin@example.org", "user1@example.org"])},
+				},
 				name,
 				type: faker.helpers.arrayElement(["p13", "p19", "p34", "p35", "p35a", "p41", "p42"]),
-				gender: sample(["mixed", "f", "m"]),
+				types: {
+					connect: faker.helpers.arrayElements(
+						["13,3", "19", "34", "35", "35a", "41", "42"].map((paragraph) => ({paragraph})),
+						faker.datatype.number({min: 1, max: 2})
+					),
+				},
+				gender: sample(["mixed", "f", "m"])!,
 				ageFrom: faker.datatype.number(10),
 				ageTo: faker.datatype.number({min: 11, max: 20}),
 				arePlacesAvailable: faker.datatype.boolean(),
-				...address,
 				photo: await getImage(),
 				homepage: faker.internet.url(),
 				email: faker.internet.exampleEmail(name),
@@ -123,6 +125,8 @@ export async function getInstitutions() {
 				mobilePhone: faker.phone.number("015# ########"),
 				descriptionPlain: faker.lorem.paragraphs(),
 			};
+
+			return institution;
 		})
 	);
 }

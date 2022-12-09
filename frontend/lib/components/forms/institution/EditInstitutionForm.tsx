@@ -37,6 +37,7 @@ export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institu
 			institution
 				? {
 						...institution,
+						types: institution.types?.map((type) => type.paragraph) ?? [],
 						ageFrom: institution.ageFrom?.toString() ?? "",
 						ageTo: institution.ageTo?.toString() ?? "",
 						arePlacesAvailable: JSON.stringify(institution.arePlacesAvailable),
@@ -71,6 +72,7 @@ export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institu
 						variables: {
 							institutionId,
 							...data,
+							types: {set: data.types.map((paragraph) => ({paragraph}))},
 							ageFrom: stringToInt(data.ageFrom),
 							ageTo: stringToInt(data.ageTo),
 							arePlacesAvailable: JSON.parse(data.arePlacesAvailable) as boolean,

@@ -15,16 +15,14 @@ import {
 	NumberInputStepper,
 	Stack,
 } from "@chakra-ui/react";
-import {Select, SelectInstance, chakraComponents} from "chakra-react-select";
+import {SelectInstance} from "chakra-react-select";
 import {Form, FormikProvider, useFormik} from "formik";
-import {FormControl, NumberInputControl, SelectControl} from "formik-chakra-ui";
+import {NumberInputControl, SelectControl} from "formik-chakra-ui";
 import React from "react";
 import {MdClose, MdOutlineFilterAlt} from "react-icons/md";
 import {useSelector} from "react-redux";
 import {useDebounce} from "usehooks-ts";
 
-import {InstitutionTypeType} from "../../../api/generated";
-import {institutionTypeParagraphNumbers, institutionTypeShortNames} from "../../../constants";
 import {useAppDispatch} from "../../../store";
 import {
 	searchSlice,
@@ -34,17 +32,9 @@ import {
 	setGeoSearch,
 } from "../../../store/search";
 import {stringToInt} from "../../../util";
+import {InstitutionTypesSelectControl} from "../../forms/fields/InstitutionTypesSelectControl";
 
 const debounceDelay = 700; // Ms
-
-const institutionTypeOptions = Object.entries(institutionTypeShortNames).map(([type, name]) => {
-	const paragraph = institutionTypeParagraphNumbers[type as InstitutionTypeType];
-	return {
-		value: type as InstitutionTypeType,
-		label: `${name} (§ ${paragraph} SGB 8) `,
-		chipLabel: `${name} (§ ${paragraph})`,
-	};
-});
 
 export const InstitutionSearchForm: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -55,7 +45,7 @@ export const InstitutionSearchForm: React.FC = () => {
 		initialValues: {
 			cityOrZip: searchValues.cityOrZip,
 			radius: searchValues.radius.toString(),
-			types: searchValues.types,
+			paragraphs: searchValues.paragraphs,
 			age: searchValues.age,
 			gender: searchValues.gender,
 		},
@@ -78,12 +68,15 @@ export const InstitutionSearchForm: React.FC = () => {
 
 	React.useEffect(() => {
 		dispatch(
-			setFilters({age: debouncedAge, types: formik.values.types, gender: formik.values.gender})
+			setFilters({
+				age: debouncedAge,
+				paragraphs: formik.values.paragraphs,
+				gender: formik.values.gender,
+			})
 		);
-	}, [dispatch, debouncedAge, formik.values.types, formik.values.gender]);
+	}, [dispatch, debouncedAge, formik.values.paragraphs, formik.values.gender]);
 
-	const typeSelectRef =
-		React.useRef<SelectInstance<typeof institutionTypeOptions[number], true>>(null);
+	const typesSelectRef = React.useRef<SelectInstance<any, true>>(null);
 
 	return (
 		<FormikProvider value={formik}>
@@ -160,7 +153,7 @@ export const InstitutionSearchForm: React.FC = () => {
 					style={{overflow: isFilterBoxOpen ? "visible" : "hidden"}}
 					onAnimationComplete={() => {
 						if (isFilterBoxOpen) {
-							typeSelectRef.current?.focus();
+							typesSelectRef.current?.focus();
 						}
 					}}
 				>
@@ -179,39 +172,14 @@ export const InstitutionSearchForm: React.FC = () => {
 						position="relative"
 						zIndex={1}
 					>
-						<FormControl
-							name="types"
+						<InstitutionTypesSelectControl
+							ref={typesSelectRef}
+							name="paragraphs"
 							label="Hilfeformen"
 							width="auto"
 							position="relative"
 							zIndex={2}
-						>
-							<Select
-								ref={typeSelectRef}
-								isMulti
-								useBasicStyles
-								name="types"
-								placeholder="Wählen..."
-								options={institutionTypeOptions}
-								components={{
-									MultiValue: (props) => (
-										<chakraComponents.MultiValue {...props}>
-											{props.data.chipLabel}
-										</chakraComponents.MultiValue>
-									),
-								}}
-								value={formik.values.types.map(
-									(optionValue) =>
-										institutionTypeOptions.find((option) => option.value === optionValue)!
-								)}
-								onChange={(options) => {
-									void formik.setFieldValue(
-										"types",
-										options.map((option) => option.value)
-									);
-								}}
-							/>
-						</FormControl>
+						/>
 
 						<Flex gap={4}>
 							<NumberInputControl

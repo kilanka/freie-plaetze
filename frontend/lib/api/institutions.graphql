@@ -5,7 +5,12 @@ fragment AgeRange on Institution {
 
 fragment Gist on Institution {
   city
-  type
+  types {
+    id
+    paragraph
+    name
+    shortName
+  }
   gender
   ...AgeRange
 }
@@ -57,7 +62,7 @@ query searchInstitutions(
   $radius: Int!
   $age: Int
   $genderTypes: [InstitutionGenderType!]
-  $institutionTypes: [InstitutionTypeType!]
+  $paragraphs: [String!]
   $offset: Int
   $limit: Int
 ) {
@@ -65,10 +70,11 @@ query searchInstitutions(
     cityOrZip: $cityOrZip
     radius: $radius
     age: $age
+    paragraphs: $paragraphs
+    where: { gender: { in: $genderTypes } }
+    orderBy: [{ arePlacesAvailable: desc }, { lastUpdated: desc }]
     offset: $offset
     limit: $limit
-    where: { gender: { in: $genderTypes }, type: { in: $institutionTypes } }
-    orderBy: [{ arePlacesAvailable: desc }, { lastUpdated: desc }]
   ) {
     ...BasicInstitutionInfo
   }
@@ -76,7 +82,8 @@ query searchInstitutions(
     cityOrZip: $cityOrZip
     radius: $radius
     age: $age
-    where: { gender: { in: $genderTypes }, type: { in: $institutionTypes } }
+    paragraphs: $paragraphs
+    where: { gender: { in: $genderTypes } }
   )
 }
 
@@ -94,7 +101,12 @@ query institutionBySlug($slug: String!) {
 
 fragment TextualInstitutionFields on Institution {
   name
-  type
+  types {
+    id
+    paragraph
+    name
+    shortName
+  }
   gender
   ageFrom
   ageTo
@@ -128,7 +140,7 @@ query myInstitutions($userId: ID!) {
 mutation addInstitution(
   $ownerId: ID!
   $name: String!
-  $type: InstitutionTypeType!
+  $types: InstitutionTypeRelateToManyForCreateInput!
   $gender: InstitutionGenderType!
   $ageFrom: Int
   $ageTo: Int
@@ -149,7 +161,7 @@ mutation addInstitution(
     data: {
       owner: { connect: { id: $ownerId } }
       name: $name
-      type: $type
+      types: $types
       gender: $gender
       ageFrom: $ageFrom
       ageTo: $ageTo
@@ -183,7 +195,7 @@ query institutionById($id: ID!) {
 mutation updateInstitution(
   $institutionId: ID!
   $name: String!
-  $type: InstitutionTypeType!
+  $types: InstitutionTypeRelateToManyForUpdateInput!
   $gender: InstitutionGenderType!
   $ageFrom: Int
   $ageTo: Int
@@ -204,7 +216,7 @@ mutation updateInstitution(
     where: { id: $institutionId }
     data: {
       name: $name
-      type: $type
+      types: $types
       gender: $gender
       ageFrom: $ageFrom
       ageTo: $ageTo

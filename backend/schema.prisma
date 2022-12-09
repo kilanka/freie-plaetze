@@ -24,14 +24,22 @@ model User {
   passwordResetRedeemedAt DateTime?
 }
 
+model InstitutionType {
+  id                     String        @id @default(cuid())
+  paragraph              String        @unique @default("")
+  name                   String        @default("")
+  shortName              String        @default("")
+  from_Institution_types Institution[] @relation("Institution_types")
+}
+
 model Institution {
   id                 String                @id @default(cuid())
   name               String                @default("")
   slug               String                @unique @default("")
   owner              User?                 @relation("Institution_owner", fields: [ownerId], references: [id])
   ownerId            String?               @map("owner")
+  types              InstitutionType[]     @relation("Institution_types")
   lastUpdated        DateTime              @updatedAt
-  type               InstitutionTypeType
   gender             InstitutionGenderType
   ageFrom            Int?
   ageTo              Int?
@@ -60,16 +68,6 @@ model Institution {
   photo_id           String?
 
   @@index([ownerId])
-}
-
-enum InstitutionTypeType {
-  p13
-  p19
-  p34
-  p35
-  p35a
-  p41
-  p42
 }
 
 enum InstitutionGenderType {

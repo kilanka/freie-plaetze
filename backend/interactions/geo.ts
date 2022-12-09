@@ -1,7 +1,9 @@
 import {lengthToDegrees} from "@turf/helpers";
 import axios from "axios";
+import {Writable} from "type-fest";
 
 import {nominatimAddressSearchEndpoint, nominatimCitySearchEndpoint} from "../environment";
+import {InstitutionWhereInput} from ".keystone/types";
 
 /**
  * https://nominatim.org/release-docs/develop/api/Search/
@@ -49,22 +51,21 @@ export const getPositionByZipOrCity = async (cityOrZip: string) =>
 	});
 
 export async function getPositionFilters(cityOrZip: string, radius: number) {
-	const positionFilters: any = {};
+	const filters: Writable<InstitutionWhereInput> = {};
 
 	if (cityOrZip !== "") {
 		const pos = await getPositionByZipOrCity(cityOrZip);
 		const radiusDeg = lengthToDegrees(radius, "kilometers");
 
-		positionFilters.positionLat = {
+		filters.positionLat = {
 			gt: pos.positionLat - radiusDeg,
 			lt: pos.positionLat + radiusDeg,
 		};
-		positionFilters.positionLng = {
+		filters.positionLng = {
 			gt: pos.positionLng - radiusDeg,
 			lt: pos.positionLng + radiusDeg,
 		};
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-	return positionFilters;
+	return filters;
 }

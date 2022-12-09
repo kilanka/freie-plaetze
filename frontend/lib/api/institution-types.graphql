@@ -1,0 +1,12 @@
+fragment InstitutionType on InstitutionType {
+  id
+  paragraph
+  name
+  shortName
+}
+
+query institutionTypes {
+  institutionTypes(orderBy: { paragraph: asc }) {
+    ...InstitutionType
+  }
+}

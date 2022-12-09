@@ -13,6 +13,7 @@ import {
 import {sendPasswordResetTokenEmail} from "./interactions/mail";
 import {extendGraphqlSchema, lists} from "./schema";
 import {insertSeedData} from "./seed";
+import {Context} from ".keystone/types";
 
 const {withAuth} = createAuth({
 	listKey: "User",
@@ -44,10 +45,10 @@ export default withAuth(
 			cors: {origin: [frontentUrl], credentials: true},
 		},
 		db: {
-			provider: databaseUrl.startsWith("file") ? "sqlite" : "postgresql",
+			provider: "postgresql",
 			url: databaseUrl,
 			useMigrations: isProduction,
-			async onConnect(context) {
+			async onConnect(context: Context) {
 				if (!isProduction && process.argv.includes("--seed")) {
 					await insertSeedData(context);
 				}

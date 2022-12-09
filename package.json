@@ -27,7 +27,9 @@
     "ignores": [
       "frontend/lib/api/generated/*"
     ],
-    "rules": {}
+    "rules": {
+      "import/order": "off"
+    }
   },
   "prettier": "@bjoluc/eslint-config-xo-next/prettier.config"
 }

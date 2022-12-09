@@ -21,7 +21,6 @@ import {getPositionByAddress, getPositionFilters} from "./interactions/geo";
 import {sendWelcomeEmail} from "./interactions/mail";
 import {slugify} from "./util";
 import {makeImageFormatField} from "./util/image-formats";
-// eslint-disable-next-line import/order
 import {Context} from ".keystone/types";
 
 type FilterArgs = {
@@ -114,11 +113,33 @@ export const lists = {
 		},
 	}),
 
+	InstitutionType: list({
+		access: {
+			operation: {
+				...allOperations(() => false),
+				query: () => true,
+			},
+		},
+		fields: {
+			paragraph: text({
+				isIndexed: "unique",
+				isFilterable: true,
+				validation: {isRequired: true},
+				graphql: {read: {isNonNull: true}},
+			}),
+			name: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
+			shortName: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
+		},
+		ui: {
+			labelField: "shortName",
+		},
+	}),
+
 	Institution: list({
 		access: {
 			operation: {
-				...allOperations(isUserLoggedIn),
-				query: async () => true,
+				...allOperations(isUserAdmin),
+				query: () => true,
 			},
 			filter: {
 				delete: filterInstitutionsOwnedByUser,
@@ -139,28 +160,13 @@ export const lists = {
 			}),
 
 			owner: relationship({ref: "User.institutions", many: false}),
+			types: relationship({ref: "InstitutionType", many: true, ui: {hideCreate: true}}),
 			lastUpdated: timestamp({
 				db: {updatedAt: true, isNullable: false},
 				ui: {itemView: {fieldMode: "read"}},
 				graphql: {read: {isNonNull: true}},
 			}),
 
-			type: select({
-				type: "enum",
-				options: [
-					// Values are SGB 8 paragraphs, prefixed with a "p" for error-free type generation in
-					// frontend code
-					{value: "p13", label: "Begleitetes Wohnen"},
-					{value: "p19", label: "Eltern-Kind-Wohnen"},
-					{value: "p34", label: "Heimerziehung"},
-					{value: "p35", label: "Einzelbetreuung"},
-					{value: "p35a", label: "Eingliederungshilfe"},
-					{value: "p41", label: "Hilfe für junge Volljährige"},
-					{value: "p42", label: "Inobhutnahme"},
-				],
-				validation: {isRequired: true},
-				graphql: {read: {isNonNull: true}},
-			}),
 			gender: select({
 				type: "enum",
 				options: [
@@ -252,22 +258,36 @@ export const lists = {
 };
 
 async function getInstitutionSearchFilters(args: {
-	cityOrZip?: string | null;
+	cityOrZip: string;
 	radius: number;
 	age?: number | null;
+	paragraphs?: string[] | null;
 }) {
-	const positionFilters = await getPositionFilters(args.cityOrZip ?? "", args.radius);
-	const ageFilters = args.age ? {ageFrom: {lte: args.age}, ageTo: {gte: args.age}} : null;
+	const filters = await getPositionFilters(args.cityOrZip, args.radius);
+	if (args.age) {
+		filters.ageFrom = {lte: args.age};
+		filters.ageTo = {gte: args.age};
+	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-	return {...positionFilters, ...ageFilters};
+	if (args.paragraphs && args.paragraphs.length > 0) {
+		filters.types = {some: {paragraph: {in: args.paragraphs}}};
+	}
+
+	return filters;
 }
 
 export const extendGraphqlSchema = graphql.extend((base) => {
 	const commonInstitutionSearchArgs = {
 		radius: graphql.arg({type: graphql.nonNull(graphql.Int)}),
-		cityOrZip: graphql.arg({type: graphql.String}),
+		cityOrZip: graphql.arg({
+			type: graphql.nonNull(graphql.String),
+			defaultValue: "",
+		}),
 		age: graphql.arg({type: graphql.Int}),
+		paragraphs: graphql.arg({
+			type: graphql.list(graphql.nonNull(graphql.String)),
+			defaultValue: [],
+		}),
 		where: graphql.arg({
 			type: graphql.nonNull(base.inputObject("InstitutionWhereInput")),
 			defaultValue: {},
@@ -291,28 +311,19 @@ export const extendGraphqlSchema = graphql.extend((base) => {
 					limit: graphql.arg({type: graphql.Int}),
 					offset: graphql.arg({type: graphql.nonNull(graphql.Int), defaultValue: 0}),
 				},
-				async resolve(
-					source,
-					{radius, cityOrZip, age, where, orderBy, limit, offset},
-					context: Context
-				) {
-					let institutionSearchFilters: any = {};
+				async resolve(source, {where, orderBy, limit, offset, ...args}, context: Context) {
 					try {
-						institutionSearchFilters = await getInstitutionSearchFilters({
-							radius,
-							cityOrZip: cityOrZip ?? "",
-							age: age === null ? undefined : age,
+						const filters = await getInstitutionSearchFilters(args);
+
+						return await context.db.Institution.findMany({
+							where: {...filters, ...where},
+							orderBy,
+							skip: offset,
+							take: limit === null ? undefined : limit,
 						});
 					} catch {
 						return [];
 					}
-
-					return context.db.Institution.findMany({
-						where: {...institutionSearchFilters, ...where},
-						orderBy,
-						skip: offset,
-						take: limit === null ? undefined : limit,
-					});
 				},
 			}),
 
@@ -320,16 +331,15 @@ export const extendGraphqlSchema = graphql.extend((base) => {
 				type: graphql.nonNull(graphql.Int),
 				args: commonInstitutionSearchArgs,
 				async resolve(source, {where, ...args}, context: Context) {
-					let institutionSearchFilters: any = {};
 					try {
-						institutionSearchFilters = await getInstitutionSearchFilters(args);
+						const filters = await getInstitutionSearchFilters(args);
+
+						return await context.db.Institution.count({
+							where: {...filters, ...where},
+						});
 					} catch {
 						return 0;
 					}
-
-					return context.db.Institution.count({
-						where: {...institutionSearchFilters, ...where},
-					});
 				},
 			}),
 

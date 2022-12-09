@@ -163,13 +163,60 @@ input InstitutionRelateToManyForCreateInput {
   connect: [InstitutionWhereUniqueInput!]
 }
 
+type InstitutionType {
+  id: ID!
+  paragraph: String!
+  name: String!
+  shortName: String!
+}
+
+input InstitutionTypeWhereUniqueInput {
+  id: ID
+  paragraph: String
+}
+
+input InstitutionTypeWhereInput {
+  AND: [InstitutionTypeWhereInput!]
+  OR: [InstitutionTypeWhereInput!]
+  NOT: [InstitutionTypeWhereInput!]
+  id: IDFilter
+  paragraph: StringFilter
+  name: StringFilter
+  shortName: StringFilter
+}
+
+input InstitutionTypeOrderByInput {
+  id: OrderDirection
+  paragraph: OrderDirection
+  name: OrderDirection
+  shortName: OrderDirection
+}
+
+input InstitutionTypeUpdateInput {
+  paragraph: String
+  name: String
+  shortName: String
+}
+
+input InstitutionTypeUpdateArgs {
+  where: InstitutionTypeWhereUniqueInput!
+  data: InstitutionTypeUpdateInput!
+}
+
+input InstitutionTypeCreateInput {
+  paragraph: String
+  name: String
+  shortName: String
+}
+
 type Institution {
   id: ID!
   name: String!
   slug: String!
   owner: User
+  types(where: InstitutionTypeWhereInput! = {}, orderBy: [InstitutionTypeOrderByInput!]! = [], take: Int, skip: Int! = 0): [InstitutionType!]
+  typesCount(where: InstitutionTypeWhereInput! = {}): Int
   lastUpdated: DateTime!
-  type: InstitutionTypeType!
   gender: InstitutionGenderType!
   ageFrom: Int
   ageTo: Int
@@ -190,16 +237,6 @@ type Institution {
   logoUrl(format: InstitutionLogoImageFormats): String
   photo: ImageFieldOutput
   photoUrl(format: InstitutionPhotoImageFormats): String
-}
-
-enum InstitutionTypeType {
-  p13
-  p19
-  p34
-  p35
-  p35a
-  p41
-  p42
 }
 
 enum InstitutionGenderType {
@@ -250,8 +287,8 @@ input InstitutionWhereInput {
   name: StringFilter
   slug: StringFilter
   owner: UserWhereInput
+  types: InstitutionTypeManyRelationFilter
   lastUpdated: DateTimeFilter
-  type: InstitutionTypeTypeNullableFilter
   gender: InstitutionGenderTypeNullableFilter
   ageFrom: IntNullableFilter
   ageTo: IntNullableFilter
@@ -269,6 +306,12 @@ input InstitutionWhereInput {
   descriptionPlain: StringFilter
 }
 
+input InstitutionTypeManyRelationFilter {
+  every: InstitutionTypeWhereInput
+  some: InstitutionTypeWhereInput
+  none: InstitutionTypeWhereInput
+}
+
 input DateTimeFilter {
   equals: DateTime
   in: [DateTime!]
@@ -278,13 +321,6 @@ input DateTimeFilter {
   gt: DateTime
   gte: DateTime
   not: DateTimeFilter
-}
-
-input InstitutionTypeTypeNullableFilter {
-  equals: InstitutionTypeType
-  in: [InstitutionTypeType!]
-  notIn: [InstitutionTypeType!]
-  not: InstitutionTypeTypeNullableFilter
 }
 
 input InstitutionGenderTypeNullableFilter {
@@ -321,7 +357,6 @@ input InstitutionOrderByInput {
   name: OrderDirection
   slug: OrderDirection
   lastUpdated: OrderDirection
-  type: OrderDirection
   gender: OrderDirection
   ageFrom: OrderDirection
   ageTo: OrderDirection
@@ -343,8 +378,8 @@ input InstitutionUpdateInput {
   name: String
   slug: String
   owner: UserRelateToOneForUpdateInput
+  types: InstitutionTypeRelateToManyForUpdateInput
   lastUpdated: DateTime
-  type: InstitutionTypeType
   gender: InstitutionGenderType
   ageFrom: Int
   ageTo: Int
@@ -371,6 +406,13 @@ input UserRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input InstitutionTypeRelateToManyForUpdateInput {
+  disconnect: [InstitutionTypeWhereUniqueInput!]
+  set: [InstitutionTypeWhereUniqueInput!]
+  create: [InstitutionTypeCreateInput!]
+  connect: [InstitutionTypeWhereUniqueInput!]
+}
+
 input ImageFieldInput {
   upload: Upload!
 }
@@ -387,8 +429,8 @@ input InstitutionCreateInput {
   name: String
   slug: String
   owner: UserRelateToOneForCreateInput
+  types: InstitutionTypeRelateToManyForCreateInput
   lastUpdated: DateTime
-  type: InstitutionTypeType!
   gender: InstitutionGenderType!
   ageFrom: Int
   ageTo: Int
@@ -414,6 +456,11 @@ input UserRelateToOneForCreateInput {
   connect: UserWhereUniqueInput
 }
 
+input InstitutionTypeRelateToManyForCreateInput {
+  create: [InstitutionTypeCreateInput!]
+  connect: [InstitutionTypeWhereUniqueInput!]
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -426,6 +473,12 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createInstitutionType(data: InstitutionTypeCreateInput!): InstitutionType
+  createInstitutionTypes(data: [InstitutionTypeCreateInput!]!): [InstitutionType]
+  updateInstitutionType(where: InstitutionTypeWhereUniqueInput!, data: InstitutionTypeUpdateInput!): InstitutionType
+  updateInstitutionTypes(data: [InstitutionTypeUpdateArgs!]!): [InstitutionType]
+  deleteInstitutionType(where: InstitutionTypeWhereUniqueInput!): InstitutionType
+  deleteInstitutionTypes(where: [InstitutionTypeWhereUniqueInput!]!): [InstitutionType]
   createInstitution(data: InstitutionCreateInput!): Institution
   createInstitutions(data: [InstitutionCreateInput!]!): [Institution]
   updateInstitution(where: InstitutionWhereUniqueInput!, data: InstitutionUpdateInput!): Institution
@@ -471,6 +524,9 @@ type Query {
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
+  institutionTypes(where: InstitutionTypeWhereInput! = {}, orderBy: [InstitutionTypeOrderByInput!]! = [], take: Int, skip: Int! = 0): [InstitutionType!]
+  institutionType(where: InstitutionTypeWhereUniqueInput!): InstitutionType
+  institutionTypesCount(where: InstitutionTypeWhereInput! = {}): Int
   institutions(where: InstitutionWhereInput! = {}, orderBy: [InstitutionOrderByInput!]! = [], take: Int, skip: Int! = 0): [Institution!]
   institution(where: InstitutionWhereUniqueInput!): Institution
   institutionsCount(where: InstitutionWhereInput! = {}): Int
@@ -481,8 +537,8 @@ type Query {
   """
   If `cityOrZip` is not empty, return institutions within `radius` km distance from `cityOrZip`. Otherwise, do not filter by location. If `age` is not null, only those institutions are returned whose age range includes `age`.
   """
-  institutionSearchResults(radius: Int!, cityOrZip: String, age: Int, where: InstitutionWhereInput! = {}, orderBy: [InstitutionOrderByInput!]! = [], limit: Int, offset: Int! = 0): [Institution!]!
-  institutionSearchResultsCount(radius: Int!, cityOrZip: String, age: Int, where: InstitutionWhereInput! = {}): Int!
+  institutionSearchResults(radius: Int!, cityOrZip: String! = "", age: Int, paragraphs: [String!] = [], where: InstitutionWhereInput! = {}, orderBy: [InstitutionOrderByInput!]! = [], limit: Int, offset: Int! = 0): [Institution!]!
+  institutionSearchResultsCount(radius: Int!, cityOrZip: String! = "", age: Int, paragraphs: [String!] = [], where: InstitutionWhereInput! = {}): Int!
   isEmailRegistered(email: String!): Boolean!
 }
 

@@ -19,6 +19,7 @@ export function makeRequiredMessage(inputName: string) {
 }
 
 export function makeParagraphURL(paragraph: string) {
+	paragraph = paragraph.split(",")[0];
 	return `https://www.gesetze-im-internet.de/sgb_8/__${paragraph}.html`;
 }
 

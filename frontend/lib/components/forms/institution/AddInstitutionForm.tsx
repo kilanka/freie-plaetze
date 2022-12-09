@@ -35,6 +35,7 @@ export const AddInstitutionForm: React.FC = () => {
 						variables: {
 							ownerId: userId,
 							...data,
+							types: {connect: data.types.map((paragraph) => ({paragraph}))},
 							ageFrom: stringToInt(data.ageFrom),
 							ageTo: stringToInt(data.ageTo),
 							arePlacesAvailable: JSON.parse(data.arePlacesAvailable) as boolean,
