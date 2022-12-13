@@ -138,7 +138,7 @@ export const lists = {
 	Institution: list({
 		access: {
 			operation: {
-				...allOperations(isUserAdmin),
+				...allOperations(isUserLoggedIn),
 				query: () => true,
 			},
 			filter: {
