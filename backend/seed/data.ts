@@ -107,7 +107,6 @@ export async function getInstitutions(): Promise<InstitutionCreateInput[]> {
 					connect: {email: faker.helpers.arrayElement(["admin@example.org", "user1@example.org"])},
 				},
 				name,
-				type: faker.helpers.arrayElement(["p13", "p19", "p34", "p35", "p35a", "p41", "p42"]),
 				types: {
 					connect: faker.helpers.arrayElements(
 						["13,3", "19", "34", "35", "35a", "41", "42"].map((paragraph) => ({paragraph})),
