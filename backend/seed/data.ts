@@ -12,6 +12,7 @@ faker.setLocale("de");
 export const users: UserCreateInput[] = [
 	{name: "Admin", email: "admin@example.org", password: "password", isAdmin: true},
 	{name: "User 1", email: "user1@example.org", password: "password", isAdmin: false},
+	{name: "User 2", email: "user2@example.org", password: "password", isAdmin: false},
 ];
 
 export const addresses = [
@@ -104,7 +105,7 @@ export async function getInstitutions(): Promise<InstitutionCreateInput[]> {
 			const institution: InstitutionCreateInput = {
 				...address,
 				owner: {
-					connect: {email: faker.helpers.arrayElement(["admin@example.org", "user1@example.org"])},
+					connect: {email: faker.helpers.arrayElement(["user1@example.org", "user2@example.org"])},
 				},
 				name,
 				types: {
