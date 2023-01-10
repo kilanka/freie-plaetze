@@ -22,7 +22,7 @@ const Page: NextPage = () => {
 
 	return (
 		<Container maxWidth="container.lg" mt={8} as={Stack} gap={12}>
-			<Title />
+			<Title>{provider.name}</Title>
 			<Heading as="h1" fontWeight={500}>
 				{provider.name}
 			</Heading>
