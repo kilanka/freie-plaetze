@@ -10,6 +10,12 @@ export const nominatimCitySearchEndpoint = process.env.NOMINATIM_CITY_SEARCH_END
 export const nominatimAddressSearchEndpoint = process.env.NOMINATIM_ADDRESS_SEARCH_ENDPOINT!;
 export const imagesPath = process.env.IMAGES_PATH!;
 
+export const additionalFrontendOriginExpressions = (
+	process.env.ADDITIONAL_FRONTEND_ORIGIN_EXPRESSIONS ?? ""
+)
+	.split(",")
+	.map((regex) => new RegExp(regex));
+
 let secret = process.env.SESSION_SECRET;
 if (!secret) {
 	if (isProduction) {

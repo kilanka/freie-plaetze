@@ -3,6 +3,7 @@ import {config} from "@keystone-6/core";
 import {statelessSessions} from "@keystone-6/core/session";
 
 import {
+	additionalFrontendOriginExpressions,
 	databaseUrl,
 	frontentUrl,
 	imagesPath,
@@ -42,7 +43,8 @@ const session = statelessSessions({
 export default withAuth(
 	config({
 		server: {
-			cors: {origin: [frontentUrl], credentials: true},
+			// https://www.npmjs.com/package/cors#configuration-options
+			cors: {origin: [frontentUrl, ...additionalFrontendOriginExpressions], credentials: true},
 		},
 		db: {
 			provider: "postgresql",
