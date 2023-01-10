@@ -19,6 +19,7 @@ export const Sidebar: React.FC<SidebarProps> = ({onClose, ...boxProps}) => {
 			w={{base: "full", md: sidebarWidth}}
 			h="full"
 			pos="fixed"
+			overflowY="scroll"
 			{...boxProps}
 		>
 			<Flex h={navBarHeight} alignItems="center" mx="8" justifyContent="space-between">
