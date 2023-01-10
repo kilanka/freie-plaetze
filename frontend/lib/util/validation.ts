@@ -17,6 +17,10 @@ export function yupSequentialStringSchema(schemas: yup.StringSchema[]) {
 	});
 }
 
+export const urlFieldSchema = yup
+	.string()
+	.url("Bitte geben Sie hier eine URL ein – also z.B. https://www.freie-plaetze.de");
+
 export const passwordFieldsSchema = {
 	password: yup
 		.string()

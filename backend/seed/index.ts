@@ -33,6 +33,4 @@ export async function insertSeedData(context: Context) {
 	);
 
 	console.log(`✅ Seed data inserted`);
-	// eslint-disable-next-line unicorn/no-process-exit
-	process.exit();
 }

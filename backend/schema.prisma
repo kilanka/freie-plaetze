@@ -19,6 +19,7 @@ model User {
   password                String
   isAdmin                 Boolean       @default(false)
   institutions            Institution[] @relation("Institution_owner")
+  providers               Provider[]    @relation("Provider_owner")
   passwordResetToken      String?
   passwordResetIssuedAt   DateTime?
   passwordResetRedeemedAt DateTime?
@@ -38,6 +39,8 @@ model Institution {
   slug               String                @unique @default("")
   owner              User?                 @relation("Institution_owner", fields: [ownerId], references: [id])
   ownerId            String?               @map("owner")
+  provider           Provider?             @relation("Institution_provider", fields: [providerId], references: [id])
+  providerId         String?               @map("provider")
   types              InstitutionType[]     @relation("Institution_types")
   lastUpdated        DateTime              @updatedAt
   gender             InstitutionGenderType
@@ -66,6 +69,22 @@ model Institution {
   photo_width        Int?
   photo_height       Int?
   photo_id           String?
+
+  @@index([ownerId])
+  @@index([providerId])
+}
+
+model Provider {
+  id           String        @id @default(cuid())
+  name         String        @default("")
+  owner        User?         @relation("Provider_owner", fields: [ownerId], references: [id])
+  ownerId      String?       @map("owner")
+  institutions Institution[] @relation("Institution_provider")
+  homepage     String        @default("")
+  street       String        @default("")
+  streetNumber String        @default("")
+  zip          String        @default("")
+  city         String        @default("")
 
   @@index([ownerId])
 }

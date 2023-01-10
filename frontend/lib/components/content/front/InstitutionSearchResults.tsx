@@ -12,7 +12,7 @@ import {InstitutionStack} from "../InstitutionStack";
 
 export const institutionSearchBatchSize = 7;
 
-export const InstitutionSearchResults: React.FC = (props) => {
+export const InstitutionSearchResults: React.FC = () => {
 	const search = useSelector(selectSearch);
 	const searchArgs = useSelector(selectSearchArgs);
 

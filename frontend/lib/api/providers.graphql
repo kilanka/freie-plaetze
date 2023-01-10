@@ -1,0 +1,51 @@
+fragment Provider on Provider {
+  id
+  name
+  street
+  streetNumber
+  zip
+  city
+  homepage
+}
+
+query myProviders($userId: ID!) {
+  providers(where: { owner: { id: { equals: $userId } } }, orderBy: { name: asc }) {
+    ...Provider
+  }
+}
+
+query providerById($id: ID!) {
+  provider(where: { id: $id }) {
+    ...Provider
+  }
+}
+
+mutation updateProvider(
+  $providerId: ID!
+  $name: String!
+  $street: String
+  $streetNumber: String
+  $zip: String
+  $city: String
+  $homepage: String
+) {
+  updateProvider(
+    where: { id: $providerId }
+    data: {
+      name: $name
+      street: $street
+      streetNumber: $streetNumber
+      zip: $zip
+      city: $city
+      homepage: $homepage
+    }
+  ) {
+    ...Provider
+  }
+}
+
+mutation deleteProvider($providerId: ID!) {
+  deleteProvider(where: { id: $providerId }) {
+    id
+  }
+}

@@ -13,6 +13,9 @@ fragment Gist on Institution {
   }
   gender
   ...AgeRange
+  provider {
+    name
+  }
 }
 
 fragment PlacesStat on Institution {
@@ -55,6 +58,9 @@ fragment InstitutionPageContent on Institution {
   email
   phone
   mobilePhone
+  provider {
+    ...Provider
+  }
 }
 
 query searchInstitutions(
@@ -85,6 +91,15 @@ query searchInstitutions(
     paragraphs: $paragraphs
     where: { gender: { in: $genderTypes } }
   )
+}
+
+query institutionsByProvider($providerId: ID!) {
+  institutions(
+    where: { provider: { id: { equals: $providerId } } }
+    orderBy: [{ arePlacesAvailable: desc }, { lastUpdated: desc }]
+  ) {
+    ...BasicInstitutionInfo
+  }
 }
 
 query institutionSlugs {
@@ -126,6 +141,9 @@ fragment EditableInstitutionFields on Institution {
   ...TextualInstitutionFields
   ...InstitutionPhoto
   ...InstitutionLogo
+  provider {
+    id
+  }
 }
 
 query myInstitutions($userId: ID!) {
@@ -156,6 +174,7 @@ mutation addInstitution(
   $descriptionPlain: String
   $photo: ImageFieldInput
   $logo: ImageFieldInput
+  $provider: ProviderRelateToOneForCreateInput
 ) {
   createInstitution(
     data: {
@@ -177,6 +196,7 @@ mutation addInstitution(
       descriptionPlain: $descriptionPlain
       photo: $photo
       logo: $logo
+      provider: $provider
     }
   ) {
     id
@@ -211,6 +231,7 @@ mutation updateInstitution(
   $descriptionPlain: String
   $photo: ImageFieldInput
   $logo: ImageFieldInput
+  $provider: ProviderRelateToOneForUpdateInput
 ) {
   updateInstitution(
     where: { id: $institutionId }
@@ -232,6 +253,7 @@ mutation updateInstitution(
       descriptionPlain: $descriptionPlain
       photo: $photo
       logo: $logo
+      provider: $provider
     }
   ) {
     id

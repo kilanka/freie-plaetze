@@ -1,15 +1,17 @@
-import {Stack} from "@chakra-ui/react";
-import {Form, Formik} from "formik";
+import {Formik} from "formik";
 import React from "react";
+import {useSelector} from "react-redux";
 
 import {useInstitutionByIdQuery, useUpdateInstitutionMutation} from "../../../api/generated";
 import {useMutationErrorHandler} from "../../../hooks/useMutationErrorHandler";
+import {selectUserId} from "../../../store/auth";
 import {stringToInt} from "../../../util";
 import {
 	convertApiFormatToImageInputFormat,
 	convertImageInputFormatToApiFormat,
 } from "../fields/ImageInputControl";
 import {FormContainer} from "../FormContainer";
+import {processProviderFormValues} from "../provider/ProviderFormFields";
 import {
 	InstitutionFormContent,
 	InstitutionFormData,
@@ -22,11 +24,12 @@ export interface EditInstitutionFormProps {
 }
 
 export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institutionId}) => {
-	const [updateInstitution] = useUpdateInstitutionMutation();
+	const [updateInstitution] = useUpdateInstitutionMutation({refetchQueries: ["myProviders"]});
 	const {wrapMutationFunction} = useMutationErrorHandler({
 		process: "Aktualisieren der Einrichtung",
 		successMessage: "Angaben erfolgreich aktualisiert",
 	});
+	const userId = useSelector(selectUserId);
 
 	const {data} = useInstitutionByIdQuery({variables: {id: institutionId}});
 
@@ -48,6 +51,8 @@ export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institu
 						descriptionPlain: institution.descriptionPlain ?? "",
 						photo: convertApiFormatToImageInputFormat(institution.photo),
 						logo: convertApiFormatToImageInputFormat(institution.logo),
+						providerId: institution.provider?.id ?? "",
+						provider: institutionFormInitialValues.provider,
 				  }
 				: institutionFormInitialValues,
 		[institution]
@@ -64,10 +69,9 @@ export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institu
 		>
 			<Formik
 				enableReinitialize
-				isInitialValid
 				initialValues={initialFormValues}
 				validationSchema={institutionFormSchema}
-				onSubmit={wrapMutationFunction(async (data) => {
+				onSubmit={wrapMutationFunction(async ({providerId, provider, ...data}) => {
 					await updateInstitution({
 						variables: {
 							institutionId,
@@ -78,13 +82,22 @@ export const EditInstitutionForm: React.FC<EditInstitutionFormProps> = ({institu
 							arePlacesAvailable: JSON.parse(data.arePlacesAvailable) as boolean,
 							photo: convertImageInputFormatToApiFormat(data.photo),
 							logo: convertImageInputFormatToApiFormat(data.logo),
+							provider:
+								providerId === ""
+									? {disconnect: true}
+									: providerId === "create"
+									? {
+											create: {
+												owner: {connect: {id: userId}},
+												...processProviderFormValues(provider),
+											},
+									  }
+									: {connect: {id: providerId}},
 						},
 					});
 				})}
 			>
-				<Stack as={Form} spacing={12}>
-					<InstitutionFormContent />
-				</Stack>
+				<InstitutionFormContent />
 			</Formik>
 		</FormContainer>
 	);

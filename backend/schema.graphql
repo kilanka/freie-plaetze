@@ -9,6 +9,8 @@ type User {
   isAdmin: Boolean
   institutions(where: InstitutionWhereInput! = {}, orderBy: [InstitutionOrderByInput!]! = [], take: Int, skip: Int! = 0): [Institution!]
   institutionsCount(where: InstitutionWhereInput! = {}): Int
+  providers(where: ProviderWhereInput! = {}, orderBy: [ProviderOrderByInput!]! = [], take: Int, skip: Int! = 0): [Provider!]
+  providersCount(where: ProviderWhereInput! = {}): Int
   passwordResetToken: PasswordState
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -34,6 +36,7 @@ input UserWhereInput {
   email: StringFilter
   isAdmin: BooleanFilter
   institutions: InstitutionManyRelationFilter
+  providers: ProviderManyRelationFilter
   passwordResetToken: PasswordFilter
   passwordResetIssuedAt: DateTimeNullableFilter
   passwordResetRedeemedAt: DateTimeNullableFilter
@@ -95,6 +98,12 @@ input InstitutionManyRelationFilter {
   none: InstitutionWhereInput
 }
 
+input ProviderManyRelationFilter {
+  every: ProviderWhereInput
+  some: ProviderWhereInput
+  none: ProviderWhereInput
+}
+
 input PasswordFilter {
   isSet: Boolean!
 }
@@ -130,6 +139,7 @@ input UserUpdateInput {
   password: String
   isAdmin: Boolean
   institutions: InstitutionRelateToManyForUpdateInput
+  providers: ProviderRelateToManyForUpdateInput
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -140,6 +150,13 @@ input InstitutionRelateToManyForUpdateInput {
   set: [InstitutionWhereUniqueInput!]
   create: [InstitutionCreateInput!]
   connect: [InstitutionWhereUniqueInput!]
+}
+
+input ProviderRelateToManyForUpdateInput {
+  disconnect: [ProviderWhereUniqueInput!]
+  set: [ProviderWhereUniqueInput!]
+  create: [ProviderCreateInput!]
+  connect: [ProviderWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -153,6 +170,7 @@ input UserCreateInput {
   password: String
   isAdmin: Boolean
   institutions: InstitutionRelateToManyForCreateInput
+  providers: ProviderRelateToManyForCreateInput
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -161,6 +179,11 @@ input UserCreateInput {
 input InstitutionRelateToManyForCreateInput {
   create: [InstitutionCreateInput!]
   connect: [InstitutionWhereUniqueInput!]
+}
+
+input ProviderRelateToManyForCreateInput {
+  create: [ProviderCreateInput!]
+  connect: [ProviderWhereUniqueInput!]
 }
 
 type InstitutionType {
@@ -214,6 +237,7 @@ type Institution {
   name: String!
   slug: String!
   owner: User
+  provider: Provider
   types(where: InstitutionTypeWhereInput! = {}, orderBy: [InstitutionTypeOrderByInput!]! = [], take: Int, skip: Int! = 0): [InstitutionType!]
   typesCount(where: InstitutionTypeWhereInput! = {}): Int
   lastUpdated: DateTime!
@@ -287,6 +311,7 @@ input InstitutionWhereInput {
   name: StringFilter
   slug: StringFilter
   owner: UserWhereInput
+  provider: ProviderWhereInput
   types: InstitutionTypeManyRelationFilter
   lastUpdated: DateTimeFilter
   gender: InstitutionGenderTypeNullableFilter
@@ -378,6 +403,7 @@ input InstitutionUpdateInput {
   name: String
   slug: String
   owner: UserRelateToOneForUpdateInput
+  provider: ProviderRelateToOneForUpdateInput
   types: InstitutionTypeRelateToManyForUpdateInput
   lastUpdated: DateTime
   gender: InstitutionGenderType
@@ -406,6 +432,12 @@ input UserRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input ProviderRelateToOneForUpdateInput {
+  create: ProviderCreateInput
+  connect: ProviderWhereUniqueInput
+  disconnect: Boolean
+}
+
 input InstitutionTypeRelateToManyForUpdateInput {
   disconnect: [InstitutionTypeWhereUniqueInput!]
   set: [InstitutionTypeWhereUniqueInput!]
@@ -429,6 +461,7 @@ input InstitutionCreateInput {
   name: String
   slug: String
   owner: UserRelateToOneForCreateInput
+  provider: ProviderRelateToOneForCreateInput
   types: InstitutionTypeRelateToManyForCreateInput
   lastUpdated: DateTime
   gender: InstitutionGenderType!
@@ -456,9 +489,83 @@ input UserRelateToOneForCreateInput {
   connect: UserWhereUniqueInput
 }
 
+input ProviderRelateToOneForCreateInput {
+  create: ProviderCreateInput
+  connect: ProviderWhereUniqueInput
+}
+
 input InstitutionTypeRelateToManyForCreateInput {
   create: [InstitutionTypeCreateInput!]
   connect: [InstitutionTypeWhereUniqueInput!]
+}
+
+type Provider {
+  id: ID!
+  name: String!
+  owner: User
+  institutions(where: InstitutionWhereInput! = {}, orderBy: [InstitutionOrderByInput!]! = [], take: Int, skip: Int! = 0): [Institution!]
+  institutionsCount(where: InstitutionWhereInput! = {}): Int
+  homepage: String
+  street: String
+  streetNumber: String
+  zip: String
+  city: String
+}
+
+input ProviderWhereUniqueInput {
+  id: ID
+}
+
+input ProviderWhereInput {
+  AND: [ProviderWhereInput!]
+  OR: [ProviderWhereInput!]
+  NOT: [ProviderWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  owner: UserWhereInput
+  institutions: InstitutionManyRelationFilter
+  homepage: StringFilter
+  street: StringFilter
+  streetNumber: StringFilter
+  zip: StringFilter
+  city: StringFilter
+}
+
+input ProviderOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  homepage: OrderDirection
+  street: OrderDirection
+  streetNumber: OrderDirection
+  zip: OrderDirection
+  city: OrderDirection
+}
+
+input ProviderUpdateInput {
+  name: String
+  owner: UserRelateToOneForUpdateInput
+  institutions: InstitutionRelateToManyForUpdateInput
+  homepage: String
+  street: String
+  streetNumber: String
+  zip: String
+  city: String
+}
+
+input ProviderUpdateArgs {
+  where: ProviderWhereUniqueInput!
+  data: ProviderUpdateInput!
+}
+
+input ProviderCreateInput {
+  name: String
+  owner: UserRelateToOneForCreateInput
+  institutions: InstitutionRelateToManyForCreateInput
+  homepage: String
+  street: String
+  streetNumber: String
+  zip: String
+  city: String
 }
 
 """
@@ -485,6 +592,12 @@ type Mutation {
   updateInstitutions(data: [InstitutionUpdateArgs!]!): [Institution]
   deleteInstitution(where: InstitutionWhereUniqueInput!): Institution
   deleteInstitutions(where: [InstitutionWhereUniqueInput!]!): [Institution]
+  createProvider(data: ProviderCreateInput!): Provider
+  createProviders(data: [ProviderCreateInput!]!): [Provider]
+  updateProvider(where: ProviderWhereUniqueInput!, data: ProviderUpdateInput!): Provider
+  updateProviders(data: [ProviderUpdateArgs!]!): [Provider]
+  deleteProvider(where: ProviderWhereUniqueInput!): Provider
+  deleteProviders(where: [ProviderWhereUniqueInput!]!): [Provider]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -530,6 +643,9 @@ type Query {
   institutions(where: InstitutionWhereInput! = {}, orderBy: [InstitutionOrderByInput!]! = [], take: Int, skip: Int! = 0): [Institution!]
   institution(where: InstitutionWhereUniqueInput!): Institution
   institutionsCount(where: InstitutionWhereInput! = {}): Int
+  providers(where: ProviderWhereInput! = {}, orderBy: [ProviderOrderByInput!]! = [], take: Int, skip: Int! = 0): [Provider!]
+  provider(where: ProviderWhereUniqueInput!): Provider
+  providersCount(where: ProviderWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   validateUserPasswordResetToken(email: String!, token: String!): ValidateUserPasswordResetTokenResult

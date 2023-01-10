@@ -1,5 +1,5 @@
 import {Stack} from "@chakra-ui/react";
-import {useFormikContext} from "formik";
+import {Form, useFormikContext} from "formik";
 import {
 	InputControl,
 	NumberInputControl,
@@ -8,13 +8,21 @@ import {
 	TextareaControl,
 } from "formik-chakra-ui";
 import React from "react";
+import {useSelector} from "react-redux";
 import * as yup from "yup";
 
-import {InstitutionGenderType} from "../../../api/generated";
+import {InstitutionGenderType, useMyProvidersQuery} from "../../../api/generated";
+import {selectUserId} from "../../../store/auth";
 import {makeRequiredMessage} from "../../../util";
+import {urlFieldSchema} from "../../../util/validation";
 import {ImageInputControl, ImageInputFormData} from "../fields/ImageInputControl";
 import {InstitutionTypesSelectControl} from "../fields/InstitutionTypesSelectControl";
 import {FormColumns} from "../FormColumns";
+import {
+	ProviderFormFields,
+	providerFormInitialValues,
+	providerFormSchema,
+} from "../provider/ProviderFormFields";
 
 export const institutionFormSchema = yup.object({
 	name: yup.string().required(makeRequiredMessage("den Namen der Einrichtung")),
@@ -23,17 +31,22 @@ export const institutionFormSchema = yup.object({
 	ageFrom: yup.number().min(1, ""),
 	ageTo: yup.number().min(1, ""),
 
-	street: yup.string().required(""),
-	streetNumber: yup.string().required(""),
-	zip: yup.string().required(""),
-	city: yup.string().required(""),
+	street: yup.string().required(" "),
+	streetNumber: yup.string().required(" "),
+	zip: yup.string().required(" "),
+	city: yup.string().required(" "),
 
-	homepage: yup
-		.string()
-		.url("Bitte geben Sie hier eine URL ein – also z.B. https://www.freie-plaetze.de"),
+	homepage: urlFieldSchema,
 	email: yup.string().email("Ungültige E-Mail-Adresse"),
 	phone: yup.string(),
 	mobilePhone: yup.string(),
+
+	providerId: yup.string(),
+	provider: yup.object().when("providerId", {
+		is: "create",
+		// eslint-disable-next-line unicorn/no-thenable
+		then: providerFormSchema,
+	}),
 });
 
 export const institutionFormInitialValues = {
@@ -53,6 +66,13 @@ export const institutionFormInitialValues = {
 	mobilePhone: "",
 	descriptionPlain: "",
 
+	/**
+	 * Can be either an empty string for "no provider", "create" to create a new provider, or the ID
+	 * of an existing provider
+	 */
+	providerId: "",
+	provider: providerFormInitialValues,
+
 	photo: {},
 	logo: {},
 };
@@ -63,10 +83,13 @@ export type InstitutionFormData = typeof institutionFormInitialValues & {
 };
 
 export const InstitutionFormContent: React.FC = () => {
-	const {dirty: isDirty, isValid} = useFormikContext();
+	const {values, dirty: isDirty, isValid} = useFormikContext<InstitutionFormData>();
+	const userId = useSelector(selectUserId);
+	const {data: providersData} = useMyProvidersQuery({variables: {userId}});
+	const providers = providersData?.providers ?? [];
 
 	return (
-		<>
+		<Stack as={Form} spacing={12}>
 			<Stack spacing={4}>
 				<InputControl isRequired name="name" label="Name der Einrichtung" />
 				<FormColumns>
@@ -76,6 +99,19 @@ export const InstitutionFormContent: React.FC = () => {
 					<InputControl isRequired name="zip" label="Postleitzahl" />
 					<InputControl isRequired name="city" label="Stadt" />
 				</FormColumns>
+			</Stack>
+
+			<Stack spacing={4}>
+				<SelectControl name="providerId" label="Träger">
+					<option value="">Keine Angabe</option>
+					{providers.map(({id, name}) => (
+						<option key={id} value={id}>
+							{name}
+						</option>
+					))}
+					<option value="create">Träger hinzufügen</option>
+				</SelectControl>
+				{values.providerId === "create" && <ProviderFormFields fieldNamesPrefix="provider." />}
 			</Stack>
 
 			<Stack spacing={4}>
@@ -116,6 +152,6 @@ export const InstitutionFormContent: React.FC = () => {
 			<SubmitButton colorScheme="blue" isDisabled={!isDirty || !isValid}>
 				Speichern
 			</SubmitButton>
-		</>
+		</Stack>
 	);
 };

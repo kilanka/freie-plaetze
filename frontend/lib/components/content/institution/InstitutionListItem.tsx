@@ -1,5 +1,5 @@
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
-import {Flex, Grid, Heading, LinkBox, LinkOverlay, Stack, Text} from "@chakra-ui/react";
+import {Flex, Grid, Heading, LinkBox, LinkOverlay, Stack, Text, chakra} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
 
@@ -41,7 +41,7 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 						</LinkOverlay>
 					</NextLink>
 					<Text fontSize="lg" fontWeight="bold" display={{base: "none", md: "block"}}>
-						<Gist hasInstitutionType institution={institution} />
+						<Gist hasInstitutionType hasProviderName institution={institution} />
 					</Text>
 				</Stack>
 
@@ -60,7 +60,7 @@ export const InstitutionListItem: React.FC<InstitutionListItemProps> = ({institu
 					fontWeight="bold"
 					mx={2}
 				>
-					<Gist hasInstitutionType institution={institution} />
+					<Gist hasInstitutionType hasProviderName institution={institution} />
 				</Text>
 
 				<Flex

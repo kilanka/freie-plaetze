@@ -37,3 +37,7 @@ export function parseCookie(cookieValue: string | undefined): any {
 		return JSON.parse(decompressedCookie);
 	} catch {}
 }
+
+export function stripProtocolFromUrl(url: string) {
+	return url.replace(/https?:\/\//g, "");
+}

@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-unsafe-assignment */
-import {createHash} from "node:crypto";
-
 import {graphql, list} from "@keystone-6/core";
 import {allOperations, allowAll} from "@keystone-6/core/access";
 import {
@@ -19,7 +17,7 @@ import {document} from "@keystone-6/fields-document";
 import {isProduction} from "./environment";
 import {getPositionByAddress, getPositionFilters} from "./interactions/geo";
 import {sendWelcomeEmail} from "./interactions/mail";
-import {slugify} from "./util";
+import {hashStrings, slugify} from "./util";
 import {makeImageFormatField} from "./util/image-formats";
 import {Context} from ".keystone/types";
 
@@ -37,9 +35,36 @@ const isUserCurrentUserItem = (args: FilterArgs & {item: any}) =>
 const isUserAdminOrCurrentUserItem = (args: FilterArgs & {item: any}) =>
 	isUserAdmin(args) || isUserCurrentUserItem(args);
 
-const filterInstitutionsOwnedByUser = (args: FilterArgs) => {
+const filterItemsOwnedByUser = (args: FilterArgs) => {
 	if (isUserAdmin(args)) return true;
 	return {owner: {id: {equals: args.session?.data.id}}};
+};
+
+const requiredFieldConfig = {
+	validation: {isRequired: true},
+	graphql: {read: {isNonNull: true}},
+};
+
+/**
+ * Updates the position fields if at least one address field was updated
+ **/
+const resolveAddressInput = async ({
+	resolvedData,
+	item,
+}: {
+	resolvedData: Record<string, any>;
+	item?: Record<string, any>;
+}) => {
+	if (resolvedData.street || resolvedData.streetNumber || resolvedData.zip) {
+		Object.assign(
+			resolvedData,
+			await getPositionByAddress({
+				street: resolvedData.street ?? item?.street,
+				streetNumber: resolvedData.streetNumber ?? item?.streetNumber,
+				zip: resolvedData.zip ?? item?.zip,
+			})
+		);
+	}
 };
 
 export const lists = {
@@ -70,28 +95,16 @@ export const lists = {
 				isFilterable: true,
 				validation: {isRequired: true},
 			}),
-			password: password({
-				validation: {isRequired: true, rejectCommon: isProduction},
-				access: {
-					read: isUserAdminOrCurrentUserItem,
-					update: isUserCurrentUserItem,
-				},
-			}),
+			password: password({validation: {isRequired: true, rejectCommon: isProduction}}),
 			isAdmin: checkbox({
 				access: {
 					create: isUserAdmin,
-					read: isUserAdminOrCurrentUserItem,
 					update: isUserAdmin,
 				},
 			}),
-			institutions: relationship({
-				ref: "Institution.owner",
-				many: true,
-				access: {
-					read: isUserAdminOrCurrentUserItem,
-					update: isUserAdmin,
-				},
-			}),
+
+			institutions: relationship({ref: "Institution.owner", many: true}),
+			providers: relationship({ref: "Provider.owner", many: true}),
 		},
 		hooks: {
 			async beforeOperation({operation, context, item}) {
@@ -127,8 +140,8 @@ export const lists = {
 				validation: {isRequired: true},
 				graphql: {read: {isNonNull: true}},
 			}),
-			name: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
-			shortName: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
+			name: text(requiredFieldConfig),
+			shortName: text(requiredFieldConfig),
 		},
 		ui: {
 			labelField: "shortName",
@@ -142,13 +155,13 @@ export const lists = {
 				query: () => true,
 			},
 			filter: {
-				delete: filterInstitutionsOwnedByUser,
-				update: filterInstitutionsOwnedByUser,
+				delete: filterItemsOwnedByUser,
+				update: filterItemsOwnedByUser,
 			},
 		},
 
 		fields: {
-			name: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
+			name: text(requiredFieldConfig),
 			slug: text({
 				isIndexed: "unique",
 				isFilterable: true,
@@ -160,6 +173,7 @@ export const lists = {
 			}),
 
 			owner: relationship({ref: "User.institutions", many: false}),
+			provider: relationship({ref: "Provider.institutions", many: false}),
 			types: relationship({ref: "InstitutionType", many: true, ui: {hideCreate: true}}),
 			lastUpdated: timestamp({
 				db: {updatedAt: true, isNullable: false},
@@ -177,24 +191,15 @@ export const lists = {
 				validation: {isRequired: true},
 				graphql: {read: {isNonNull: true}},
 			}),
-			ageFrom: integer({
-				validation: {min: 1},
-			}),
-			ageTo: integer({
-				validation: {min: 1},
-			}),
+			ageFrom: integer({validation: {min: 1}}),
+			ageTo: integer({validation: {min: 1}}),
 
-			arePlacesAvailable: checkbox({
-				graphql: {read: {isNonNull: true}},
-			}),
+			arePlacesAvailable: checkbox({graphql: {read: {isNonNull: true}}}),
 
-			street: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
-			streetNumber: text({
-				validation: {isRequired: true},
-				graphql: {read: {isNonNull: true}},
-			}),
-			zip: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
-			city: text({validation: {isRequired: true}, graphql: {read: {isNonNull: true}}}),
+			street: text(requiredFieldConfig),
+			streetNumber: text(requiredFieldConfig),
+			zip: text(requiredFieldConfig),
+			city: text(requiredFieldConfig),
 			positionLat: float(),
 			positionLng: float(),
 
@@ -225,34 +230,46 @@ export const lists = {
 		},
 		hooks: {
 			async resolveInput({resolvedData, item, context}) {
-				// Update position if at least one address field was updated
-				if (resolvedData.street || resolvedData.streetNumber || resolvedData.zip) {
-					Object.assign(
-						resolvedData,
-						await getPositionByAddress({
-							street: resolvedData.street ?? item?.street,
-							streetNumber: resolvedData.streetNumber ?? item?.streetNumber,
-							zip: resolvedData.zip ?? item?.zip,
-						})
-					);
-				}
+				await resolveAddressInput({resolvedData, item});
 
 				// Update slug if name was updated
 				if (resolvedData.name) {
-					resolvedData.slug = `${slugify(resolvedData.name)}-${createHash("md5")
-						.update(
-							"".concat(
-								resolvedData.street ?? item!.street,
-								resolvedData.streetNumber ?? item!.streetNumber,
-								resolvedData.zip ?? item!.zip
-							)
-						)
-						.digest("hex")
-						.slice(0, 8)}`;
+					resolvedData.slug = `${slugify(resolvedData.name)}-${hashStrings(
+						resolvedData.street ?? item!.street,
+						resolvedData.streetNumber ?? item!.streetNumber,
+						resolvedData.zip ?? item!.zip
+					)}`;
 				}
 
 				return resolvedData;
 			},
+		},
+	}),
+
+	Provider: list({
+		access: {
+			operation: {
+				...allOperations(isUserLoggedIn),
+				query: () => true,
+			},
+			filter: {
+				delete: filterItemsOwnedByUser,
+				update: filterItemsOwnedByUser,
+			},
+		},
+
+		fields: {
+			name: text(requiredFieldConfig),
+
+			owner: relationship({ref: "User.providers", many: false}),
+			institutions: relationship({ref: "Institution.provider", many: true}),
+
+			homepage: text(),
+
+			street: text(),
+			streetNumber: text(),
+			zip: text(),
+			city: text(),
 		},
 	}),
 };

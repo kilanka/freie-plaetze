@@ -1,5 +1,4 @@
-import {Stack} from "@chakra-ui/react";
-import {Form, Formik} from "formik";
+import {Formik} from "formik";
 import {useRouter} from "next/router";
 import React from "react";
 import {useSelector} from "react-redux";
@@ -10,6 +9,7 @@ import {selectUserId} from "../../../store/auth";
 import {stringToInt} from "../../../util";
 import {convertImageInputFormatToApiFormat} from "../fields/ImageInputControl";
 import {FormContainer} from "../FormContainer";
+import {processProviderFormValues} from "../provider/ProviderFormFields";
 import {
 	InstitutionFormContent,
 	institutionFormInitialValues,
@@ -18,7 +18,9 @@ import {
 
 export const AddInstitutionForm: React.FC = () => {
 	const userId = useSelector(selectUserId);
-	const [addInstitution] = useAddInstitutionMutation({refetchQueries: ["myInstitutions"]});
+	const [addInstitution] = useAddInstitutionMutation({
+		refetchQueries: ["myInstitutions", "myProviders"],
+	});
 	const {wrapMutationFunction} = useMutationErrorHandler({process: "Hinzufügen der Einrichtung"});
 	const router = useRouter();
 
@@ -30,7 +32,7 @@ export const AddInstitutionForm: React.FC = () => {
 			<Formik
 				initialValues={institutionFormInitialValues}
 				validationSchema={institutionFormSchema}
-				onSubmit={wrapMutationFunction(async (data) => {
+				onSubmit={wrapMutationFunction(async ({providerId, provider, ...data}) => {
 					const result = await addInstitution({
 						variables: {
 							ownerId: userId,
@@ -39,6 +41,18 @@ export const AddInstitutionForm: React.FC = () => {
 							ageFrom: stringToInt(data.ageFrom),
 							ageTo: stringToInt(data.ageTo),
 							arePlacesAvailable: JSON.parse(data.arePlacesAvailable) as boolean,
+
+							provider:
+								providerId === ""
+									? {}
+									: providerId === "create"
+									? {
+											create: {
+												owner: {connect: {id: userId}},
+												...processProviderFormValues(provider),
+											},
+									  }
+									: {connect: {id: providerId}},
 
 							photo: convertImageInputFormatToApiFormat(data.photo),
 							logo: convertImageInputFormatToApiFormat(data.logo),
@@ -51,9 +65,7 @@ export const AddInstitutionForm: React.FC = () => {
 					}
 				})}
 			>
-				<Stack as={Form} spacing={12}>
-					<InstitutionFormContent />
-				</Stack>
+				<InstitutionFormContent />
 			</Formik>
 		</FormContainer>
 	);

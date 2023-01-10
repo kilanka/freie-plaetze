@@ -1,13 +1,13 @@
+import {Divider} from "@chakra-ui/react";
 import React from "react";
-import {BiInfoCircle, BiLogIn, BiUserPlus} from "react-icons/bi";
-import {BsHouseFill} from "react-icons/bs";
-import {MdAddBox} from "react-icons/md";
+import {BiHome, BiInfoCircle, BiLogIn, BiPlus, BiUserPlus, BiWallet} from "react-icons/bi";
 import {useSelector} from "react-redux";
 
-import {useMyInstitutionsQuery} from "../../api/generated";
+import {useMyInstitutionsQuery, useMyProvidersQuery} from "../../api/generated";
 import {useClientOnlyLoginState} from "../../hooks/useClientOnlyLoginState";
 import {selectUserId} from "../../store/auth";
 import {SidebarItem} from "./SidebarItem";
+import {SidebarSectionTitle} from "./SidebarSectionTitle";
 
 export interface SidebarContentProps {
 	onClose: () => void;
@@ -16,26 +16,49 @@ export interface SidebarContentProps {
 export const SidebarContent: React.FC<SidebarContentProps> = ({onClose}) => {
 	const userId = useSelector(selectUserId);
 	const {data: myInstitutions} = useMyInstitutionsQuery({variables: {userId}, skip: !userId});
+	const {data: myProviders} = useMyProvidersQuery({variables: {userId}, skip: !userId});
 	const isUserLoggedIn = useClientOnlyLoginState();
+
+	const providers = myProviders?.providers ?? [];
+	const doProvidersExist = providers.length > 0;
 
 	return (
 		<>
 			{isUserLoggedIn && (
 				<>
-					{myInstitutions?.institutions?.map((institution) => (
+					{doProvidersExist && <SidebarSectionTitle>Einrichtungen</SidebarSectionTitle>}
+
+					{myInstitutions?.institutions?.map(({id, name}) => (
 						<SidebarItem
-							key={institution.name}
-							href={`/members/institution/${institution.id}`}
-							icon={BsHouseFill}
+							key={id}
+							href={`/members/institution/${id}`}
+							icon={BiHome}
 							onClick={onClose}
 						>
-							{institution.name}
+							{name}
 						</SidebarItem>
 					))}
 
-					<SidebarItem href="/members/add-institution" icon={MdAddBox} onClick={onClose}>
+					<SidebarItem href="/members/add-institution" icon={BiPlus} onClick={onClose}>
 						Einrichtung hinzufügen
 					</SidebarItem>
+
+					{doProvidersExist && (
+						<>
+							<Divider my={4} />
+							<SidebarSectionTitle>Träger</SidebarSectionTitle>
+							{providers.map(({id, name}) => (
+								<SidebarItem
+									key={id}
+									href={`/members/provider/${id}`}
+									icon={BiWallet}
+									onClick={onClose}
+								>
+									{name}
+								</SidebarItem>
+							))}
+						</>
+					)}
 				</>
 			)}
 
