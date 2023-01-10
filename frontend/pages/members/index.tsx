@@ -17,7 +17,9 @@ const Page: NextPage = () => {
 		<Container pt={8} maxWidth="container.lg">
 			<Title>Meine Einrichtungen</Title>
 			<Stack gap={12}>
-				<Heading>Meine Einrichtungen</Heading>
+				<Heading as="h1" fontWeight={500}>
+					Meine Einrichtungen
+				</Heading>
 				<InstitutionStack>
 					{data?.institutions?.map((institution) => (
 						<InstitutionListItem
