@@ -101,9 +101,9 @@ const Page: NextPage = () => {
 			{queryToken && queryEmail && (
 				<FormBox title="Passwort zurücksetzen">
 					<Formik
+						validateOnMount
 						initialValues={{password: "", confirmPassword: ""}}
 						validationSchema={setPasswordFormSchema}
-						isInitialValid={false}
 						onSubmit={wrapSetPasswordMutationFunction(async ({password}) => {
 							const {data: result} = await resetPassword({
 								variables: {email: queryEmail, token: queryToken, password},

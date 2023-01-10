@@ -35,7 +35,6 @@ export const EditUserForm: React.FC = () => {
 		>
 			<Formik
 				enableReinitialize
-				isInitialValid
 				initialValues={initialFormValues}
 				validationSchema={userFormSchema}
 				onSubmit={wrapMutationFunction(async (data, {resetForm}) => {
