@@ -6,7 +6,7 @@ import {useDispatch, useStore} from "react-redux";
 import {authSlice} from "./auth";
 import {searchSlice} from "./search";
 
-const makeStore = wrapMakeStore(() =>
+export const makeStore = wrapMakeStore(() =>
 	configureStore({
 		reducer: {
 			[authSlice.name]: authSlice.reducer,

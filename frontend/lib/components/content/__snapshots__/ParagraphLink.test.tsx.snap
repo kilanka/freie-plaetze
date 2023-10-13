@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`falls back to a default link text when no children are provided 1`] = `
+<div>
+  <a
+    class="chakra-link css-1yoq2sr"
+    href="https://www.gesetze-im-internet.de/sgb_8/__1.html"
+    target="_blank"
+  >
+    § 
+    1
+     SGB VIII
+  </a>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
+</div>
+`;
+
+exports[`renders a link to a paragraph URL 1`] = `
+<div>
+  <a
+    class="chakra-link css-1yoq2sr"
+    href="https://www.gesetze-im-internet.de/sgb_8/__1.html"
+    target="_blank"
+  >
+    Content
+  </a>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
+</div>
+`;

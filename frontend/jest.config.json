@@ -1,0 +1,7 @@
+{
+  "testEnvironment": "jsdom",
+  "setupFilesAfterEnv": ["<rootDir>/tests/jest-setup.ts"],
+  "moduleNameMapper": {
+    "^test-utils$": "<rootDir>/tests/test-utils.tsx"
+  }
+}
