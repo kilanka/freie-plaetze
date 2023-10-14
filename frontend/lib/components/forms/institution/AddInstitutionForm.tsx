@@ -44,7 +44,7 @@ export const AddInstitutionForm: React.FC = () => {
 
 							provider:
 								providerId === ""
-									? {}
+									? null
 									: providerId === "create"
 									? {
 											create: {
