@@ -16,8 +16,7 @@
     "incremental": true,
     "paths": {
       "test-utils": ["./tests/test-utils"]
-    },
-    "types": ["jest-puppeteer"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tests/jest-setup.ts"],
   "exclude": ["node_modules"]
