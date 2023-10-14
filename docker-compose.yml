@@ -9,6 +9,14 @@ services:
     ports:
       - 5432:5432
 
+  db-e2e:
+    image: postgres:14.2
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpass
+    ports:
+      - 5433:5432
+
   imgproxy:
     image: darthsim/imgproxy:v3.6.0
     volumes:

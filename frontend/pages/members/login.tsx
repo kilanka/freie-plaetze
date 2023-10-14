@@ -45,7 +45,7 @@ const Page: NextPage = () => {
 						}
 					}}
 				>
-					<Stack as={Form} spacing={4}>
+					<Stack as={Form} id="login" spacing={4}>
 						<InputControl name="email" label="E-Mail-Adresse" />
 						<InputControl
 							name="password"

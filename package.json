@@ -2,6 +2,7 @@
   "private": true,
   "workspaces": [
     "./backend",
+    "./e2e-tests",
     "./frontend"
   ],
   "scripts": {

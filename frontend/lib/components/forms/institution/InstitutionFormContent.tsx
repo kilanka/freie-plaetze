@@ -89,7 +89,7 @@ export const InstitutionFormContent: React.FC = () => {
 	const providers = providersData?.providers ?? [];
 
 	return (
-		<Stack as={Form} spacing={12}>
+		<Stack as={Form} id="institution" spacing={12}>
 			<Stack spacing={4}>
 				<InputControl isRequired name="name" label="Name der Einrichtung" />
 				<FormColumns>

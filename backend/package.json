@@ -2,14 +2,16 @@
   "name": "backend",
   "private": true,
   "scripts": {
-    "dev": "keystone dev",
+    "dev": "npm run start-dependencies && keystone dev",
     "seed": "npm run dev -- --seed",
+    "e2e": "npm run start-dependencies && npm run migrate:reset && keystone build && keystone start",
     "start": "npm run migrate:deploy && keystone start",
     "build": "keystone build",
     "keystone-postinstall": "keystone postinstall",
     "migrate:deploy": "keystone prisma migrate deploy",
     "migrate:draft": "keystone prisma migrate dev --create-only",
-    "migrate:reset": "keystone prisma migrate reset"
+    "migrate:reset": "keystone prisma migrate reset --force",
+    "start-dependencies": "docker compose up -d db db-e2e imgproxy"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
