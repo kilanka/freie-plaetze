@@ -14,5 +14,9 @@
     "editor.formatOnSave": true
   },
   "cSpell.language": "en,de",
-  "cSpell.words": ["imgproxy", "nominatim"]
+  "cSpell.words": ["imgproxy", "nominatim"],
+  "jest.autoRun": {
+    "watch": false
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

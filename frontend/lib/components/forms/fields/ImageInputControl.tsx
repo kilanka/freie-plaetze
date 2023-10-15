@@ -52,7 +52,12 @@ export const ImageInputControl: FC<ImageInputControlProps> = React.forwardRef(
 
 		return (
 			<FormControl name={name} label={label} {...rest}>
-				<Button variant="outline" leftIcon={<Icon as={FiFile} />} onClick={openFileSelector}>
+				<Button
+					id={name}
+					variant="outline"
+					leftIcon={<Icon as={FiFile} />}
+					onClick={openFileSelector}
+				>
 					Bild auswählen
 				</Button>
 				{(fileContent || value?.url) && (

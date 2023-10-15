@@ -3,8 +3,7 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "test:headful": "HEADLESS=false jest",
-    "test:watch": "jest --watch"
+    "test:headful": "HEADLESS=false jest"
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.2",
