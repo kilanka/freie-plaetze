@@ -9,6 +9,14 @@ import {InstitutionWhereInput} from ".keystone/types";
  * https://nominatim.org/release-docs/develop/api/Search/
  */
 async function queryPosition(endpointUrl: string, parameters: Record<string, string | number>) {
+	if (process.env.NODE_ENV === "test") {
+		// Mock Nominatim responses in test environments
+		return {
+			positionLat: 52.517_164_75,
+			positionLng: 13.379_497_863,
+		};
+	}
+
 	const response = await axios.get<any[]>(endpointUrl, {
 		params: {
 			country: "de",
@@ -18,8 +26,6 @@ async function queryPosition(endpointUrl: string, parameters: Record<string, str
 		},
 		headers: {"User-Agent": "freie-plaetze.de"},
 	});
-
-	// Console.log(result);
 
 	if (response.data.length === 0) {
 		throw new Error("Position not found");
