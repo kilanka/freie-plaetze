@@ -1,10 +1,6 @@
-import path from "node:path";
-
 import {defineConfig, devices} from "@playwright/test";
 
 import {constants} from "./data";
-
-export const STORAGE_STATE_PATH = path.join(__dirname, "playwright/.auth/user.json");
 
 // https://playwright.dev/docs/test-configuration.
 export default defineConfig({
@@ -28,21 +24,18 @@ export default defineConfig({
 		},
 		{
 			name: "chromium",
-			testMatch: "**/*.loggedin.spec.ts",
 			dependencies: ["setup"],
-			use: {...devices["Desktop Chrome"], storageState: STORAGE_STATE_PATH},
+			use: {...devices["Desktop Chrome"]},
 		},
 		{
 			name: "firefox",
-			testMatch: "**/*.loggedin.spec.ts",
 			dependencies: ["setup"],
-			use: {...devices["Desktop Firefox"], storageState: STORAGE_STATE_PATH},
+			use: {...devices["Desktop Firefox"]},
 		},
 		{
 			name: "webkit",
-			testMatch: "**/*.loggedin.spec.ts",
 			dependencies: ["setup"],
-			use: {...devices["Desktop Safari"], storageState: STORAGE_STATE_PATH},
+			use: {...devices["Desktop Safari"]},
 		},
 	],
 
@@ -54,7 +47,6 @@ export default defineConfig({
 			},
 			url: "http://localhost:3010",
 			reuseExistingServer: !process.env.CI,
-			stdout: "pipe",
 		},
 		{
 			command: "npm run -w frontend e2e",
@@ -63,7 +55,6 @@ export default defineConfig({
 			},
 			url: "http://localhost:8090/about",
 			reuseExistingServer: !process.env.CI,
-			stdout: "pipe",
 		},
 	],
 });

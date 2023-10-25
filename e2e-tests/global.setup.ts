@@ -1,11 +1,10 @@
 import {expect, test as setup} from "@playwright/test";
 
 import {constants} from "./data";
-import {STORAGE_STATE_PATH} from "./playwright.config";
 
 setup.describe.configure({mode: "serial"});
 
-setup("Create first user", async ({page}) => {
+setup("Create initial user", async ({page}) => {
 	await page.goto("/init");
 
 	try {
@@ -29,20 +28,4 @@ setup("Create first user", async ({page}) => {
 	await page.getByRole("button", {name: "Sign out"}).click();
 
 	await expect(page.getByRole("heading", {name: "Sign In"})).toBeVisible();
-});
-
-setup("Sign in", async ({page}) => {
-	await page.goto(constants.frontendUrl);
-	await page.getByRole("link", {name: "Anmelden"}).first().click();
-
-	await expect(page.getByRole("heading", {name: "Anmelden"})).toBeVisible();
-
-	await page.getByLabel("E-Mail-Adresse").fill(constants.user.email);
-	await page.getByLabel("Passwort").fill(constants.user.password);
-	await page.getByRole("button", {name: "Anmelden"}).click();
-
-	await expect(page.getByRole("button", {name: "Test User Test User"})).toBeVisible();
-	await expect(page.getByRole("heading", {name: "Meine Einrichtungen"})).toBeVisible();
-
-	await page.context().storageState({path: STORAGE_STATE_PATH});
 });

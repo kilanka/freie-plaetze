@@ -1,8 +1,9 @@
 import path from "node:path";
 
-import {Page, expect, test} from "@playwright/test";
+import {Page} from "@playwright/test";
 
 import {constants} from "./data";
+import {expect, test} from "./fixtures";
 
 test.describe.configure({mode: "serial"});
 
@@ -14,7 +15,7 @@ async function selectImage(page: Page, label: string, filename: string) {
 }
 
 test.describe("Add institution", () => {
-	test.beforeEach(async ({page}) => {
+	test.beforeEach(async ({page, account}) => {
 		await page.goto("/members");
 		await page.locator("a").filter({hasText: "Einrichtung hinzufügen"}).click();
 		await page.waitForURL("/members/add-institution");
