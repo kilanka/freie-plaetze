@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "npm run start-dependencies && keystone dev",
     "seed": "npm run dev -- --seed",
-    "e2e": "npm run start-dependencies && npm run migrate:reset && keystone build && keystone start",
+    "e2e": "npm run start-dependencies && keystone build && npm run migrate:reset && keystone start",
     "start": "npm run migrate:deploy && keystone start",
     "build": "keystone build",
     "keystone-postinstall": "keystone postinstall",
