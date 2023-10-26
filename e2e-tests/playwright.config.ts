@@ -10,31 +10,23 @@ export default defineConfig({
 	workers: process.env.CI ? 1 : undefined,
 	reporter: "html",
 
+	globalSetup: require.resolve("./global-setup"),
+
 	use: {
 		baseURL: constants.frontendUrl,
 		trace: "on-first-retry",
 	},
 	projects: [
 		{
-			name: "setup",
-			testMatch: /global.setup\.ts/,
-			use: {
-				baseURL: constants.backendUrl,
-			},
-		},
-		{
 			name: "chromium",
-			dependencies: ["setup"],
 			use: {...devices["Desktop Chrome"]},
 		},
 		{
 			name: "firefox",
-			dependencies: ["setup"],
 			use: {...devices["Desktop Firefox"]},
 		},
 		{
 			name: "webkit",
-			dependencies: ["setup"],
 			use: {...devices["Desktop Safari"]},
 		},
 	],
