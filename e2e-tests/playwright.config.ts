@@ -36,14 +36,18 @@ export default defineConfig({
 			command: "npm run -w backend e2e",
 			env: {
 				NODE_ENV: "test",
+				PORT: "3010",
+				DATABASE_URL: "postgres://pguser:pgpass@localhost:5433/pguser",
+				FRONTEND_URL: "http://localhost:8090/",
 			},
 			url: "http://localhost:3010",
 			reuseExistingServer: !process.env.CI,
 		},
 		{
-			command: "npm run -w frontend e2e",
+			command: "wait-port localhost:3010 && npm run -w frontend e2e",
 			env: {
 				NODE_ENV: "test",
+				NEXT_PUBLIC_BACKEND_URL: "http://localhost:3010",
 			},
 			url: "http://localhost:8090/about",
 			reuseExistingServer: !process.env.CI,
