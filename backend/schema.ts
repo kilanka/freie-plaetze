@@ -241,9 +241,8 @@ export const lists = {
 				// Update slug if name was updated
 				if (resolvedData.name) {
 					resolvedData.slug = `${slugify(resolvedData.name)}-${hashStrings(
-						resolvedData.street ?? item!.street,
-						resolvedData.streetNumber ?? item!.streetNumber,
-						resolvedData.zip ?? item!.zip
+						resolvedData.name,
+						new Date().toISOString()
 					)}`;
 				}
 
