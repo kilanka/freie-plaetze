@@ -240,6 +240,7 @@ type Institution {
   provider: Provider
   types(where: InstitutionTypeWhereInput! = {}, orderBy: [InstitutionTypeOrderByInput!]! = [], take: Int, skip: Int! = 0): [InstitutionType!]
   typesCount(where: InstitutionTypeWhereInput! = {}): Int
+  createdAt: DateTime!
   lastUpdated: DateTime!
   gender: InstitutionGenderType!
   ageFrom: Int
@@ -313,6 +314,7 @@ input InstitutionWhereInput {
   owner: UserWhereInput
   provider: ProviderWhereInput
   types: InstitutionTypeManyRelationFilter
+  createdAt: DateTimeFilter
   lastUpdated: DateTimeFilter
   gender: InstitutionGenderTypeNullableFilter
   ageFrom: IntNullableFilter
@@ -381,6 +383,7 @@ input InstitutionOrderByInput {
   id: OrderDirection
   name: OrderDirection
   slug: OrderDirection
+  createdAt: OrderDirection
   lastUpdated: OrderDirection
   gender: OrderDirection
   ageFrom: OrderDirection
@@ -405,6 +408,7 @@ input InstitutionUpdateInput {
   owner: UserRelateToOneForUpdateInput
   provider: ProviderRelateToOneForUpdateInput
   types: InstitutionTypeRelateToManyForUpdateInput
+  createdAt: DateTime
   lastUpdated: DateTime
   gender: InstitutionGenderType
   ageFrom: Int
@@ -463,6 +467,7 @@ input InstitutionCreateInput {
   owner: UserRelateToOneForCreateInput
   provider: ProviderRelateToOneForCreateInput
   types: InstitutionTypeRelateToManyForCreateInput
+  createdAt: DateTime
   lastUpdated: DateTime
   gender: InstitutionGenderType!
   ageFrom: Int

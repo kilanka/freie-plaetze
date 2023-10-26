@@ -42,6 +42,7 @@ model Institution {
   provider           Provider?             @relation("Institution_provider", fields: [providerId], references: [id])
   providerId         String?               @map("provider")
   types              InstitutionType[]     @relation("Institution_types")
+  createdAt          DateTime              @default(now())
   lastUpdated        DateTime              @updatedAt
   gender             InstitutionGenderType
   ageFrom            Int?

@@ -175,6 +175,12 @@ export const lists = {
 			owner: relationship({ref: "User.institutions", many: false}),
 			provider: relationship({ref: "Provider.institutions", many: false}),
 			types: relationship({ref: "InstitutionType", many: true, ui: {hideCreate: true}}),
+			createdAt: timestamp({
+				db: {isNullable: false},
+				ui: {itemView: {fieldMode: "read"}},
+				defaultValue: {kind: "now"},
+				graphql: {read: {isNonNull: true}},
+			}),
 			lastUpdated: timestamp({
 				db: {updatedAt: true, isNullable: false},
 				ui: {itemView: {fieldMode: "read"}},
