@@ -2,13 +2,13 @@ import {lengthToDegrees} from "@turf/helpers";
 import axios from "axios";
 import {Writable} from "type-fest";
 
-import {nominatimAddressSearchEndpoint, nominatimCitySearchEndpoint} from "../environment";
+import {geoResolverUrl, nominatimSearchEndpoint} from "../environment";
 import {InstitutionWhereInput} from ".keystone/types";
 
 /**
  * https://nominatim.org/release-docs/develop/api/Search/
  */
-async function queryPosition(endpointUrl: string, parameters: Record<string, string | number>) {
+async function queryPosition(parameters: Record<string, string | number>) {
 	if (process.env.NODE_ENV === "test") {
 		// Mock Nominatim responses in test environments
 		return {
@@ -17,7 +17,7 @@ async function queryPosition(endpointUrl: string, parameters: Record<string, str
 		};
 	}
 
-	const response = await axios.get<any[]>(endpointUrl, {
+	const response = await axios.get<any[]>(nominatimSearchEndpoint, {
 		params: {
 			country: "de",
 			format: "jsonv2",
@@ -46,15 +46,23 @@ type Address = {
 };
 
 export const getPositionByAddress = async ({street, streetNumber, zip}: Address) =>
-	queryPosition(nominatimAddressSearchEndpoint, {
+	queryPosition({
 		postalcode: zip,
 		street: `${streetNumber} ${street}`,
 	});
 
-export const getPositionByZipOrCity = async (cityOrZip: string) =>
-	queryPosition(nominatimCitySearchEndpoint, {
-		[/^\d+$/.test(cityOrZip) ? "postalcode" : "city"]: cityOrZip,
-	});
+export async function getPositionByZipOrCity(cityOrZip: string) {
+	const response = await axios.get<{location: {lat: number; lon: number}}>(
+		`${geoResolverUrl}/city/${cityOrZip}`
+	);
+
+	if (response.status === 404) {
+		throw new Error("Position not found");
+	}
+
+	const {lat: positionLat, lon: positionLng} = response.data.location;
+	return {positionLat, positionLng};
+}
 
 export async function getPositionFilters(cityOrZip: string, radius: number) {
 	const filters: Writable<InstitutionWhereInput> = {};

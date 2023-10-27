@@ -30,6 +30,24 @@ services:
     ports:
       - 8081:8080
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.4
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      xpack.security.enabled: "false"
+    ports:
+      - 9200:9200
+
+  geo-resolver:
+    build:
+      context: .
+      dockerfile: ./geo-resolver/Dockerfile
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - 3001:3001
+
   backend:
     build: .
     depends_on:
@@ -39,6 +57,7 @@ services:
     environment:
       APP_ENV: staging
       DATABASE_URL: postgres://pguser:pgpass@db:5432/pguser
+      GEO_RESOLVER_URL: http://geo-resolver:3001
       IMAGES_PATH: /images
     ports:
       - 3000:3000

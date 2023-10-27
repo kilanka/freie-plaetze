@@ -3,6 +3,7 @@
   "workspaces": [
     "./backend",
     "./e2e-tests",
+    "./geo-resolver",
     "./frontend"
   ],
   "scripts": {
@@ -30,7 +31,8 @@
     ],
     "rules": {
       "import/order": "off",
-      "@typescript-eslint/class-literal-property-style": "off"
+      "@typescript-eslint/class-literal-property-style": "off",
+      "@typescript-eslint/no-extraneous-class": "off"
     }
   },
   "prettier": "@bjoluc/eslint-config-xo-next/prettier.config"
