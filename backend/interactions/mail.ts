@@ -1,3 +1,5 @@
+import path from "node:path";
+
 import Email from "email-templates";
 import {createTransport} from "nodemailer";
 
@@ -16,6 +18,10 @@ export async function sendMail(template: string, to: string, locals: Record<stri
 			secure: true,
 			auth: {user: MAIL_ADDRESS, pass: MAIL_PASSWORD},
 		}),
+		preview: process.env.NODE_ENV !== "production" && {
+			dir: path.join(__dirname, "../.emails"),
+			id: to,
+		},
 	});
 
 	await email.send({
