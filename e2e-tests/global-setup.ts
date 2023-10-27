@@ -10,7 +10,15 @@ async function globalSetup() {
 
 	await page.goto(constants.backendUrl + "/init");
 
-	await page.getByRole("heading", {name: "Welcome to KeystoneJS"}).waitFor({state: "visible"});
+	try {
+		await page
+			.getByRole("heading", {name: "Welcome to KeystoneJS"})
+			.waitFor({state: "visible", timeout: 1000});
+	} catch {
+		// In case the setup has already been run (happens when using the VS Code Playwright extension
+		// simultaneously with a standalone Playwright instance)
+		return;
+	}
 
 	await page.getByLabel("Name").fill(constants.user.name);
 	await page.getByLabel("Email").fill(constants.user.email);

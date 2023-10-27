@@ -1,6 +1,7 @@
 import {Page, expect} from "@playwright/test";
 
 import {selectImage} from "../utils";
+import {Providers} from "./Providers";
 
 interface InstitutionData {
 	name?: string;
@@ -32,7 +33,7 @@ interface InstitutionData {
 export class Institutions {
 	public readonly allNames = new Set<string>();
 
-	constructor(public readonly page: Page) {}
+	constructor(public readonly page: Page, private readonly providersFixture: Providers) {}
 
 	/**
 	 * Fills out the "Add Institution" form with the provided data, runs the `beforeSave` callback (if
@@ -52,6 +53,10 @@ export class Institutions {
 
 		await this.pressSaveButton();
 		this.allNames.add(data.name!);
+
+		if (typeof data.provider === "object") {
+			this.providersFixture.namesMarkedForRemoval.add(data.provider.name);
+		}
 	}
 
 	// eslint-disable-next-line complexity
@@ -143,6 +148,8 @@ export class Institutions {
 
 		await expect(this.page.getByText("Einrichtung gelöscht")).toBeVisible();
 		await this.page.getByRole("button", {name: "Close"}).click();
+
+		await this.page.waitForURL(/\/members$/);
 
 		this.allNames.delete(institutionName);
 	}

@@ -18,25 +18,23 @@ test.describe("Add institution", () => {
 			await institutions.add({
 				name: "Institution",
 				address: constants.institutionAddress,
-				provider: {name: "Provider1", homepage: "https://example.org/provider1"},
+				provider: {name: "Provider", homepage: "https://example.org/provider"},
 			});
 
 			await expect(page.getByRole("heading", {name: "Institution"})).toBeVisible();
-			await expect(page.getByText("Träger: Provider1 – example.org/provider1")).toBeVisible();
+			await expect(page.getByText("Träger: Provider – example.org/provider")).toBeVisible();
 		});
 
 		test("specifying an address and no homepage", async ({page, institutions}) => {
 			await institutions.add({
 				name: "Institution",
 				address: constants.institutionAddress,
-				provider: {name: "Provider2", ...constants.providerAddress},
+				provider: {name: "Provider", ...constants.providerAddress},
 			});
 
 			await expect(page.getByRole("heading", {name: "Institution"})).toBeVisible();
 			await expect(page.getByText("Berlin•geschlechtsgemischt•alle Altersklassen")).toBeVisible();
-			await expect(
-				page.getByText("Träger: Provider2, Pariser Platz 5, 10117 Berlin")
-			).toBeVisible();
+			await expect(page.getByText("Träger: Provider, Pariser Platz 5, 10117 Berlin")).toBeVisible();
 		});
 	});
 
@@ -44,17 +42,17 @@ test.describe("Add institution", () => {
 		await institutions.add({
 			name: "Institution creating the provider",
 			address: constants.institutionAddress,
-			provider: {name: "Provider3", homepage: "https://example.org/provider3"},
+			provider: {name: "Provider", homepage: "https://example.org/provider"},
 		});
 
 		await institutions.add({
 			name: "Institution",
 			address: constants.institutionAddress,
-			provider: "Provider3",
+			provider: "Provider",
 		});
 
 		await expect(page.getByRole("heading", {name: "Institution"})).toBeVisible();
-		await expect(page.getByText("Träger: Provider3 – example.org/provider3")).toBeVisible();
+		await expect(page.getByText("Träger: Provider – example.org/provider")).toBeVisible();
 	});
 
 	test("using all available fields (except provider)", async ({page, institutions}) => {

@@ -3,9 +3,11 @@ import {test as base, expect} from "@playwright/test";
 import {constants} from "../data";
 import {Account} from "./Account";
 import {Institutions} from "./Institutions";
+import {Providers} from "./Providers";
 
 type Fixtures = {
 	institutions: Institutions;
+	providers: Providers;
 };
 
 type WorkerFixtures = {
@@ -39,12 +41,20 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
 		await use(page);
 	},
 
-	async institutions({page}, use) {
-		const institutions = new Institutions(page);
+	async institutions({page, providers}, use) {
+		const institutions = new Institutions(page, providers);
 
 		await use(institutions);
 
 		await institutions.removeAll();
+	},
+
+	async providers({page}, use) {
+		const providers = new Providers(page);
+
+		await use(providers);
+
+		await providers.removeMarked();
 	},
 });
 export {expect} from "@playwright/test";
