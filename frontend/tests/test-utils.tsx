@@ -3,7 +3,7 @@
 import {ApolloProvider} from "@apollo/client";
 import {ChakraProvider} from "@chakra-ui/react";
 import {Provider as ModalProvider} from "@ebay/nice-modal-react";
-import {RenderOptions, render} from "@testing-library/react";
+import {render, RenderOptions} from "@testing-library/react";
 import React, {ReactElement} from "react";
 import {Provider as ReduxProvider} from "react-redux";
 

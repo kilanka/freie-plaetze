@@ -1,7 +1,8 @@
-import {PayloadAction, createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {HYDRATE} from "next-redux-wrapper";
 import router from "next/router";
 
+import type {AppState, AppThunkAction} from ".";
 import {getApolloClient} from "../api/apollo-client";
 import {
 	LoginDocument,
@@ -10,7 +11,6 @@ import {
 	LogoutDocument,
 } from "../api/generated";
 import {LogoutMutation} from "../api/generated/ssr";
-import type {AppState, AppThunkAction} from ".";
 
 export const authSlice = createSlice({
 	name: "auth",

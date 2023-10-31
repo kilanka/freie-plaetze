@@ -1,45 +1,45 @@
 {
-  "name": "backend",
-  "private": true,
-  "scripts": {
-    "dev": "pnpm run start-dependencies && keystone dev",
-    "seed": "pnpm run dev -- --seed",
-    "e2e": "pnpm run start-dependencies && keystone build && pnpm run migrate:reset && keystone start",
-    "start": "pnpm run migrate:deploy && keystone start",
-    "build": "keystone build",
-    "keystone-postinstall": "keystone postinstall",
-    "migrate:deploy": "keystone prisma migrate deploy",
-    "migrate:draft": "keystone prisma migrate dev --create-only",
-    "migrate:reset": "keystone prisma migrate reset --force",
-    "start-dependencies": "docker compose up -d db db-e2e imgproxy"
-  },
-  "files": [
-    "*",
-    ".keystone"
-  ],
-  "dependencies": {
-    "@faker-js/faker": "^8.2.0",
-    "@keystone-6/auth": "7.0.2",
-    "@keystone-6/core": "5.7.0",
-    "@keystone-6/fields-document": "8.0.2",
-    "@next/env": "^14.0.0",
-    "@prisma/client": "4.16.2",
-    "@turf/helpers": "^6.5.0",
-    "axios": "^1.6.0",
-    "email-templates": "^11.1.1",
-    "graphql-upload": "^15.0.2",
-    "imgproxy": "^1.2.0",
-    "lodash": "^4.17.21",
-    "nodemailer": "^6.9.7",
-    "prisma": "4.16.2",
-    "pug": "^3.0.2",
-    "slugify": "^1.6.6",
-    "undici": "^5.27.0"
-  },
-  "devDependencies": {
-    "@types/email-templates": "^10.0.3",
-    "@types/nodemailer": "^6.4.13",
-    "type-fest": "^4.6.0",
-    "typescript": "^4.9.4"
-  }
+	"name": "backend",
+	"private": true,
+	"scripts": {
+		"dev": "pnpm run start-dependencies && keystone dev",
+		"seed": "pnpm run dev -- --seed",
+		"e2e": "pnpm run start-dependencies && keystone build && pnpm run migrate:reset && keystone start",
+		"start": "pnpm run migrate:deploy && keystone start",
+		"build": "keystone build",
+		"keystone-postinstall": "keystone postinstall",
+		"migrate:deploy": "keystone prisma migrate deploy",
+		"migrate:draft": "keystone prisma migrate dev --create-only",
+		"migrate:reset": "keystone prisma migrate reset --force",
+		"start-dependencies": "docker compose up -d db db-e2e imgproxy"
+	},
+	"files": [
+		"*",
+		".keystone"
+	],
+	"dependencies": {
+		"@faker-js/faker": "^8.2.0",
+		"@keystone-6/auth": "7.0.2",
+		"@keystone-6/core": "5.7.0",
+		"@keystone-6/fields-document": "8.0.2",
+		"@next/env": "^14.0.0",
+		"@prisma/client": "4.16.2",
+		"@turf/helpers": "^6.5.0",
+		"axios": "^1.6.0",
+		"email-templates": "^11.1.1",
+		"graphql-upload": "^15.0.2",
+		"imgproxy": "^1.2.0",
+		"lodash": "^4.17.21",
+		"nodemailer": "^6.9.7",
+		"prisma": "4.16.2",
+		"pug": "^3.0.2",
+		"slugify": "^1.6.6",
+		"undici": "^5.27.0"
+	},
+	"devDependencies": {
+		"@types/email-templates": "^10.0.3",
+		"@types/nodemailer": "^6.4.13",
+		"type-fest": "^4.6.0",
+		"typescript": "^4.9.4"
+	}
 }

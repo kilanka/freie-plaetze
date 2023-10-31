@@ -6,8 +6,8 @@ import {useMutationErrorHandler} from "../../../hooks/useMutationErrorHandler";
 import {FormContainer} from "../FormContainer";
 import {ProviderFormContent} from "./ProviderFormContent";
 import {
-	ProviderFormData,
 	processProviderFormValues,
+	ProviderFormData,
 	providerFormInitialValues,
 	providerFormSchema,
 } from "./ProviderFormFields";

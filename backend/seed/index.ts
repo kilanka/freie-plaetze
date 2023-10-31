@@ -1,5 +1,5 @@
-import {getInstitutions, users} from "./data";
 import {Context, InstitutionCreateInput, UserCreateInput} from ".keystone/types";
+import {getInstitutions, users} from "./data";
 
 export async function insertSeedData(context: Context) {
 	context = context.sudo();

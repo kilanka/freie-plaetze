@@ -1,4 +1,4 @@
-import {AnyAction, ThunkAction, configureStore} from "@reduxjs/toolkit";
+import {AnyAction, configureStore, ThunkAction} from "@reduxjs/toolkit";
 import {nextReduxCookieMiddleware, wrapMakeStore} from "next-redux-cookie-wrapper";
 import {createWrapper} from "next-redux-wrapper";
 import {useDispatch, useStore} from "react-redux";

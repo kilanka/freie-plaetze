@@ -2,8 +2,8 @@ import {lengthToDegrees} from "@turf/helpers";
 import axios from "axios";
 import {Writable} from "type-fest";
 
-import {geoResolverUrl, nominatimSearchEndpoint} from "../environment";
 import {InstitutionWhereInput} from ".keystone/types";
+import {geoResolverUrl, nominatimSearchEndpoint} from "../environment";
 
 /**
  * https://nominatim.org/release-docs/develop/api/Search/

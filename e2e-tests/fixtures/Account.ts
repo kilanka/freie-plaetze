@@ -1,4 +1,4 @@
-import {Locator, Page, expect} from "@playwright/test";
+import {expect, Locator, Page} from "@playwright/test";
 
 import {constants} from "../data";
 
@@ -6,7 +6,10 @@ export class Account {
 	public readonly email;
 	public readonly password = "user-password";
 
-	constructor(public readonly page: Page, public readonly username: string) {
+	constructor(
+		public readonly page: Page,
+		public readonly username: string
+	) {
 		this.email = this.username + "@example.org";
 	}
 

@@ -1,4 +1,4 @@
-import {Faker, de} from "@faker-js/faker";
+import {de, Faker} from "@faker-js/faker";
 // @ts-expect-error https://github.com/jaydenseric/graphql-upload/issues/282
 import Upload from "graphql-upload/Upload.js";
 import {sample} from "lodash";

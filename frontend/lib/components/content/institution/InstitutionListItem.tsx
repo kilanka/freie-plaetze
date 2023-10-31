@@ -1,5 +1,5 @@
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
-import {Flex, Grid, Heading, LinkBox, LinkOverlay, Stack, Text, chakra} from "@chakra-ui/react";
+import {chakra, Flex, Grid, Heading, LinkBox, LinkOverlay, Stack, Text} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
 

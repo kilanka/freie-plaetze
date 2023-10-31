@@ -1,4 +1,4 @@
-import {Page, expect} from "@playwright/test";
+import {expect, Page} from "@playwright/test";
 
 import {selectImage} from "../utils";
 import {Providers} from "./Providers";
@@ -33,7 +33,10 @@ interface InstitutionData {
 export class Institutions {
 	public readonly allNames = new Set<string>();
 
-	constructor(public readonly page: Page, private readonly providersFixture: Providers) {}
+	constructor(
+		public readonly page: Page,
+		private readonly providersFixture: Providers
+	) {}
 
 	/**
 	 * Fills out the "Add Institution" form with the provided data, runs the `beforeSave` callback (if

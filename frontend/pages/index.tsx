@@ -7,8 +7,8 @@ import {getApolloClient} from "../lib/api/apollo-client";
 import {getSdk} from "../lib/api/generated/ssr";
 import {InstitutionSearchForm} from "../lib/components/content/front/InstitutionSearchForm";
 import {
-	InstitutionSearchResults,
 	institutionSearchBatchSize,
+	InstitutionSearchResults,
 } from "../lib/components/content/front/InstitutionSearchResults";
 import {InstitutionTypesList} from "../lib/components/content/front/InstitutionTypesList";
 import {HeaderSection} from "../lib/components/HeaderSection";

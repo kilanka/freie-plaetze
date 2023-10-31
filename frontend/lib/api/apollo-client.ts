@@ -17,8 +17,8 @@ export function getApolloClient() {
 				credentials: "include",
 				headers: {
 					// https://www.apollographql.com/docs/apollo-server/security/cors/#preventing-cross-site-request-forgery-csrf
-					'Apollo-Require-Preflight': 'true'
-				}
+					"Apollo-Require-Preflight": "true",
+				},
 			}),
 			cache: new InMemoryCache({
 				typePolicies: {

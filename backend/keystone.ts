@@ -2,6 +2,7 @@ import {createAuth} from "@keystone-6/auth";
 import {config} from "@keystone-6/core";
 import {statelessSessions} from "@keystone-6/core/session";
 
+import {Context} from ".keystone/types";
 import {
 	additionalFrontendOriginExpressions,
 	databaseUrl,
@@ -14,7 +15,6 @@ import {
 import {sendPasswordResetTokenEmail} from "./interactions/mail";
 import {extendGraphqlSchema, lists} from "./schema";
 import {insertSeedData} from "./seed";
-import {Context} from ".keystone/types";
 
 const {withAuth} = createAuth({
 	listKey: "User",
