@@ -37,7 +37,7 @@ export const ImageInputControl: FC<ImageInputControlProps> = React.forwardRef(
 			filesContent: [fileContent],
 			plainFiles: [file],
 		} = useFilePicker({
-			accept: ".jpg,.jpeg,.png",
+			accept: ".jpg,.jpeg,.png,.webp,.gif",
 			multiple: false,
 			readAs: "DataURL",
 		});
