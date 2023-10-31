@@ -61,4 +61,5 @@ export const ConfirmationModal = create<ConfirmationModalProps>(
 );
 
 export const showConfirmationModal = async (props: ConfirmationModalProps) =>
+	// @ts-expect-error Modal components can be passed here (per the docs) but the typings currently don't reflect that
 	show<boolean>(ConfirmationModal, props);

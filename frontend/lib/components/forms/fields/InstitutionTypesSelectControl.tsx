@@ -1,7 +1,7 @@
 import {useForwardedRef} from "@bedrock-layout/use-forwarded-ref";
-import {Select, SelectInstance, chakraComponents} from "chakra-react-select";
+import {chakraComponents, Select, SelectInstance} from "chakra-react-select";
 import {useField} from "formik";
-import {FormControl, BaseProps as FormControlProps} from "formik-chakra-ui";
+import {BaseProps as FormControlProps, FormControl} from "formik-chakra-ui";
 import React from "react";
 import {Except} from "type-fest";
 
@@ -64,10 +64,10 @@ export const InstitutionTypesSelectControl = React.forwardRef<
 				}}
 				value={field.value.map((paragraph) => institutionTypeOptionsMap[paragraph])}
 				onChange={(options) => {
-					helpers.setValue(options.map((option) => option.value));
+					void helpers.setValue(options.map((option) => option.value));
 				}}
 				onBlur={() => {
-					helpers.setTouched(true);
+					void helpers.setTouched(true);
 				}}
 			/>
 		</FormControl>

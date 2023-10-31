@@ -14,11 +14,9 @@ export const providerFormSchema = yup.object({
 	...Object.fromEntries(
 		["street", "streetNumber", "zip", "city"].map((fieldName) => [
 			fieldName,
-			yup.string().when("homepage", {
-				is: (homepage: string) => !homepage,
-				// eslint-disable-next-line unicorn/no-thenable
-				then: (schema) => schema.required(" "),
-			}),
+			yup
+				.string()
+				.when("homepage", ([homepage], schema) => (homepage ? schema : schema.required(" "))),
 		])
 	),
 });

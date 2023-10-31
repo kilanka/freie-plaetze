@@ -1,13 +1,18 @@
-FROM node:20
+FROM node:20 AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
-WORKDIR /app/geo-resolver
+FROM base AS build
+COPY . /source
+WORKDIR /source
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter geo-resolver install --frozen-lockfile
+RUN pnpm --filter geo-resolver run build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter geo-resolver deploy --prod /app
 
-COPY package.json package-lock.json ../
-COPY geo-resolver/package.json ./
-RUN npm ci -w geo-resolver
-
-COPY geo-resolver .
-RUN npm run build
+FROM base AS app
+COPY --from=build --chown=node:node /app /app
+WORKDIR /app
 
 ENV NODE_ENV production
 
@@ -15,4 +20,4 @@ USER node
 
 EXPOSE 3001
 
-CMD ["npm", "run", "start:prod"]
+CMD ["pnpm", "run", "start:prod"]

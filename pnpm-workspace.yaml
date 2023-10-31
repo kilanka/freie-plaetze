@@ -1,0 +1,5 @@
+packages:
+  - backend
+  - e2e-tests
+  - geo-resolver
+  - frontend

@@ -21,6 +21,7 @@ export async function sendMail(template: string, to: string, locals: Record<stri
 		preview: process.env.NODE_ENV !== "production" && {
 			dir: path.join(__dirname, "../.emails"),
 			id: to,
+			open: process.env.NODE_ENV !== "test",
 		},
 	});
 

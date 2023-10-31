@@ -32,13 +32,11 @@ export const ImageInputControl: FC<ImageInputControlProps> = React.forwardRef(
 		const {setFieldValue, values} = useFormikContext<Record<string, ImageInputFormData>>();
 		const value = values[name];
 
-		const [
-			openFileSelector,
-			{
-				filesContent: [fileContent],
-				plainFiles: [file],
-			},
-		] = useFilePicker({
+		const {
+			openFilePicker,
+			filesContent: [fileContent],
+			plainFiles: [file],
+		} = useFilePicker({
 			accept: ".jpg,.jpeg,.png",
 			multiple: false,
 			readAs: "DataURL",
@@ -46,7 +44,7 @@ export const ImageInputControl: FC<ImageInputControlProps> = React.forwardRef(
 
 		React.useEffect(() => {
 			if (file && file !== value.upload) {
-				setFieldValue(name, {upload: file});
+				void setFieldValue(name, {upload: file});
 			}
 		}, [setFieldValue, name, value, file]);
 
@@ -56,7 +54,7 @@ export const ImageInputControl: FC<ImageInputControlProps> = React.forwardRef(
 					id={name}
 					variant="outline"
 					leftIcon={<Icon as={FiFile} />}
-					onClick={openFileSelector}
+					onClick={openFilePicker}
 				>
 					Bild auswählen
 				</Button>

@@ -33,7 +33,7 @@ export default defineConfig({
 
 	webServer: [
 		{
-			command: "npm run -w backend e2e",
+			command: "pnpm --filter backend run e2e",
 			env: {
 				NODE_ENV: "test",
 				PORT: "3010",
@@ -44,7 +44,7 @@ export default defineConfig({
 			reuseExistingServer: !process.env.CI,
 		},
 		{
-			command: "wait-port localhost:3010 && npm run -w frontend e2e",
+			command: "wait-port localhost:3010 && pnpm --filter frontend run e2e",
 			env: {
 				NODE_ENV: "test",
 				NEXT_PUBLIC_BACKEND_URL: "http://localhost:3010",

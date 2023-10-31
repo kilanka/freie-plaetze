@@ -14,12 +14,12 @@ import {
 } from "@keystone-6/core/fields";
 import {document} from "@keystone-6/fields-document";
 
+import {Context} from ".keystone/types";
 import {isProduction} from "./environment";
 import {getPositionByAddress, getPositionFilters} from "./interactions/geo";
 import {sendWelcomeEmail} from "./interactions/mail";
 import {hashStrings, slugify} from "./util";
 import {makeImageFormatField} from "./util/image-formats";
-import {Context} from ".keystone/types";
 
 type FilterArgs = {
 	session?: {
@@ -42,7 +42,7 @@ const filterItemsOwnedByUser = (args: FilterArgs) => {
 
 const requiredFieldConfig = {
 	validation: {isRequired: true},
-	graphql: {read: {isNonNull: true}},
+	graphql: {isNonNull: {read: true}},
 };
 
 /**
@@ -138,7 +138,7 @@ export const lists = {
 				isIndexed: "unique",
 				isFilterable: true,
 				validation: {isRequired: true},
-				graphql: {read: {isNonNull: true}},
+				graphql: {isNonNull: {read: true}},
 			}),
 			name: text(requiredFieldConfig),
 			shortName: text(requiredFieldConfig),
@@ -165,7 +165,7 @@ export const lists = {
 			slug: text({
 				isIndexed: "unique",
 				isFilterable: true,
-				graphql: {read: {isNonNull: true}},
+				graphql: {isNonNull: {read: true}},
 				access: {
 					create: isUserAdmin,
 					update: isUserAdmin,
@@ -179,12 +179,12 @@ export const lists = {
 				db: {isNullable: false},
 				ui: {itemView: {fieldMode: "read"}},
 				defaultValue: {kind: "now"},
-				graphql: {read: {isNonNull: true}},
+				graphql: {isNonNull: {read: true}},
 			}),
 			lastUpdated: timestamp({
 				db: {updatedAt: true, isNullable: false},
 				ui: {itemView: {fieldMode: "read"}},
-				graphql: {read: {isNonNull: true}},
+				graphql: {isNonNull: {read: true}},
 			}),
 
 			gender: select({
@@ -195,12 +195,12 @@ export const lists = {
 					{value: "m", label: "nur Jungen"},
 				],
 				validation: {isRequired: true},
-				graphql: {read: {isNonNull: true}},
+				graphql: {isNonNull: {read: true}},
 			}),
 			ageFrom: integer({validation: {min: 1}}),
 			ageTo: integer({validation: {min: 1}}),
 
-			arePlacesAvailable: checkbox({graphql: {read: {isNonNull: true}}}),
+			arePlacesAvailable: checkbox({graphql: {isNonNull: {read: true}}}),
 
 			street: text(requiredFieldConfig),
 			streetNumber: text(requiredFieldConfig),

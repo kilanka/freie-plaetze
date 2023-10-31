@@ -1,22 +1,13 @@
 {
-  "xo.enable": true,
-  "xo.format.enable": true,
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "samverschueren.linter-xo",
-    "editor.formatOnSave": true
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "samverschueren.linter-xo",
-    "editor.formatOnSave": true
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "samverschueren.linter-xo",
-    "editor.formatOnSave": true
-  },
-  "cSpell.language": "en,de",
-  "cSpell.words": ["imgproxy", "nominatim"],
-  "jest.autoRun": {
-    "watch": false
-  },
-  "typescript.tsdk": "node_modules/typescript/lib"
+	"prettier.requireConfig": true,
+	"eslint.enable": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"cSpell.language": "en,de",
+	"cSpell.words": ["imgproxy", "nominatim"],
+	"jest.autoRun": {
+		"watch": false
+	},
+	"typescript.tsdk": "node_modules/typescript/lib"
 }

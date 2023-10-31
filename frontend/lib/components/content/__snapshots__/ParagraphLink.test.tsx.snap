@@ -3,7 +3,7 @@
 exports[`falls back to a default link text when no children are provided 1`] = `
 <div>
   <a
-    class="chakra-link css-1yoq2sr"
+    class="chakra-link css-1jsfqne"
     href="https://www.gesetze-im-internet.de/sgb_8/__1.html"
     target="_blank"
   >
@@ -21,7 +21,7 @@ exports[`falls back to a default link text when no children are provided 1`] = `
 exports[`renders a link to a paragraph URL 1`] = `
 <div>
   <a
-    class="chakra-link css-1yoq2sr"
+    class="chakra-link css-1jsfqne"
     href="https://www.gesetze-im-internet.de/sgb_8/__1.html"
     target="_blank"
   >

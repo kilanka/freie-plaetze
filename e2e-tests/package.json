@@ -2,9 +2,9 @@
   "name": "e2e-tests",
   "private": true,
   "scripts": {
-    "ui": "npx playwright test --ui",
-    "test": "npx playwright test",
-    "test:chromium": "npx playwright test --project=chromium"
+    "ui": "playwright test --ui",
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium"
   },
   "dependencies": {
     "@playwright/test": "^1.39.0",

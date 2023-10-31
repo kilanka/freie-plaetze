@@ -1,23 +1,24 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "paths": {
-      "test-utils": ["./tests/test-utils"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tests/jest-setup.ts"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"target": "ES2015",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true, // required for apollo-upload-client
+		"maxNodeModuleJsDepth": 10, // required for apollo-upload-client
+		"skipLibCheck": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"paths": {
+			"test-utils": ["./tests/test-utils"]
+		}
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tests/jest-setup.ts"],
+	"exclude": ["node_modules"]
 }

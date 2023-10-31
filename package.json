@@ -1,39 +1,41 @@
 {
-  "private": true,
-  "workspaces": [
-    "./backend",
-    "./e2e-tests",
-    "./geo-resolver",
-    "./frontend"
-  ],
-  "scripts": {
-    "xo": "xo"
-  },
-  "devDependencies": {
-    "@bjoluc/eslint-config-xo-next": "^1.0.0",
-    "typescript": "^4.7.4"
-  },
-  "overrides": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "chakra-ui-markdown-renderer": {
-      "@chakra-ui/react": "^2.1.0"
-    },
-    "@keystone-6/core": {
-      "graphql": "16.6.0"
-    }
-  },
-  "xo": {
-    "extends": "@bjoluc/xo-next",
-    "prettier": true,
-    "ignores": [
-      "frontend/lib/api/generated/*"
-    ],
-    "rules": {
-      "import/order": "off",
-      "@typescript-eslint/class-literal-property-style": "off",
-      "@typescript-eslint/no-extraneous-class": "off"
-    }
-  },
-  "prettier": "@bjoluc/eslint-config-xo-next/prettier.config"
+	"private": true,
+	"scripts": {
+		"lint": "eslint . --ext .ts,tsx"
+	},
+	"devDependencies": {
+		"@bjoluc/eslint-config-xo-next": "^2.0.1",
+		"typescript": "^4.7.4"
+	},
+	"eslintConfig": {
+		"extends": "@bjoluc/xo-next",
+		"parser": "@typescript-eslint/parser",
+		"root": true,
+		"parserOptions": {
+			"project": [
+				"backend/tsconfig.json",
+				"e2e-tests/tsconfig.json",
+				"frontend/tsconfig.json",
+				"geo-resolver/tsconfig.json"
+			],
+			"tsconfigRootDir": "./"
+		},
+		"ignorePatterns": [
+			"**/*.js",
+			"geo-resolver/dist",
+			"frontend/lib/api/generated"
+		],
+		"rules": {
+			"@typescript-eslint/class-literal-property-style": "off",
+			"@typescript-eslint/no-extraneous-class": "off",
+			"@typescript-eslint/no-unsafe-argument": "off",
+			"@typescript-eslint/consistent-type-imports": "off",
+			"@typescript-eslint/consistent-type-definitions": "off",
+			"react/prefer-read-only-props": "off",
+			"new-cap": "off",
+			"arrow-body-style": "off",
+			"prefer-destructuring": "off"
+		}
+	},
+	"prettier": "@bjoluc/eslint-config-xo-next/prettier.config"
 }

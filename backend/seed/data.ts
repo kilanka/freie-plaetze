@@ -1,4 +1,4 @@
-import {faker} from "@faker-js/faker";
+import {Faker, de} from "@faker-js/faker";
 // @ts-expect-error https://github.com/jaydenseric/graphql-upload/issues/282
 import Upload from "graphql-upload/Upload.js";
 import {sample} from "lodash";
@@ -6,8 +6,8 @@ import {fetch} from "undici";
 
 import {InstitutionCreateInput, UserCreateInput} from ".keystone/types";
 
+const faker = new Faker({locale: [de]});
 faker.seed(123);
-faker.setLocale("de");
 
 export const users: UserCreateInput[] = [
 	{name: "Admin", email: "admin@example.org", password: "password", isAdmin: true},

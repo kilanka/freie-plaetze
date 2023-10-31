@@ -79,7 +79,7 @@ test.describe("Add institution", () => {
 					.locator("svg")
 					.nth(2)
 					.click();
-				await page.getByRole("button", {name: "Eltern-Kind-Wohnen (§ 19 SGB 8)"}).click();
+				await page.getByRole("option", {name: "Eltern-Kind-Wohnen (§ 19 SGB 8)"}).click();
 			}
 		);
 
@@ -135,7 +135,7 @@ test.describe("Edit institution", () => {
 					.locator("svg")
 					.nth(2)
 					.click();
-				await page.getByRole("button", {name: "Eltern-Kind-Wohnen (§ 19 SGB 8)"}).click();
+				await page.getByRole("option", {name: "Eltern-Kind-Wohnen (§ 19 SGB 8)"}).click();
 			}
 		);
 

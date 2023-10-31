@@ -1,9 +1,9 @@
-import {PayloadAction, createSlice} from "@reduxjs/toolkit";
+import {createSelector, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {HYDRATE} from "next-redux-wrapper";
 
+import type {AppState} from ".";
 import {InstitutionGenderType} from "../api/generated";
 import {stringToInt} from "../util";
-import type {AppState} from ".";
 
 export const searchSlice = createSlice({
 	name: "search",
@@ -46,24 +46,32 @@ export const {setGeoSearch, setFiltersActive, setFilters} = searchSlice.actions;
 
 export const selectSearch = (state: AppState) => state[searchSlice.name];
 
-// Returns arguments for the `searchInstitutions` query
-export const selectSearchArgs = (state: AppState) => {
-	const search = selectSearch(state);
-
-	return {
-		cityOrZip: search.cityOrZip,
-		radius: search.radius,
-
-		age: search.areFiltersActive && search.age !== "" ? stringToInt(search.age) : null,
+/**
+ * Returns arguments for the `searchInstitutions` query
+ **/
+export const selectSearchArgs = createSelector(
+	[
+		(state) => selectSearch(state).cityOrZip,
+		(state) => selectSearch(state).radius,
+		(state) => selectSearch(state).areFiltersActive,
+		(state) => selectSearch(state).age,
+		(state) => selectSearch(state).paragraphs,
+		(state) => selectSearch(state).gender,
+	],
+	// eslint-disable-next-line max-params
+	(cityOrZip, radius, areFiltersActive, age, paragraphs, gender) => ({
+		cityOrZip,
+		radius,
+		age: areFiltersActive && age !== "" ? stringToInt(age) : null,
 
 		genderTypes:
-			search.areFiltersActive && search.gender !== ""
+			areFiltersActive && gender !== ""
 				? {
 						f: [InstitutionGenderType.F, InstitutionGenderType.Mixed],
 						m: [InstitutionGenderType.M, InstitutionGenderType.Mixed],
-				  }[search.gender]
+				  }[gender]
 				: Object.values(InstitutionGenderType),
 
-		paragraphs: search.areFiltersActive ? search.paragraphs : null,
-	};
-};
+		paragraphs: areFiltersActive ? paragraphs : null,
+	})
+);

@@ -42,11 +42,11 @@ export const institutionFormSchema = yup.object({
 	mobilePhone: yup.string(),
 
 	providerId: yup.string(),
-	provider: yup.object().when("providerId", {
-		is: "create",
-		// eslint-disable-next-line unicorn/no-thenable
-		then: providerFormSchema,
-	}),
+	provider: yup
+		.object()
+		.when("providerId", ([providerId], schema) =>
+			providerId === "create" ? providerFormSchema : schema
+		),
 });
 
 export const institutionFormInitialValues = {
