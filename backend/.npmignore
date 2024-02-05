@@ -1,0 +1,1 @@
+# This file makes `pnpm deploy` copy all project files, including those matched by .gitignore

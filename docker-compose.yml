@@ -43,6 +43,8 @@ services:
     build:
       context: .
       dockerfile: ./geo-resolver/Dockerfile
+    depends_on:
+      - elasticsearch
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
     ports:
