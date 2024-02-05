@@ -22,11 +22,13 @@
 		"@nestjs/elasticsearch": "^10.0.1",
 		"@nestjs/platform-express": "^10.0.0",
 		"@next/env": "^14.0.0",
-		"@types/stream-json": "^1.7.5",
+		"@types/split2": "^4.2.3",
+		"@types/unzip-stream": "^0.3.4",
 		"reflect-metadata": "^0.1.13",
 		"rxjs": "^7.8.1",
-		"stream-json": "^1.8.0",
+		"split2": "^4.2.0",
 		"undici": "^5.27.0",
+		"unzip-stream": "^0.3.1",
 		"wait-port": "^1.1.0"
 	},
 	"devDependencies": {

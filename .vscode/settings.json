@@ -2,7 +2,7 @@
 	"prettier.requireConfig": true,
 	"eslint.enable": true,
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll.eslint": "explicit"
 	},
 	"cSpell.language": "en,de",
 	"cSpell.words": ["imgproxy", "nominatim"],

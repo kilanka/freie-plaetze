@@ -1,5 +1,7 @@
 export interface City {
 	name: string;
 	zip: string;
-	location: [number, number];
+	state: string;
+	county: string;
+	location: {lat: number; lon: number};
 }

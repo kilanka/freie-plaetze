@@ -1,14 +1,14 @@
-import {Readable as ReadableStream, Transform} from "node:stream";
-
 import {SearchTotalHits} from "@elastic/elasticsearch/lib/api/types";
 import {Injectable, Logger, OnModuleInit} from "@nestjs/common";
 import {ElasticsearchService} from "@nestjs/elasticsearch";
-import * as StreamArray from "stream-json/streamers/StreamArray";
+import {Readable as ReadableStream, Transform} from "node:stream";
+import * as split2 from "split2";
 import {fetch} from "undici";
+import {Parse as ParseZip} from "unzip-stream";
 
 import {City} from "./interfaces/city.interface";
 
-const DATA_SOURCE_URL = `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/georef-germany-postleitzahl/exports/json?lang=en&timezone=Europe%2FBerlin`;
+const DATA_SOURCE_URL = "https://download.geonames.org/export/zip/DE.zip";
 
 @Injectable()
 export class CitiesService implements OnModuleInit {
@@ -36,12 +36,10 @@ export class CitiesService implements OnModuleInit {
 								text: {type: "text"},
 							},
 						},
-						zip: {
-							type: "keyword",
-						},
-						location: {
-							type: "geo_point",
-						},
+						zip: {type: "keyword"},
+						state: {type: "text"},
+						county: {type: "text"},
+						location: {type: "geo_point"},
 					},
 				},
 			},
@@ -54,26 +52,38 @@ export class CitiesService implements OnModuleInit {
 
 		const result = await this.elasticsearchService.helpers.bulk({
 			datasource: ReadableStream.from(response.body!)
-				.pipe(StreamArray.withParser())
+				.pipe(ParseZip())
 				.pipe(
 					new Transform({
-						transform(
-							{
-								value,
-							}: {value: {plz_name: string; plz_code: string; geo_point_2d: [number, number]}},
-							_encoding,
-							callback
-						) {
-							callback(null, {
-								name: value.plz_name,
-								zip: value.plz_code,
-								location: value.geo_point_2d,
-							});
+						objectMode: true,
+						async transform(entry, _encoding, callback) {
+							if (entry.path === "DE.txt") {
+								// Send all chunks of DE.txt down the pipeline:
+								for await (const chunk of entry) {
+									this.push(chunk);
+								}
+							} else {
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+								entry.autodrain();
+							}
+
+							callback();
 						},
-						readableObjectMode: true,
-						writableObjectMode: true,
+					})
+				)
+				.pipe(
+					split2((line: string) => {
+						const [, zip, name, state, , , , county, , lat, lon] = line.split("\t");
+						return {
+							zip,
+							name,
+							state,
+							county,
+							location: {lat: Number.parseFloat(lat), lon: Number.parseFloat(lon)},
+						};
 					})
 				),
+
 			onDocument(doc) {
 				return {
 					index: {_index: "cities"},
