@@ -63,3 +63,12 @@ services:
       IMAGES_PATH: /images
     ports:
       - 3000:3000
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - 8080:8080
