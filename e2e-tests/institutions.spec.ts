@@ -144,7 +144,7 @@ test.describe("Edit institution", () => {
 			{
 				name: "Edited Institution",
 				gender: "m",
-				ageFrom: "", // TODO does this work?
+				ageFrom: "",
 				ageTo: "",
 				arePlacesAvailable: true,
 				homepage: "https://example.org/edited-institution",

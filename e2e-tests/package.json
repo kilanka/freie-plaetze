@@ -7,9 +7,9 @@
 		"test:chromium": "playwright test --project=chromium"
 	},
 	"dependencies": {
-		"@playwright/test": "^1.39.0",
-		"@types/node": "^20.8.7",
-		"typescript": "^4.9.4",
+		"@playwright/test": "^1.45.1",
+		"@types/node": "^20.14.10",
+		"typescript": "^5.5.3",
 		"wait-port": "^1.1.0"
 	}
 }
