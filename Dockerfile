@@ -15,6 +15,8 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter backend deploy -
 FROM base AS app
 COPY --from=build --chown=node:node /app /app
 WORKDIR /app
+# Generate the prisma client in-place because `pnpm deploy` doesn't copy it from `node_modules`
+RUN pnpm exec keystone prisma generate
 
 ENV NODE_ENV production
 ENV APP_ENV production
