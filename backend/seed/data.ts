@@ -1,12 +1,11 @@
-import {de, Faker} from "@faker-js/faker";
+import {de, en, Faker} from "@faker-js/faker";
 // @ts-expect-error https://github.com/jaydenseric/graphql-upload/issues/282
 import Upload from "graphql-upload/Upload.js";
-import {sample} from "lodash";
 import {fetch} from "undici";
 
 import {InstitutionCreateInput, UserCreateInput} from ".keystone/types";
 
-const faker = new Faker({locale: [de]});
+const faker = new Faker({locale: [de, en]});
 faker.seed(123);
 
 export const users: UserCreateInput[] = [
@@ -79,7 +78,7 @@ export const addresses = [
 ];
 
 async function getImage() {
-	const seed = faker.random.alphaNumeric(5);
+	const seed = faker.string.alphanumeric(5);
 	const sourceUrl = `https://picsum.photos/seed/${seed}/2400/1600`;
 	const response = await fetch(sourceUrl);
 	const imageStream = response.body!;
@@ -111,18 +110,18 @@ export async function getInstitutions(): Promise<InstitutionCreateInput[]> {
 				types: {
 					connect: faker.helpers.arrayElements(
 						["13,3", "19", "34", "35", "35a", "41", "42"].map((paragraph) => ({paragraph})),
-						faker.datatype.number({min: 1, max: 2})
+						faker.number.int({min: 1, max: 2})
 					),
 				},
-				gender: sample(["mixed", "f", "m"])!,
-				ageFrom: faker.datatype.number(10),
-				ageTo: faker.datatype.number({min: 11, max: 20}),
+				gender: faker.helpers.arrayElement(["mixed", "f", "m"]),
+				ageFrom: faker.number.int(10),
+				ageTo: faker.number.int({min: 11, max: 20}),
 				arePlacesAvailable: faker.datatype.boolean(),
 				photo: await getImage(),
 				homepage: faker.internet.url(),
-				email: faker.internet.exampleEmail(name),
-				phone: faker.phone.number("0#### ######"),
-				mobilePhone: faker.phone.number("015# ########"),
+				email: faker.internet.exampleEmail({firstName: name}),
+				phone: faker.phone.number(),
+				mobilePhone: faker.phone.number(),
 				descriptionPlain: faker.lorem.paragraphs(),
 			};
 
