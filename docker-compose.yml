@@ -51,7 +51,9 @@ services:
       - 3001:3001
 
   backend:
-    build: .
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
     depends_on:
       - db
     volumes:

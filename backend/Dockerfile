@@ -1,5 +1,3 @@
-# Backend Dockerfile – frontend is deployed using Vercel
-
 FROM node:20 AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
