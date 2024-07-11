@@ -16,133 +16,94 @@ const Page: NextPage = () => {
 					{`
 ## Datenschutzerklärung
 
-Verantwortlicher im Sinne der Datenschutzgesetze, insbesondere der EU-Datenschutzgrundverordnung (DSGVO), ist Björn Luchterhandt (E-Mail: [privacy@freie-plaetze.de](mailto:privacy@freie-plaetze.de)).
+Im Rahmen dieser Datenschutzerklärung möchten wir Sie über Art, Umfang und Zweck der von uns erhobenen, genutzten und verarbeiteten personenbezogenen Daten informieren.
+Personenbezogene Daten bezeichnen alle Informationen, die direkt oder indirekt auf Sie persönlich beziehbar sind.
+Dazu zählen beispielsweise Ihr Name, Ihre Anschrift, Ihre E-Mail-Adresse, Online-Kennungen und Ihr Nutzerverhalten, wenn Sie durch diese Informationen oder Handlungen identifiziert werden oder identifiziert werden könnten.
+Wir setzen auf unserer Webseite zum Schutz Ihrer personenbezogenen Daten und anderer vertraulicher Inhalte (z.B. bei Anfragen über unser Kontaktformular) eine SSL-Verschlüsselung ein.
+Bei Fragen zur Erhebung, Verarbeitung oder Nutzung Ihrer personenbezogenen Daten, bei Auskünften, Berichtigung, Sperrung oder Löschung von Daten sowie Widerruf ggfls. erteilter Einwilligungen oder Widerspruch gegen eine bestimmte Datenverarbeitung wenden Sie sich bitte an den nachfolgend genannten Verantwortlichen oder unseren Datenschutzbeauftragten.
 
-### Ihre Betroffenenrechte
+#### I. Name und Kontaktdaten des Verantwortlichen
 
-Unter den angegebenen Kontaktdaten unseres Datenschutzbeauftragten können Sie jederzeit folgende Rechte ausüben:
+Der Verantwortliche im Sinne von Art. 4 Nr. 7 der Datenschutz-Grundverordnung (DS-GVO), sonstiger in den Mitgliedstaaten der Europäischen Union geltenden Datenschutzgesetze sowie sonstiger datenschutzrechtlicher Bestimmungen ist:
 
-*   Auskunft über Ihre bei uns gespeicherten Daten und deren Verarbeitung (Art. 15 DSGVO),
-*   Berichtigung unrichtiger personenbezogener Daten (Art. 16 DSGVO),
-*   Löschung Ihrer bei uns gespeicherten Daten (Art. 17 DSGVO),
-*   Einschränkung der Datenverarbeitung, sofern wir Ihre Daten aufgrund gesetzlicher Pflichten noch nicht löschen dürfen (Art. 18 DSGVO),
-*   Widerspruch gegen die Verarbeitung Ihrer Daten bei uns (Art. 21 DSGVO) und
-*   Datenübertragbarkeit, sofern Sie in die Datenverarbeitung eingewilligt haben oder einen Vertrag mit uns abgeschlossen haben (Art. 20 DSGVO).
+Kilanka GmbH\\
+Stresemannstraße 360\\
+22761 Hamburg
 
-Sofern Sie uns eine Einwilligung erteilt haben, können Sie diese jederzeit mit Wirkung für die Zukunft widerrufen.
+Telefon: 040 / 60 944 194 - 0\\
+E-Mail: info@kilanka.de
 
-Sie können sich jederzeit mit einer Beschwerde an eine Aufsichtsbehörde wenden, z. B. an die zuständige Aufsichtsbehörde des Bundeslands Ihres Wohnsitzes oder an die für uns als verantwortliche Stelle zuständige Behörde.
-Eine Liste der Aufsichtsbehörden (für den nichtöffentlichen Bereich) mit Anschrift finden Sie unter: [https://www.bfdi.bund.de/DE/Service/Anschriften/Laender/Laender-node.html](https://www.bfdi.bund.de/DE/Service/Anschriften/Laender/Laender-node.html).
+Unseren Datenschutzbeauftragten erreichen Sie per E-Mail über steen@kanzlei-360.de oder postalisch unter folgender Anschrift:
+Rechtsanwalt Carsten-Helmut Steen, Kanzlei360 Grad GbR, Bahnhofstraße 23, 24217 Schönberg.
 
+#### II. Ihre Rechte
 
-### Cookies
+1. Nachfolgend informieren wir Sie über Ihre Rechte hinsichtlich der Sie betreffenden personenbezogenen Daten.
 
-Wie viele andere Webseiten verwenden wir auch so genannte „Cookies“. Bei Cookies handelt es sich um kleine Textdateien, die auf Ihrem Endgerät (Laptop, Tablet, Smartphone o.ä.) gespeichert werden, wenn Sie unsere Webseite besuchen.
+	Sie haben das Recht unentgeltlich
 
-Sie können Sie einzelne Cookies oder den gesamten Cookie-Bestand löschen. Darüber hinaus erhalten Sie Informationen und Anleitungen, wie diese Cookies gelöscht oder deren Speicherung vorab blockiert werden können. Je nach Anbieter Ihres Browsers finden Sie die notwendigen Informationen unter den nachfolgenden Links:
-
-*   Mozilla Firefox: [https://support.mozilla.org/de/kb/cookies-loeschen-daten-von-websites-entfernen](https://support.mozilla.org/de/kb/cookies-loeschen-daten-von-websites-entfernen)
-*   Internet Explorer: [https://support.microsoft.com/de-de/help/17442/windows-internet-explorer-delete-manage-cookies](https://support.microsoft.com/de-de/help/17442/windows-internet-explorer-delete-manage-cookies)
-*   Google Chrome: [https://support.google.com/accounts/answer/61416?hl=de](https://support.google.com/accounts/answer/61416?hl=de)
-*   Opera: [http://www.opera.com/de/help](http://www.opera.com/de/help)
-*   Safari: [https://support.apple.com/kb/PH17191?locale=de_DE&viewlocale=de_DE](https://support.apple.com/kb/PH17191?locale=de_DE&viewlocale=de_DE)
-
-#### Speicherdauer und eingesetzte Cookies:
-
-Soweit Sie uns durch Ihre Browsereinstellungen oder Zustimmung die Verwendung von Cookies erlauben, können folgende Cookies auf unseren Webseiten zum Einsatz kommen:
-
-* \`auth\`: Notwendige Daten zur Speicherung Ihres Anmeldestatuses, die wieder gelöscht werden wenn Sie sich abmelden.
+	* eine **Bestätigung** darüber zu verlangen, ob Sie betreffende personenbezogene Daten von uns verarbeitet werden (Art. 15 DS-GVO),
+	* **Auskunft** über Ihre von uns verarbeiteten personenbezogenen Daten zu verlangen (Art. 15 DS-GVO). Insbesondere können Sie Auskunft über die Verarbeitungszwecke, die Kategorie der personenbezogenen Daten, die Kategorien von Empfängern, gegenüber denen Ihre Daten offengelegt wurden oder werden, die geplante Speicherdauer, das Bestehen eines Rechts auf Berichtigung, Löschung, Einschränkung der Verarbeitung oder Widerspruch, das Bestehen eines Beschwerderechts, die Herkunft Ihrer Daten, sofern diese nicht bei uns erhoben wurden, sowie über das Bestehen einer automatisierten Entscheidungsfindung einschließlich Profiling und ggfls. aussagekräftigen Informationen zu deren Einzelheiten verlangen,
+	* unverzüglich die **Berichtigung** unrichtiger oder Vervollständigung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen (Art. 16 DS-GVO),
+	* die **Löschung** Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen, soweit nicht die Verarbeitung zur Ausübung des Rechts auf freie Meinungsäußerung und Information, zur Erfüllung einer rechtlichen Verpflichtung, aus Gründen des öffentlichen Interesses oder zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen erforderlich ist (Art. 17 DS-GVO),
+	* die **Einschränkung der Verarbeitung** Ihrer personenbezogenen Daten zu verlangen, soweit die Richtigkeit der Daten von Ihnen bestritten wird, die Verarbeitung unrechtmäßig ist, Sie aber deren Löschung ablehnen und wir die Daten nicht mehr benötigen, Sie jedoch diese zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen benötigen oder Sie gemäß Art. 21 DS-GVO Widerspruch gegen die Verarbeitung eingelegt haben (Art. 18 DS-GVO),
+	* Ihre personenbezogenen Daten, die Sie uns bereitgestellt haben, in einem strukturierten, gängigen und maschinenlesebaren Format zu erhalten oder die **Übermittlung** an einen anderen Verantwortlichen zu verlangen (Art. 20 DS-GVO),
+	* Ihre einmal erteilte Einwilligung jederzeit uns gegenüber zu **widerrufen**. Durch den Widerruf der Einwilligung wird die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung nicht berührt.
 
 
-### Technisch notwendige Cookies
+2. Haben Sie das Recht auf Berichtigung, Löschung oder Einschränkung der Verarbeitung uns gegenüber geltend gemacht, sind wir verpflichtet, allen Empfängern, denen die Sie betreffenden personenbezogenen Daten offengelegt wurden, diese Berichtigung oder Löschung der Daten oder Einschränkung der Verarbeitung mitzuteilen, es sei denn, dies erweist sich als unmöglich oder ist mit einem unverhältnismäßigen Aufwand verbunden. Ihnen steht weiterhin das Recht zu, über diese Empfänger unterrichtet zu werden (Art. 19 DS-GVO).
 
-#### Art und Zweck der Verarbeitung:
+3. Sie haben ferner das Recht, sich bei der für uns zuständigen Datenschutz-Aufsichtsbehörde (https://www.datenschutz-hamburg.de/) über die Verarbeitung Ihrer personenbezogenen Daten durch uns zu beschweren (Art. 77 DS-GVO).
 
-Wir setzen Cookies ein, um unsere Website nutzerfreundlicher zu gestalten. Einige Elemente unserer Internetseite erfordern es, dass der aufrufende Browser auch nach einem Seitenwechsel identifiziert werden kann.
+#### III. Bereitstellung unserer Webseite und Erstellung von Server-Logfiles
 
-Der Zweck der Verwendung technisch notwendiger Cookies ist, die Nutzung von Websites für die Nutzer zu vereinfachen. Einige Funktionen unserer Internetseite können ohne den Einsatz von Cookies nicht angeboten werden. Für diese ist es erforderlich, dass der Browser auch nach einem Seitenwechsel wiedererkannt wird.
+1. Bei der bloß informatorischen Nutzung unserer Webseite, also wenn Sie sich nicht registrieren oder uns anderweitig Informationen übermitteln, erheben wir nur die personenbezogenen Daten, die Ihr Browser an unseren Server übermittelt. Wenn Sie unsere Webseite aufrufen, erheben wir die folgenden Daten, die für uns technisch erforderlich sind, um Ihnen unsere Webseite anzuzeigen und die Stabilität und Sicherheit unserer Webseite zu gewährleisten:
 
-Für folgende Anwendungen benötigen wir Cookies:
+	* IP-Adresse
+	* Datum und Uhrzeit des Zugriffs
+	* Zeitzonendifferenz zur Greenwich Mean Time (GMT)
+	* Inhalt der Anforderung (konkrete Seite)
+	* Zugriffsstatus/HTTP-Statuscode
+	* die jeweils übertragene Datenmenge
+	* Webseite, von der Ihre Anforderung kommt
+	* Webseiten, die Sie bei uns aufrufen
+	* Informationen über den Browsertyp und die verwendete Version
+	* Betriebssystem und dessen Oberfläche
+	* Sprache und Version der Browsersoftware.
 
-* Speicherung Ihres Anmeldestatuses
+	\\
+	Diese allgemeinen Daten und Informationen werden in den Logfiles unseres Servers nur vorübergehend und getrennt von Ihren personenbezogenen Daten gespeichert, die Sie uns ggfls. freiwillig übermitteln. Die in den Logfiles anonym erhobenen Daten und Informationen werden von uns lediglich statistisch mit dem Ziel ausgewertet, den Datenschutz und die Datensicherheit in unserem Unternehmen zu erhöhen und ein optimales Schutzniveau für die von uns verarbeiteten personenbezogenen Daten sicherzustellen.
 
-#### Rechtsgrundlage und berechtigtes Interesse:
+2. Die Rechtsgrundlage für die Datenverarbeitung im Zusammenhang mit Server-Logfiles ist Art. 6 Abs. 1 S. 1 lit. f DS-GVO. Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind. Im Falle der Erfassung der Daten zur Bereitstellung der Webseite ist dies der Fall, wenn die jeweilige Sitzung von Ihnen beendet wird.
 
-Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. f DSGVO auf Basis unseres berechtigten Interesses an einer nutzerfreundlichen Gestaltung unserer Website.
+	Die Erfassung der Daten ist zur Bereitstellung und deren Speicherung in Logfiles für den Betrieb unserer Webseite zwingend erforderlich. Es besteht für Sie daher keine Möglichkeit, dieser Datenverarbeitung zu widersprechen.
 
-#### Empfänger:
+#### IV. Kontaktformular / Kommunikation per E-Mail
 
-Empfänger der Daten sind ggf. technische Dienstleister, die für den Betrieb und die Wartung unserer Website als Auftragsverarbeiter tätig werden.
+1. Sie können uns jederzeit über das von uns bereitgestellte Formular kontaktieren. Im Zeitpunkt der Absendung Ihrer Nachricht werden die folgenden Daten (Pflichtfeld) bei uns gespeichert:
 
-#### Drittlandtransfer:
+	* E-Mail-Adresse
 
-Die erhobenen Daten werden ggfs. an Vercel Inc. in die USA übertragen. Vercel ist unter dem [EU-US Privacy Shield zertifiziert](https://www.privacyshield.gov/participant?id=a2zt0000000TTIbAAO) und damit verpflichtet, den EU-Datenschutzvorgaben nachzukommen.
+	\\
+	Weiterhin speichern wir das Datum und den Zeitpunkt der Absendung Ihrer Kontaktanfrage.
 
-#### Bereitstellung vorgeschrieben oder erforderlich:
+	Alternativ können Sie uns jederzeit über die von uns bereitgestellte E-Mail-Adresse kontaktieren.
+	In diesem Fall werden nur die uns von Ihnen mit der E-Mail übermittelten personenbezogenen Daten gespeichert.
 
-Die Bereitstellung der vorgenannten personenbezogenen Daten ist weder gesetzlich noch vertraglich vorgeschrieben. Ohne diese Daten ist jedoch der Dienst und die Funktionsfähigkeit unserer Website nicht gewährleistet. Zudem können einzelne Dienste und Services nicht verfügbar oder eingeschränkt sein.
+2. Rechtsgrundlage für die Verarbeitung der Daten bei der Verwendung unseres Kontaktformulars ist oder der Daten, die Sie uns im Zuge einer Übersendung per E-Mail übermitteln, ist Art. 6 Abs. 1 S. 1 lit. f DS-GVO. Dient die Kontaktaufnahme der Erfüllung eines Vertrages oder Durchführung vorvertraglicher Maßnahmen ist Art. 6 Abs. 1 S. 1 lit. b DS-GVO ergänzende Rechtsgrundlage.
 
-#### Widerspruch
+3. Wir verwenden die Daten ausschließlich für die Beantwortung Ihres Anliegens. Die in diesem Zusammenhang anfallenden Daten löschen wir, nachdem die Speicherung nicht mehr erforderlich ist, oder schränken die Verarbeitung ein, falls gesetzliche Aufbewahrungspflichten bestehen. Sie können der Verarbeitung Ihrer über das Kontaktformular oder per E-Mail mitgeteilten personenbezogenen Daten jederzeit widersprechen. Richten Sie Ihren Widerspruch bitte an die in Ziffer I. angegebenen Kontaktdaten. Die Korrespondenz kann dann allerdings nicht fortgesetzt werden.
 
-Lesen Sie dazu die Informationen über Ihr Widerspruchsrecht nach Art. 21 DSGVO weiter unten.
+#### V. Routinemäßige Löschung und Sperrung Ihrer personenbezogenen Daten
 
+Wir verarbeiten und speichern Ihre personenbezogenen Daten jeweils nur für den Zeitraum, der zur Erreichung des Speicherungszwecks erforderlich ist oder sofern dies durch den Europäischen Richtlinien- und Verordnungsgeber oder einen anderen Gesetzgeber in Gesetzen oder Vorschriften, dem wir unterliegen, vorgesehen wurde.
+Entfällt der Speicherungszweck oder läuft eine vom Europäischen Richtlinien- und Verordnungsgeber oder einem anderen zuständigen Gesetzgeber vorgeschriebene Speicherfrist ab, werden die personenbezogenen Daten routinemäßig und entsprechend den gesetzlichen Vorschriften gesperrt oder gelöscht, es sei denn, Sie haben einer darüberhinausgehenden Nutzung Ihrer Daten zugestimmt.
 
-### Registrierung auf unserer Website
+#### VI. WIDERSPRUCHSRECHT (Art. 21 DS-GVO)
 
-Für das Bereithalten bestimmter Inhalte und Leistungen auf unserer Website ist Ihre Registrierung erforderlich.
-Für die Registrierung auf unserer Website benötigen wir einige personenbezogene Daten, die über eine Eingabemaske an uns übermittelt werden.
-Zum Zeitpunkt der Registrierung wird zusätzlich die aktuelle Uhrzeit gespeichert.
-
-
-#### Rechtsgrundlage:
-
-Die Verarbeitung der bei der Registrierung eingegebenen Daten erfolgt auf Grundlage einer Einwilligung des Nutzers (Art. 6 Abs. 1 lit. a DSGVO).
-
-#### Empfänger:
-
-Empfänger der Daten sind ggf. technische Dienstleister, die für den Betrieb und die Wartung unserer Website als Auftragsverarbeiter tätig werden.
-
-#### Drittlandtransfer:
-
-Die erhobenen Daten werden ggfs. an Vercel Inc. in die USA übertragen. Vercel ist unter dem [EU-US Privacy Shield zertifiziert](https://www.privacyshield.gov/participant?id=a2zt0000000TTIbAAO) und damit verpflichtet, den EU-Datenschutzvorgaben nachzukommen.
-
-#### Speicherdauer:
-
-Daten werden in diesem Zusammenhang nur verarbeitet, solange die entsprechende Einwilligung vorliegt.
-
-#### Bereitstellung vorgeschrieben oder erforderlich:
-
-Die Bereitstellung Ihrer personenbezogenen Daten erfolgt freiwillig, allein auf Basis Ihrer Einwilligung. Ohne die Bereitstellung Ihrer personenbezogenen Daten können wir Ihnen keinen Zugang auf unsere angebotenen Inhalte gewähren.
-
-
-### SSL-Verschlüsselung
-
-Um die Sicherheit Ihrer Daten bei der Übertragung zu schützen, verwenden wir dem aktuellen Stand der Technik entsprechende Verschlüsselungsverfahren (z.B. SSL) über HTTPS.
-
-
-
-### Information über Ihr Widerspruchsrecht nach Art. 21 DSGVO
-
-#### Einzelfallbezogenes Widerspruchsrecht
-
-Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Sie betreffender personenbezogener Daten, die aufgrund Art. 6 Abs. 1 lit. f DSGVO (Datenverarbeitung auf der Grundlage einer Interessenabwägung) erfolgt, Widerspruch einzulegen; dies gilt auch für ein auf diese Bestimmung gestütztes Profiling im Sinne von Art. 4 Nr. 4 DSGVO.
-
-Legen Sie Widerspruch ein, werden wir Ihre personenbezogenen Daten nicht mehr verarbeiten, es sei denn, wir können zwingende schutzwürdige Gründe für die Verarbeitung nachweisen, die Ihre Interessen, Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.
-
-**Empfänger eines Widerspruchs**: [privacy@freie-plaetze.de](mailto:privacy@freie-plaetze.de)
-
-
-
-### Änderung unserer Datenschutzbestimmungen
-
-Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen, z.B. bei der Einführung neuer Services. Für Ihren erneuten Besuch gilt dann die neue Datenschutzerklärung.
-
-### Fragen an den Datenschutzbeauftragten
-
-Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine E-Mail an [privacy@freie-plaetze.de](mailto:privacy@freie-plaetze.de).
-
-
-_Die Datenschutzerklärung wurde mithilfe der activeMind AG erstellt (Version #2020-09-30)._
+Wenn wir Ihre personenbezogenen Daten aufgrund unseres überwiegenden berechtigten Interesses im Rahmen einer Interessenabwägung nach Art. 6 Abs. 1 S. 1 lit. f DS-GVO verarbeiten, haben Sie aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit das Recht, dieser Verarbeitung mit Wirkung für die Zukunft kostenfrei zu widersprechen.
+Wenn wir Ihre personenbezogenen Daten verarbeiten, um Direktwerbung zu betreiben, haben Sie ebenfalls jederzeit das Recht, der Verarbeitung zum Zwecke derartiger Werbung mit Wirkung für die Zukunft kostenfrei zu widersprechen; dies gilt auch für ein Profiling, soweit es mit solcher Direktwerbung in Verbindung steht.
+Ihren Widerspruch richten Sie bitte an den in Ziffer I. genannten Verantwortlichen (z.B. per E-Mail).
 					`}
 				</ReactMarkdown>
 			</Container>
