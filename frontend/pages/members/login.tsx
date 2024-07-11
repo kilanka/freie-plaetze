@@ -27,6 +27,7 @@ const Page: NextPage = () => {
 	const router = useRouter();
 
 	const redirectDestination =
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 		(!Array.isArray(router.query.redirect) && router.query.redirect) || "/members";
 
 	return (
