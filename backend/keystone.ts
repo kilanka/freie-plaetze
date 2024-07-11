@@ -8,9 +8,9 @@ import {
 	databaseUrl,
 	frontentUrl,
 	imagesPath,
-	isProduction,
 	sessionMaxAge,
 	sessionSecret,
+	shouldSeedDataBeInserted,
 } from "./environment";
 import {sendPasswordResetTokenEmail} from "./interactions/mail";
 import {extendGraphqlSchema, lists} from "./schema";
@@ -49,12 +49,14 @@ export default withAuth(
 		db: {
 			provider: "postgresql",
 			url: databaseUrl,
-			useMigrations: isProduction,
 			async onConnect(context: Context) {
-				if (!isProduction && process.argv.includes("--seed")) {
+				if (shouldSeedDataBeInserted) {
 					await insertSeedData(context);
 				}
 			},
+		},
+		graphql: {
+			extendGraphqlSchema,
 		},
 		ui: {
 			isAccessAllowed: (context) => Boolean(context.session?.data.isAdmin),
@@ -72,6 +74,5 @@ export default withAuth(
 				storagePath: imagesPath,
 			},
 		},
-		extendGraphqlSchema,
 	})
 );

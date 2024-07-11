@@ -59,16 +59,16 @@ model Institution {
   mobilePhone        String                @default("")
   description        Json                  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   descriptionPlain   String                @default("")
+  logo_id            String?
   logo_filesize      Int?
-  logo_extension     String?
   logo_width         Int?
   logo_height        Int?
-  logo_id            String?
+  logo_extension     String?
+  photo_id           String?
   photo_filesize     Int?
-  photo_extension    String?
   photo_width        Int?
   photo_height       Int?
-  photo_id           String?
+  photo_extension    String?
 
   @@index([ownerId])
   @@index([providerId])
