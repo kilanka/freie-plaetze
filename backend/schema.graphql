@@ -654,13 +654,13 @@ type Query {
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   validateUserPasswordResetToken(email: String!, token: String!): ValidateUserPasswordResetTokenResult
+  isEmailRegistered(email: String!): Boolean!
 
   """
   If `cityOrZip` is not empty, return institutions within `radius` km distance from `cityOrZip`. Otherwise, do not filter by location. If `age` is not null, only those institutions are returned whose age range includes `age`.
   """
   institutionSearchResults(radius: Int!, cityOrZip: String! = "", age: Int, paragraphs: [String!] = [], where: InstitutionWhereInput! = {}, orderBy: [InstitutionOrderByInput!]! = [], limit: Int, offset: Int! = 0): [Institution!]!
   institutionSearchResultsCount(radius: Int!, cityOrZip: String! = "", age: Int, paragraphs: [String!] = [], where: InstitutionWhereInput! = {}): Int!
-  isEmailRegistered(email: String!): Boolean!
 }
 
 union AuthenticatedItem = User
