@@ -5,15 +5,14 @@ type User {
   id: ID!
   name: String
   email: String
-  password: PasswordState
   isAdmin: Boolean
+  authToken: PasswordState
+  authTokenIssuedAt: DateTime
+  authTokenRedeemed: Boolean
   institutions(where: InstitutionWhereInput! = {}, orderBy: [InstitutionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InstitutionWhereUniqueInput): [Institution!]
   institutionsCount(where: InstitutionWhereInput! = {}): Int
   providers(where: ProviderWhereInput! = {}, orderBy: [ProviderOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProviderWhereUniqueInput): [Provider!]
   providersCount(where: ProviderWhereInput! = {}): Int
-  passwordResetToken: PasswordState
-  passwordResetIssuedAt: DateTime
-  passwordResetRedeemedAt: DateTime
 }
 
 type PasswordState {
@@ -35,11 +34,11 @@ input UserWhereInput {
   name: StringFilter
   email: StringFilter
   isAdmin: BooleanFilter
+  authToken: PasswordFilter
+  authTokenIssuedAt: DateTimeNullableFilter
+  authTokenRedeemed: BooleanFilter
   institutions: InstitutionManyRelationFilter
   providers: ProviderManyRelationFilter
-  passwordResetToken: PasswordFilter
-  passwordResetIssuedAt: DateTimeNullableFilter
-  passwordResetRedeemedAt: DateTimeNullableFilter
 }
 
 input IDFilter {
@@ -92,18 +91,6 @@ input BooleanFilter {
   not: BooleanFilter
 }
 
-input InstitutionManyRelationFilter {
-  every: InstitutionWhereInput
-  some: InstitutionWhereInput
-  none: InstitutionWhereInput
-}
-
-input ProviderManyRelationFilter {
-  every: ProviderWhereInput
-  some: ProviderWhereInput
-  none: ProviderWhereInput
-}
-
 input PasswordFilter {
   isSet: Boolean!
 }
@@ -119,13 +106,25 @@ input DateTimeNullableFilter {
   not: DateTimeNullableFilter
 }
 
+input InstitutionManyRelationFilter {
+  every: InstitutionWhereInput
+  some: InstitutionWhereInput
+  none: InstitutionWhereInput
+}
+
+input ProviderManyRelationFilter {
+  every: ProviderWhereInput
+  some: ProviderWhereInput
+  none: ProviderWhereInput
+}
+
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
   isAdmin: OrderDirection
-  passwordResetIssuedAt: OrderDirection
-  passwordResetRedeemedAt: OrderDirection
+  authTokenIssuedAt: OrderDirection
+  authTokenRedeemed: OrderDirection
 }
 
 enum OrderDirection {
@@ -136,13 +135,12 @@ enum OrderDirection {
 input UserUpdateInput {
   name: String
   email: String
-  password: String
   isAdmin: Boolean
+  authToken: String
+  authTokenIssuedAt: DateTime
+  authTokenRedeemed: Boolean
   institutions: InstitutionRelateToManyForUpdateInput
   providers: ProviderRelateToManyForUpdateInput
-  passwordResetToken: String
-  passwordResetIssuedAt: DateTime
-  passwordResetRedeemedAt: DateTime
 }
 
 input InstitutionRelateToManyForUpdateInput {
@@ -167,13 +165,12 @@ input UserUpdateArgs {
 input UserCreateInput {
   name: String
   email: String
-  password: String
   isAdmin: Boolean
+  authToken: String
+  authTokenIssuedAt: DateTime
+  authTokenRedeemed: Boolean
   institutions: InstitutionRelateToManyForCreateInput
   providers: ProviderRelateToManyForCreateInput
-  passwordResetToken: String
-  passwordResetIssuedAt: DateTime
-  passwordResetRedeemedAt: DateTime
 }
 
 input InstitutionRelateToManyForCreateInput {
@@ -604,35 +601,22 @@ type Mutation {
   deleteProvider(where: ProviderWhereUniqueInput!): Provider
   deleteProviders(where: [ProviderWhereUniqueInput!]!): [Provider]
   endSession: Boolean!
-  authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
-  createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
-  sendUserPasswordResetLink(email: String!): Boolean!
-  redeemUserPasswordResetToken(email: String!, token: String!, password: String!): RedeemUserPasswordResetTokenResult
+  requestAuthToken(email: String!): Boolean!
+  redeemAuthToken(email: String!, token: String!): AuthTokenRedemptionResult!
 }
 
-union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
+union AuthTokenRedemptionResult = AuthTokenRedemptionSuccess | AuthTokenRedemptionFailure
 
-type UserAuthenticationWithPasswordSuccess {
+type AuthTokenRedemptionSuccess {
   sessionToken: String!
-  item: User!
+  user: User!
 }
 
-type UserAuthenticationWithPasswordFailure {
-  message: String!
+type AuthTokenRedemptionFailure {
+  code: AuthTokenRedemptionErrorCode!
 }
 
-input CreateInitialUserInput {
-  name: String
-  email: String
-  password: String
-}
-
-type RedeemUserPasswordResetTokenResult {
-  code: PasswordResetRedemptionErrorCode!
-  message: String!
-}
-
-enum PasswordResetRedemptionErrorCode {
+enum AuthTokenRedemptionErrorCode {
   FAILURE
   TOKEN_EXPIRED
   TOKEN_REDEEMED
@@ -652,22 +636,12 @@ type Query {
   provider(where: ProviderWhereUniqueInput!): Provider
   providersCount(where: ProviderWhereInput! = {}): Int
   keystone: KeystoneMeta!
-  authenticatedItem: AuthenticatedItem
-  validateUserPasswordResetToken(email: String!, token: String!): ValidateUserPasswordResetTokenResult
-  isEmailRegistered(email: String!): Boolean!
 
   """
   If `cityOrZip` is not empty, return institutions within `radius` km distance from `cityOrZip`. Otherwise, do not filter by location. If `age` is not null, only those institutions are returned whose age range includes `age`.
   """
   institutionSearchResults(radius: Int!, cityOrZip: String! = "", age: Int, paragraphs: [String!] = [], where: InstitutionWhereInput! = {}, orderBy: [InstitutionOrderByInput!]! = [], limit: Int, offset: Int! = 0): [Institution!]!
   institutionSearchResultsCount(radius: Int!, cityOrZip: String! = "", age: Int, paragraphs: [String!] = [], where: InstitutionWhereInput! = {}): Int!
-}
-
-union AuthenticatedItem = User
-
-type ValidateUserPasswordResetTokenResult {
-  code: PasswordResetRedemptionErrorCode!
-  message: String!
 }
 
 type KeystoneMeta {

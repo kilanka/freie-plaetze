@@ -10,6 +10,7 @@ export const geoResolverUrl = process.env.GEO_RESOLVER_URL!;
 export const nominatimSearchEndpoint = process.env.NOMINATIM_SEARCH_ENDPOINT!;
 export const imagesPath = process.env.IMAGES_PATH!;
 export const shouldSeedDataBeInserted = !isProduction && Boolean(process.env.INSERT_SEED_DATA);
+export const initialAdminUserEmail = process.env.INITIAL_ADMIN_USER_EMAIL;
 
 export const additionalFrontendOriginExpressions = (
 	process.env.ADDITIONAL_FRONTEND_ORIGIN_EXPRESSIONS ?? ""

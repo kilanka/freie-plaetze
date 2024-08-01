@@ -14,7 +14,6 @@ import {Title} from "../../lib/components/Title";
 import {useMutationErrorHandler} from "../../lib/hooks/useMutationErrorHandler";
 import {useAppDispatch} from "../../lib/store";
 import {login} from "../../lib/store/auth";
-import {passwordFieldsSchema} from "../../lib/util/validation";
 
 const formSchema = yup.object({
 	name: yup.string().required("Bitte geben Sie Ihren Namen ein."),
@@ -22,7 +21,6 @@ const formSchema = yup.object({
 		.string()
 		.required("Bitte geben Sie Ihre E-Mail-Adresse ein")
 		.email("Ungültige E-Mail-Adresse"),
-	...passwordFieldsSchema,
 	consent: yup
 		.bool()
 		.required("Um sich zu registrieren, müssen Sie unsere Datenschutzerklärung akzeptieren.")
@@ -47,7 +45,7 @@ const Page: NextPage = () => {
 					initialValues={{name: "", email: "", password: "", consent: false}}
 					validationSchema={formSchema}
 					onSubmit={wrapMutationFunction(async ({name, email, password}) => {
-						await registerUser({variables: {name, email, password}});
+						await registerUser({variables: {name, email}});
 						await dispatch(login(email, password));
 						await router.push("/members");
 					})}
@@ -62,12 +60,6 @@ const Page: NextPage = () => {
 							name="email"
 							label="E-Mail-Adresse"
 							helperText="Ihre E-Mail-Adresse ist nicht öffentlich einsehbar."
-						/>
-						<InputControl name="password" label="Passwort" inputProps={{type: "password"}} />
-						<InputControl
-							name="confirmPassword"
-							label="Passwort wiederholen"
-							inputProps={{type: "password"}}
 						/>
 						<CheckboxSingleControl name="consent">
 							Ich akzeptiere die{" "}

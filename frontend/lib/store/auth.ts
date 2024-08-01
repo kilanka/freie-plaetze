@@ -5,10 +5,11 @@ import router from "next/router";
 import type {AppState, AppThunkAction} from ".";
 import {getApolloClient} from "../api/apollo-client";
 import {
-	LoginDocument,
-	LoginMutation,
-	LoginMutationVariables,
+	AuthTokenRedemptionErrorCode,
 	LogoutDocument,
+	RedeemAuthTokenDocument,
+	RedeemAuthTokenMutation,
+	RedeemAuthTokenMutationVariables,
 } from "../api/generated";
 import {LogoutMutation} from "../api/generated/ssr";
 
@@ -64,44 +65,49 @@ export const {updateUserData} = authSlice.actions;
  *
  * The thunk action returns `undefined` if the login was successful and an error message otherwise.
  */
-export function login(
-	email: string,
-	password: string
-): AppThunkAction<Promise<string | undefined>> {
+export function login(email: string, token: string): AppThunkAction<Promise<string | undefined>> {
 	// Since the login action is only dispatched client-side, we can get the global ApolloClient
 	// instance using `getApolloClient()`:
 	const client = getApolloClient();
 
 	return async (dispatch) => {
-		const {data} = await client.mutate<LoginMutation, LoginMutationVariables>({
-			mutation: LoginDocument,
-			variables: {email, password},
+		const {data} = await client.mutate<RedeemAuthTokenMutation, RedeemAuthTokenMutationVariables>({
+			mutation: RedeemAuthTokenDocument,
+			variables: {email, token},
 		});
 
-		if (data?.authResult?.__typename) {
-			const authResult = data.authResult;
-			if (authResult.__typename === "UserAuthenticationWithPasswordFailure") {
-				dispatch(authSlice.actions.loginError());
-				return "E-Mail-Adresse oder Passwort ungültig";
-			}
+		if (data?.authResult?.__typename !== "AuthTokenRedemptionSuccess") {
+			dispatch(authSlice.actions.loginError());
 
-			if (authResult.__typename === "UserAuthenticationWithPasswordSuccess") {
-				dispatch(
-					authSlice.actions.loginSuccess({
-						sessionToken: authResult.sessionToken,
-						user: {
-							id: authResult.user.id ?? "",
-							name: authResult.user.name ?? "",
-							email: authResult.user.email ?? "",
-						},
-					})
-				);
-				return;
-			}
+			const errorCode =
+				data?.authResult?.__typename === "AuthTokenRedemptionFailure"
+					? data.authResult.errorCode
+					: AuthTokenRedemptionErrorCode.Failure;
+
+			const errorMessage = {
+				[AuthTokenRedemptionErrorCode.Failure]:
+					"Es ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+				[AuthTokenRedemptionErrorCode.TokenExpired]:
+					"Der Anmelde-Link ist abgelaufen. Bitte fordern Sie einen Neuen an.",
+				[AuthTokenRedemptionErrorCode.TokenRedeemed]:
+					"Der Anmelde-Link wurde bereits verwendet. Bitte fordern Sie einen Neuen an.",
+			}[errorCode];
+
+			return errorMessage;
 		}
 
-		dispatch(authSlice.actions.loginError());
-		return "An unexpected error occurred. Please try again.";
+		const {sessionToken, user} = data.authResult;
+
+		dispatch(
+			authSlice.actions.loginSuccess({
+				sessionToken,
+				user: {
+					id: user.id,
+					name: user.name ?? "",
+					email: user.email ?? "",
+				},
+			})
+		);
 	};
 }
 

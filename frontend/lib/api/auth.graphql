@@ -1,19 +1,23 @@
-mutation login($email: String!, $password: String!) {
-  authResult: authenticateUserWithPassword(email: $email, password: $password) {
-    ... on UserAuthenticationWithPasswordSuccess {
-      sessionToken
-      user: item {
-        id
-        name
-        email
-      }
-    }
-    ... on UserAuthenticationWithPasswordFailure {
-      errorMessage: message
-    }
-  }
+mutation requestAuthToken($email: String!) {
+	requestAuthToken(email: $email)
+}
+
+mutation redeemAuthToken($email: String!, $token: String!) {
+	authResult: redeemAuthToken(email: $email, token: $token) {
+		... on AuthTokenRedemptionSuccess {
+			sessionToken
+			user {
+				id
+				name
+				email
+			}
+		}
+		... on AuthTokenRedemptionFailure {
+			errorCode: code
+		}
+	}
 }
 
 mutation logout {
-  endSession
+	endSession
 }
