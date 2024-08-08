@@ -48,6 +48,30 @@ export const UserList = list({
 			isIndexed: "unique",
 			isFilterable: true,
 			validation: {isRequired: true},
+			hooks: {
+				async validateInput({
+					context,
+					resolvedData,
+					fieldKey,
+					operation,
+					item,
+					addValidationError,
+				}) {
+					// Handle non-unique email addresses with a user-facing custom error message
+					const email = resolvedData[fieldKey]; // eslint-disable-line
+					if (typeof email === "string") {
+						const userCount = await context.sudo().db.User.count({where: {email: {equals: email}}});
+						if (
+							userCount !== 0 &&
+							(operation === "create" || (operation === "update" && email !== item.email))
+						) {
+							addValidationError(
+								"CustomErrorMessage[Ein Konto mit der angegebenen E-Mail-Adresse existiert bereits.]"
+							);
+						}
+					}
+				},
+			},
 		}),
 		isAdmin: checkbox({
 			access: {

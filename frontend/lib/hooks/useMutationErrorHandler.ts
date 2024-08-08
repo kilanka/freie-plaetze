@@ -24,6 +24,12 @@ export function useMutationErrorHandler({process, successMessage}: MutationError
 		if (error instanceof ApolloError) {
 			if (error.graphQLErrors.length > 0) {
 				errorMessage = error.graphQLErrors[0].message;
+
+				// Extract custom error message string, if any
+				const customErrorMessageMatches = /CustomErrorMessage\[(.*?)]/.exec(errorMessage);
+				if (customErrorMessageMatches?.length) {
+					errorMessage = customErrorMessageMatches[1];
+				}
 			} else if (error.networkError) {
 				console.error(error.message);
 				errorMessage = "Bitte überprüfen Sie Ihre Internetverbindung und versuchen es erneut.";
@@ -36,8 +42,6 @@ export function useMutationErrorHandler({process, successMessage}: MutationError
 			errorTitle = "Adresse nicht gefunden";
 			errorMessage =
 				"Bitte überprüfen Sie die Adressdaten der Einrichtung und versuchen Sie es erneut.";
-		} else if (errorMessage.includes("Unique constraint failed on the fields: (`email`)")) {
-			errorMessage = "Ein Konto mit der angegebenen E-Mail-Adresse existiert bereits.";
 		}
 
 		showToast({
