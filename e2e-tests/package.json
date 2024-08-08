@@ -9,6 +9,7 @@
 	"dependencies": {
 		"@playwright/test": "^1.45.1",
 		"@types/node": "^20.14.10",
+		"cheerio": "1.0.0-rc.12",
 		"typescript": "^5.5.3",
 		"wait-port": "^1.1.0"
 	}

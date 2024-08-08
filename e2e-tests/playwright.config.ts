@@ -10,8 +10,6 @@ export default defineConfig({
 	workers: process.env.CI ? 1 : undefined,
 	reporter: "html",
 
-	globalSetup: require.resolve("./global-setup"),
-
 	use: {
 		baseURL: constants.frontendUrl,
 		trace: "on-first-retry",

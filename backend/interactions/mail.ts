@@ -32,13 +32,23 @@ export async function sendMail(template: string, to: string, locals: Record<stri
 	});
 }
 
-export async function sendWelcomeEmail(email: string, name: string) {
-	await sendMail("welcome", email, {name, email, editAccountLink: `${frontentUrl}/members/user`});
+function getLoginLink(email: string, token: string) {
+	return `${frontentUrl}/members/login?email=${email}&token=${token}`;
 }
 
-export async function sendPasswordResetTokenEmail(email: string, name: string, token: string) {
-	await sendMail("reset-password", email, {
+export async function sendWelcomeEmail(email: string, name: string, token: string) {
+	const loginLink = getLoginLink(email, token);
+	await sendMail("welcome", email, {
 		name,
-		resetLink: `${frontentUrl}/members/reset-password?email=${email}&token=${token}`,
+		email,
+		loginLink,
+		editAccountLink: `${loginLink}&redirect=/members/user`,
+	});
+}
+
+export async function sendAuthTokenEmail(email: string, name: string, token: string) {
+	await sendMail("auth", email, {
+		name,
+		loginLink: getLoginLink(email, token),
 	});
 }
