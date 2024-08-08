@@ -1,6 +1,6 @@
-import {InstitutionList, institutionListExtendGraphqlSchema} from "./lists/InstitutionList";
-import {InstitutionTypeList} from "./lists/InstitutionTypeList";
-import {ProviderList} from "./lists/ProviderList";
+import {InstitutionList, institutionListExtendGraphqlSchema} from "./lists/institution";
+import {InstitutionTypeList} from "./lists/institution-type";
+import {ProviderList} from "./lists/provider";
 import {UserList, userListExtendGraphqlSchema} from "./lists/user";
 
 export const lists = {
