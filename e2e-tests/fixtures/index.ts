@@ -1,6 +1,7 @@
 import {expect, test as base} from "@playwright/test";
 
 import {constants} from "../data";
+import {extractLinksFromEmailText, getEmailText} from "../utils";
 import {Account} from "./Account";
 import {Institutions} from "./Institutions";
 import {Providers} from "./Providers";
@@ -28,16 +29,7 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
 	],
 
 	async page({page, account}, use) {
-		await page.goto(constants.frontendUrl + "/members/login");
-		await expect(page.getByRole("heading", {name: "Anmelden"})).toBeVisible();
-
-		await page.getByLabel("E-Mail-Adresse").fill(account.email);
-		await page.getByLabel("Passwort").fill(account.password);
-		await page.getByRole("button", {name: "Anmelden"}).click();
-
-		await page.waitForURL(constants.frontendUrl + "/members");
-		await expect(page.getByRole("button", {name: account.username})).toBeVisible();
-
+		await account.loginOnPage(page);
 		await use(page);
 	},
 

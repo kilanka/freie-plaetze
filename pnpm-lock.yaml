@@ -90,6 +90,9 @@ importers:
       '@types/node':
         specifier: ^20.14.10
         version: 20.14.10
+      cheerio:
+        specifier: 1.0.0-rc.12
+        version: 1.0.0-rc.12
       typescript:
         specifier: ^5.5.3
         version: 5.5.3
