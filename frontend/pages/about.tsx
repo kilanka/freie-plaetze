@@ -45,8 +45,13 @@ Seit Juli 2024 wird Freie-Plaetze.de von der Kilanka GmbH betrieben und weiteren
 ### Impressum
 
 Kilanka GmbH\\
-Stresemannstraße 360\\
+Paul-Dessau-Straße 8\\
 22761 Hamburg
+
+Telefon: 040 / 60 944 194 - 0\\
+Fax: 040 / 60 944 194 - 9\\
+Mail: info@kilanka.de
+
 
 Vertretungsberechtigte Geschäftsführer:\\
 Maximilian Holtzberg
@@ -55,8 +60,6 @@ Registergericht: Amtsgericht Hamburg\\
 Register-Nummer: HRB 142528\\
 Steuernummer: 41/736/03695\\
 USt-IdNr.: DE307281687\\
-Telefon: 040 / 60 944 194 - 0\\
-Mail: info@kilanka.de
 
 #### Disclaimer: Rechtliche Hinweise
 

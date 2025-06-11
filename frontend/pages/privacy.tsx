@@ -27,10 +27,11 @@ Bei Fragen zur Erhebung, Verarbeitung oder Nutzung Ihrer personenbezogenen Daten
 Der Verantwortliche im Sinne von Art. 4 Nr. 7 der Datenschutz-Grundverordnung (DS-GVO), sonstiger in den Mitgliedstaaten der Europäischen Union geltenden Datenschutzgesetze sowie sonstiger datenschutzrechtlicher Bestimmungen ist:
 
 Kilanka GmbH\\
-Stresemannstraße 360\\
+Paul-Dessau-Straße 8\\
 22761 Hamburg
 
 Telefon: 040 / 60 944 194 - 0\\
+Fax: 040 / 60 944 194 - 9\\
 E-Mail: info@kilanka.de
 
 Unseren Datenschutzbeauftragten erreichen Sie per E-Mail über steen@kanzlei-360.de oder postalisch unter folgender Anschrift:
