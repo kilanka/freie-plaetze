@@ -3,3 +3,11 @@ packages:
   - e2e-tests
   - geo-resolver
   - frontend
+
+onlyBuiltDependencies:
+  - '@apollo/protobufjs'
+  - '@nestjs/core'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - esbuild
+  - prisma
