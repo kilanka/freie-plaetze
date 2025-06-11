@@ -9,9 +9,9 @@ const faker = new Faker({locale: [de, en]});
 faker.seed(123);
 
 export const users: UserCreateInput[] = [
-	{name: "Admin", email: "admin@example.org", password: "password", isAdmin: true},
-	{name: "User 1", email: "user1@example.org", password: "password", isAdmin: false},
-	{name: "User 2", email: "user2@example.org", password: "password", isAdmin: false},
+	{name: "Admin", email: "admin@example.org", isAdmin: true},
+	{name: "User 1", email: "user1@example.org", isAdmin: false},
+	{name: "User 2", email: "user2@example.org", isAdmin: false},
 ];
 
 export const addresses = [
