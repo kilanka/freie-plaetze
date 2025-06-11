@@ -35,7 +35,7 @@ export default defineConfig({
 			env: {
 				NODE_ENV: "test",
 				PORT: "3010",
-				DATABASE_URL: "postgres://pguser:pgpass@localhost:5433/pguser",
+				DATABASE_URL: "postgres://pguser:pgpass@localhost:5434/pguser",
 				FRONTEND_URL: "http://localhost:8090/",
 			},
 			url: "http://localhost:3010",
